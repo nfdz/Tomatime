@@ -1,2 +1,2 @@
 # tomatina
-TODO work in progress...
+TODO work in progress... -> go to kanban
