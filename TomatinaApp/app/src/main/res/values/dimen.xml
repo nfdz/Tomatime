@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="content_horizontal_padding">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="loading_size">50dp</dimen>
+
+    <!-- Main activity -->
+    <dimen name="main_activity_logo_height">70dp</dimen>
+    <dimen name="main_activity_logo_margin_top">12dp</dimen>
+    <dimen name="main_activity_tabs_height">45dp</dimen>
+    <dimen name="main_activity_tabs_indicator_height">4dp</dimen>
+
+</resources>
