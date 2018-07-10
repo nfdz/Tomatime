@@ -1,8 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO -->
+    <TextView
+        android:id="@+id/home_tv_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        tools:text="Tomatina"
+        android:textColor="@color/logoColorLight"
+        android:textSize="@dimen/home_logo_font_size"
+        android:layout_marginTop="@dimen/home_logo_margin_top"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <View
+        android:id="@+id/home_bg_state"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black_alpha_20"
+        app:layout_constraintTop_toTopOf="@+id/home_tv_state"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tv_state"
+        app:layout_constraintLeft_toLeftOf="@+id/home_tv_state"
+        app:layout_constraintRight_toRightOf="@+id/home_tv_state" />
+
+    <TextView
+        android:id="@+id/home_tv_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/home_state_size"
+        android:text="Work!"
+        android:textColor="@color/textColorLight"
+        android:padding="@dimen/home_bg_margin"
+        android:layout_marginTop="@dimen/home_state_margin_top"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <!-- Current progress -->
+
+    <View
+        android:id="@+id/home_bg_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/black_alpha_20"
+        app:layout_constraintTop_toTopOf="@+id/home_tv_progress_current"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/home_tv_progress_current"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorLight"
+        android:text="00:00"
+        android:textStyle="bold"
+        android:textSize="@dimen/home_progress_current_size"
+        android:paddingTop="@dimen/home_bg_margin"
+        android:paddingBottom="@dimen/home_bg_margin"
+        android:layout_marginBottom="@dimen/home_progress_current_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/home_iv_global_working"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/home_tv_progress_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorLight"
+        android:paddingTop="@dimen/home_bg_margin"
+        android:paddingBottom="@dimen/home_bg_margin"
+        android:text="/00:00"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
+        app:layout_constraintLeft_toRightOf="@+id/home_tv_progress_current"/>
+
+    <!-- Global pomodoro progress -->
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_line_width"
+        android:background="@color/dark"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/home_iv_global_working"
+        app:layout_constraintTop_toTopOf="@+id/home_iv_global_working"
+        app:layout_constraintBottom_toBottomOf="@+id/home_iv_global_working"/>
+
+    <ImageView
+        android:id="@+id/home_iv_global_working"
+        android:layout_width="@dimen/home_global_progress_section_size"
+        android:layout_height="@dimen/home_global_progress_section_size"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:background="@drawable/selector_shape_progress"
+        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/home_iv_global_short_break"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_line_width"
+        android:background="@color/dark"
+        app:layout_constraintLeft_toRightOf="@+id/home_iv_global_working"
+        app:layout_constraintRight_toLeftOf="@+id/home_iv_global_short_break"
+        app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
+        app:layout_constraintBottom_toBottomOf="@+id/home_iv_global_short_break"/>
+
+    <ImageView
+        android:id="@+id/home_iv_global_short_break"
+        android:layout_width="@dimen/home_global_progress_section_size"
+        android:layout_height="@dimen/home_global_progress_section_size"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:background="@drawable/selector_shape_progress"
+        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
+        app:layout_constraintLeft_toRightOf="@+id/home_iv_global_working"
+        app:layout_constraintRight_toLeftOf="@+id/home_iv_global_long_break"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_line_width"
+        android:background="@color/dark"
+        app:layout_constraintLeft_toRightOf="@+id/home_iv_global_short_break"
+        app:layout_constraintRight_toLeftOf="@+id/home_iv_global_long_break"
+        app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
+        app:layout_constraintBottom_toBottomOf="@+id/home_iv_global_short_break"/>
+
+    <ImageView
+        android:id="@+id/home_iv_global_long_break"
+        android:layout_width="@dimen/home_global_progress_section_size"
+        android:layout_height="@dimen/home_global_progress_section_size"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        android:background="@drawable/selector_shape_progress"
+        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
+        app:layout_constraintLeft_toRightOf="@+id/home_iv_global_short_break"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_line_width"
+        android:background="@color/dark"
+        app:layout_constraintLeft_toRightOf="@+id/home_iv_global_long_break"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
+        app:layout_constraintBottom_toBottomOf="@+id/home_iv_global_short_break"/>
+
+    <!-- Action buttons -->
+
+    <Button
+        android:id="@+id/home_btn_toggle_pomodoro"
+        android:layout_width="@dimen/home_button_width"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Start"
+        android:textColor="@color/textColorDark"
+        android:layout_marginBottom="@dimen/home_button_margin_bottom"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/home_btn_info_pomodoro"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/home_btn_info_pomodoro"
+        android:layout_width="@dimen/home_button_width"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:text="Info"
+        android:textColor="@color/textColorDark"
+        android:layout_marginBottom="@dimen/home_button_margin_bottom"
+        app:layout_constraintLeft_toRightOf="@+id/home_btn_toggle_pomodoro"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <!-- Progress animation -->
+    <android.support.constraint.Guideline
+        android:id="@+id/home_guideline_anim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.15"
+        android:orientation="vertical" />
+
+    <ImageView
+        android:layout_width="@dimen/home_progress_icon_size"
+        android:layout_height="@dimen/home_progress_icon_size"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_state"
+        app:layout_constraintBottom_toTopOf="@+id/home_tv_progress_current"
+        app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim"
+        app:layout_constraintRight_toRightOf="@+id/home_guideline_anim" />
 
 </android.support.constraint.ConstraintLayout>

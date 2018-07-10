@@ -5,8 +5,12 @@
     <color name="colorPrimaryDark">#F44336</color>
     <color name="colorAccent">#64DD17</color>
 
-    <color name="textColorDark">#212121</color>
+    <color name="black_alpha_20">#33000000</color>
 
+    <color name="dark">#212121</color>
+    <color name="textColorDark">#212121</color>
+    <color name="textColorLight">#EEEEEE</color>
+    <color name="logoColorLight">#EEEEEE</color>
     <color name="tabBackground">#EEEEEE</color>
 
 </resources>
