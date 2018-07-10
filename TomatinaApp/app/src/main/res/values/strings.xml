@@ -8,4 +8,41 @@
     <string name="historical_tab">Historical</string>
 
 
+
+    <!-- Settings Preferences -->
+    <string name="prefs_pomodoro_title">Pomodoro settings</string>
+    <string name="prefs_pomodoro_key" translatable="false">pomodoro-settings</string>
+    <string name="prefs_notification_title">Notification settings</string>
+    <string name="prefs_notification_key" translatable="false">notification-settings</string>
+
+    <string name="pref_sound_key" translatable="false">pomodoro-alarm</string>
+    <string name="pref_sound_default" translatable="false">true</string>
+    <string name="pref_sound_title">Sound</string>
+    <string name="pref_sound_summary">Pomodoro events will be alerted with sounds</string>
+
+    <string name="pref_vibration_key" translatable="false">pomodoro-vibration</string>
+    <string name="pref_vibration_default" translatable="false">true</string>
+    <string name="pref_vibration_title">Vibration</string>
+    <string name="pref_vibration_summary">The device will vibrate several times to alert you of the events</string>
+
+    <string name="pref_pomodoro_time_key" translatable="false">pomodoro-work-time</string>
+    <string name="pref_pomodoro_time_default" translatable="false">25</string>
+    <string name="pref_pomodoro_time_title">Work time</string>
+
+    <string name="pref_short_break_time_key" translatable="false">pomodoro-short-break-time</string>
+    <string name="pref_short_break_time_default" translatable="false">5</string>
+    <string name="pref_short_break_time_title">Short break time</string>
+
+    <string name="pref_long_break_time_key" translatable="false">pomodoro-long-break-time</string>
+    <string name="pref_long_break_time_default" translatable="false">30</string>
+    <string name="pref_long_break_time_title">Long break time</string>
+
+    <string name="pref_pomodoros_to_long_break_key" translatable="false">pomodoros-to-long-break</string>
+    <string name="pref_pomodoros_to_long_break_default" translatable="false">4</string>
+    <string name="pref_pomodoros_to_long_break_title">Pomodos to long break</string>
+
+    <string name="pref_restore_default_key" translatable="false">restore-default-values</string>
+    <string name="pref_restore_default_title">Restore default values</string>
+    <string name="pref_restore_default_summary">The default values are recommended for all types of tasks</string>
+
 </resources>
