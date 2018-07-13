@@ -76,6 +76,7 @@
         android:textColor="@color/textColorLight"
         android:paddingTop="@dimen/home_bg_margin"
         android:paddingBottom="@dimen/home_bg_margin"
+        android:textStyle="bold"
         android:text="/00:00"
         app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintLeft_toRightOf="@+id/home_tv_progress_current"/>
@@ -102,6 +103,17 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_short_break"/>
 
+    <LinearLayout
+        android:id="@+id/home_ll_global_working_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_global_progress_indicator_height"
+        android:layout_marginTop="@dimen/home_global_progress_indicator_margin_top"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/home_iv_global_working"
+        app:layout_constraintLeft_toLeftOf="@+id/home_iv_global_working"
+        app:layout_constraintRight_toRightOf="@+id/home_iv_global_working"/>
+
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
@@ -121,6 +133,17 @@
         app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_working"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_long_break"/>
+
+    <LinearLayout
+        android:id="@+id/home_ll_global_short_break_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_global_progress_indicator_height"
+        android:layout_marginTop="@dimen/home_global_progress_indicator_margin_top"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/home_iv_global_short_break"
+        app:layout_constraintLeft_toLeftOf="@+id/home_iv_global_short_break"
+        app:layout_constraintRight_toRightOf="@+id/home_iv_global_short_break"/>
 
     <View
         android:layout_width="0dp"
@@ -142,6 +165,17 @@
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_short_break"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <LinearLayout
+        android:id="@+id/home_ll_global_long_break_container"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/home_global_progress_indicator_height"
+        android:layout_marginTop="@dimen/home_global_progress_indicator_margin_top"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/home_iv_global_long_break"
+        app:layout_constraintLeft_toLeftOf="@+id/home_iv_global_long_break"
+        app:layout_constraintRight_toRightOf="@+id/home_iv_global_long_break"/>
+
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
@@ -158,6 +192,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_play_dark"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        android:layout_marginLeft="@dimen/home_button_margin_horizontal"
+        android:layout_marginRight="@dimen/home_button_margin_horizontal"
+        app:layout_constraintHorizontal_chainStyle="packed"
         android:layout_marginBottom="@dimen/home_button_margin_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/home_btn_info_pomodoro"
@@ -168,6 +207,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_notes_dark"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        android:layout_marginLeft="@dimen/home_button_margin_horizontal"
+        android:layout_marginRight="@dimen/home_button_margin_horizontal"
         android:layout_marginBottom="@dimen/home_button_margin_bottom"
         app:layout_constraintLeft_toRightOf="@+id/home_btn_toggle_pomodoro"
         app:layout_constraintRight_toLeftOf="@+id/home_btn_settings_pomodoro"
@@ -178,6 +221,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_settings_dark"
+        app:elevation="0dp"
+        app:fabSize="mini"
+        android:layout_marginLeft="@dimen/home_button_margin_horizontal"
+        android:layout_marginRight="@dimen/home_button_margin_horizontal"
         android:layout_marginBottom="@dimen/home_button_margin_bottom"
         app:layout_constraintLeft_toRightOf="@+id/home_btn_info_pomodoro"
         app:layout_constraintRight_toRightOf="parent"
@@ -192,6 +239,7 @@
         android:orientation="vertical" />
 
     <ImageView
+        android:id="@+id/home_iv_anim"
         android:layout_width="@dimen/home_progress_icon_size"
         android:layout_height="@dimen/home_progress_icon_size"
         app:srcCompat="@drawable/ic_launcher_foreground"

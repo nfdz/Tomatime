@@ -12,15 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.common.utils.SocialPreferencesUtils;
 import io.github.nfdz.tomatina.historical.view.HistoricalFragment;
 import io.github.nfdz.tomatina.home.view.HomeFragment;
 import io.github.nfdz.tomatina.user.view.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int HOME_TAB_POSITION = 0;
-    private static final int USER_TAB_POSITION = 1;
-    private static final int HISTORICAL_TAB_POSITION = 2;
 
     @BindView(R.id.main_activity_vp) ViewPager main_activity_vp;
     @BindView(R.id.main_activity_tl) TabLayout main_activity_tl;
@@ -51,37 +48,57 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case HOME_TAB_POSITION:
-                    return HomeFragment.newInstance();
-                case USER_TAB_POSITION:
-                    return UserFragment.newInstance();
-                case HISTORICAL_TAB_POSITION:
-                    return HistoricalFragment.newInstance();
-                default:
-                    throw new IllegalArgumentException("Invalid tab position: " + position);
-
+            if (SocialPreferencesUtils.isSocialEnabled()) {
+                switch (position) {
+                    case 0:
+                        return HomeFragment.newInstance();
+                    case 1:
+                        return UserFragment.newInstance();
+                    case 2:
+                        return HistoricalFragment.newInstance();
+                    default:
+                        throw new IllegalArgumentException("Invalid tab position: " + position);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return HomeFragment.newInstance();
+                    case 1:
+                        return HistoricalFragment.newInstance();
+                    default:
+                        throw new IllegalArgumentException("Invalid tab position: " + position);
+                }
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return SocialPreferencesUtils.isSocialEnabled() ? 3 : 2;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case HOME_TAB_POSITION:
-                    return getString(R.string.home_tab);
-                case USER_TAB_POSITION:
-                    return getString(R.string.user_tab);
-                case HISTORICAL_TAB_POSITION:
-                    return getString(R.string.historical_tab);
-                default:
-                    throw new IllegalArgumentException("Invalid tab position: " + position);
-
+            if (SocialPreferencesUtils.isSocialEnabled()) {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.home_tab);
+                    case 1:
+                        return getString(R.string.user_tab);
+                    case 2:
+                        return getString(R.string.historical_tab);
+                    default:
+                        throw new IllegalArgumentException("Invalid tab position: " + position);
+                }
+            } else {
+                switch (position) {
+                    case 0:
+                        return getString(R.string.home_tab);
+                    case 1:
+                        return getString(R.string.historical_tab);
+                    default:
+                        throw new IllegalArgumentException("Invalid tab position: " + position);
+                }
             }
         }
 

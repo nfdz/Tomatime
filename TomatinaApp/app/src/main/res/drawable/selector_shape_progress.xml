@@ -3,7 +3,7 @@
 
     <item
         android:drawable="@drawable/shape_rectangle_accent"
-        android:state_checked="true"/>
+        android:state_selected="true"/>
 
     <item android:drawable="@drawable/shape_rectangle_dark"/>
 

@@ -67,7 +67,6 @@ public class SettingsPreferencesUtils {
         return getPreferences().getInt(key, defaultValue);
     }
 
-
     public static boolean getSoundEnabledFlag() {
         String key = TomatinaApp.INSTANCE.getString(R.string.pref_sound_key);
         boolean defaultValue = Boolean.parseBoolean(TomatinaApp.INSTANCE.getString(R.string.pref_sound_default));

@@ -2,27 +2,30 @@ package io.github.nfdz.tomatina.home;
 
 import android.arch.lifecycle.LiveData;
 
-import io.github.nfdz.tomatina.common.model.PomodoroInfo;
-import io.github.nfdz.tomatina.common.model.PomodoroState;
+import io.github.nfdz.tomatina.common.model.PomodoroRealm;
+import io.realm.RealmResults;
 
 public interface HomeContract {
 
     interface View {
-        void bindViewToLiveData(LiveData<PomodoroState> data);
-        void showInfoDialog(PomodoroInfo info);
-        void navigateToSettings();
+        void bindViewToLiveData(LiveData<RealmResults<PomodoroRealm>> data);
+        void showInfoDialog();
     }
 
     interface Presenter {
         void create();
         void destroy();
+        void savePomodoroInfo(long id, String title, String notes);
+        void onStartPomodoroClick();
+        void onStopPomodoroClick();
     }
 
     interface Interactor {
         void initialize();
         void destroy();
-        LiveData<PomodoroState> loadDataAsync();
-
+        LiveData<PomodoroRealm> loadDataAsync();
+        void startPomodoro();
+        void stopPomodoro();
     }
 
 }
