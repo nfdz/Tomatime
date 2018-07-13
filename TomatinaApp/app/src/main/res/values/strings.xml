@@ -7,7 +7,14 @@
     <string name="user_tab">Wall</string>
     <string name="historical_tab">Historical</string>
 
+    <!-- Home -->
+    <string name="home_save_info_error">Ups! Notes cannot be saved :(</string>
 
+    <!-- States -->
+    <string name="state_text_working">Stop procrastinating! Work! Go!</string>
+    <string name="state_text_short_break">Enjoy your short break!</string>
+    <string name="state_text_long_break">Congrats! You reach the long break!</string>
+    <string name="state_text_none">What are you waiting for?</string>
 
     <!-- Settings Preferences -->
     <string name="prefs_pomodoro_title">Pomodoro settings</string>

@@ -5,6 +5,6 @@
         android:drawable="@drawable/shape_rectangle_accent"
         android:state_selected="true"/>
 
-    <item android:drawable="@drawable/shape_rectangle_dark"/>
+    <item android:drawable="@drawable/shape_rectangle_light"/>
 
 </selector>

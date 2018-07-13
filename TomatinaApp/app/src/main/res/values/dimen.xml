@@ -11,10 +11,10 @@
 
     <!-- Home -->
     <dimen name="home_logo_font_size">54dp</dimen>
-    <dimen name="home_logo_margin_top">12dp</dimen>
+    <dimen name="home_logo_margin_top">16dp</dimen>
     <dimen name="home_bg_margin">12dp</dimen>
-    <dimen name="home_state_margin_top">12dp</dimen>
-    <dimen name="home_state_size">20sp</dimen>
+    <dimen name="home_state_margin_top">18dp</dimen>
+    <dimen name="home_state_size">16sp</dimen>
     <dimen name="home_progress_current_size">42sp</dimen>
     <dimen name="home_progress_current_margin_bottom">34sp</dimen>
     <dimen name="home_line_width">3dp</dimen>

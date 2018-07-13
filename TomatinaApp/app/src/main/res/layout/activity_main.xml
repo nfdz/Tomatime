@@ -18,11 +18,11 @@
         android:layout_height="@dimen/main_activity_tabs_height"
         app:tabIndicatorColor="@color/colorAccent"
         app:tabIndicatorHeight="@dimen/main_activity_tabs_indicator_height"
-        app:tabBackground="@color/tabBackground"
+        app:tabBackground="@color/dark"
         app:elevation="0dp"
         android:hapticFeedbackEnabled="true"
-        app:tabTextColor="@color/textColorDark"
-        app:tabSelectedTextColor="@color/textColorDark"
+        app:tabTextColor="@color/textColorLight"
+        app:tabSelectedTextColor="@color/textColorLight"
         app:tabTextAppearance="@style/MainTabText" />
 
 </LinearLayout>

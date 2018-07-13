@@ -9,23 +9,31 @@ public interface HomeContract {
 
     interface View {
         void bindViewToLiveData(LiveData<RealmResults<PomodoroRealm>> data);
-        void showInfoDialog();
+        void showSaveInfoError();
     }
 
     interface Presenter {
         void create();
         void destroy();
-        void savePomodoroInfo(long id, String title, String notes);
         void onStartPomodoroClick();
         void onStopPomodoroClick();
+        void onSkipStageClick();
+        void savePomodoroInfo(long id, String title, String notes);
     }
 
     interface Interactor {
         void initialize();
         void destroy();
-        LiveData<PomodoroRealm> loadDataAsync();
+        LiveData<RealmResults<PomodoroRealm>> loadDataAsync();
         void startPomodoro();
         void stopPomodoro();
+        void skipStage();
+
+        interface SaveInfoCallback {
+            void onSuccess();
+            void onError();
+        }
+        void savePomodoroInfo(long id, String title, String notes, SaveInfoCallback callback);
     }
 
 }
