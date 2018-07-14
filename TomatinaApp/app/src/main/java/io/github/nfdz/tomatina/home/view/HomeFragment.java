@@ -2,6 +2,7 @@ package io.github.nfdz.tomatina.home.view;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -231,7 +232,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getPomodoroTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress);
+        setStageProgressBar(progress/100f);
         // TODO icono home_iv_anim.setImageResource();
 
         // global summary section
@@ -239,7 +240,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(false);
         home_iv_global_long_break.setSelected(false);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak()-1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -262,7 +263,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getShortBreakTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress);
+        setStageProgressBar(progress/100f);
         // TODO icono home_iv_anim.setImageResource();
 
         // global summary section
@@ -270,7 +271,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(true);
         home_iv_global_long_break.setSelected(false);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter()-1, shownPomodoroRealm.getPomodorosToLongBreak());
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter()-1, shownPomodoroRealm.getPomodorosToLongBreak()-1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -293,7 +294,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getLongBreakTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress);
+        setStageProgressBar(progress/100f);
         // TODO icono home_iv_anim.setImageResource();
 
         // global summary section
@@ -301,7 +302,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(false);
         home_iv_global_long_break.setSelected(true);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak()-1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -318,6 +319,18 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
 
     private void setupIndicator(LinearLayout indicatorContainer, int progress, int total) {
         indicatorContainer.removeAllViews();
+        Context context = indicatorContainer.getContext();
+        int size = getResources().getDimensionPixelSize(R.dimen.home_indicator_size);
+        int horizontalMargin = getResources().getDimensionPixelSize(R.dimen.home_indicator_margin_horizontal);
+        for (int i = 0; i < total; i++) {
+            boolean isCompleted = i < progress;
+            ImageView indicatorIv = new ImageView(context);
+            indicatorIv.setImageResource(isCompleted ? R.drawable.shape_circle_light_filled : R.drawable.shape_circle_light);
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(size, size);
+            layoutParams.setMargins(horizontalMargin, 0, horizontalMargin, 0);
+            indicatorIv.setLayoutParams(layoutParams);
+            indicatorContainer.addView(indicatorIv);
+        }
     }
 
     private void setStageProgressBar(float ratio) {
@@ -379,7 +392,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
                     home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
                     home_tv_progress_total.setText("/ " + getTimerTextFor(maxTime));
                     progress = Math.min(progress, 100);
-                    setStageProgressBar(progress);
+                    setStageProgressBar(progress/100f);
                 } catch (Exception e) {
                     Timber.e(e, "There was an error processing tick");
                 } finally {

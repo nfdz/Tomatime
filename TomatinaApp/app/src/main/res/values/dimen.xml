@@ -18,6 +18,9 @@
     <dimen name="home_progress_current_size">42sp</dimen>
     <dimen name="home_progress_current_margin_bottom">34sp</dimen>
     <dimen name="home_line_width">3dp</dimen>
+    <dimen name="home_indicator_line_width">1dp</dimen>
+    <dimen name="home_indicator_size">8dp</dimen>
+    <dimen name="home_indicator_margin_horizontal">1dp</dimen>
     <dimen name="home_global_progress_section_size">60dp</dimen>
     <dimen name="home_global_progress_section_margin_bottom">34dp</dimen>
     <dimen name="home_global_progress_indicator_margin_top">4dp</dimen>
