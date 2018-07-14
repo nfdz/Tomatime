@@ -19,6 +19,8 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".service.PomodoroService" />
+
     </application>
 
 </manifest>

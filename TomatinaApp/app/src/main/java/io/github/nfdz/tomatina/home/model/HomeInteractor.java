@@ -7,6 +7,7 @@ import io.github.nfdz.tomatina.TomatinaApp;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.utils.RealmUtils;
 import io.github.nfdz.tomatina.home.HomeContract;
+import io.github.nfdz.tomatina.service.PomodoroService;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -16,12 +17,10 @@ public class HomeInteractor implements HomeContract.Interactor {
 
     @Override
     public void initialize() {
-
     }
 
     @Override
     public void destroy() {
-
     }
 
     @Override
@@ -33,17 +32,17 @@ public class HomeInteractor implements HomeContract.Interactor {
 
     @Override
     public void startPomodoro() {
-
+        PomodoroService.startPomodoro(TomatinaApp.INSTANCE);
     }
 
     @Override
     public void stopPomodoro() {
-
+        PomodoroService.stopPomodoro(TomatinaApp.INSTANCE);
     }
 
     @Override
     public void skipStage() {
-
+        PomodoroService.skipStage(TomatinaApp.INSTANCE);
     }
 
     @Override

@@ -1,6 +1,32 @@
 <resources>
 
     <string name="app_name">Tomatina</string>
+    <string name="channel_name">Tomatina</string>
+    <string name="channel_description">Pomodoro notifications</string>
+
+    <!-- Notification -->
+    <string name="notif_action_start_pomodoro">Start</string>
+    <string name="notif_action_skip_stage">Skip</string>
+    <string name="notif_action_stop_pomodoro">Stop</string>
+    <string name="notif_action_continue_pomodoro">Continue</string>
+
+    <string name="notif_back_to_work_title">Back to work</string>
+    <string name="notif_back_to_work_text">It\'s time to go back to work</string>
+    <string name="notif_working_title">Working</string>
+    <string name="notif_working_text">@string/state_text_working</string>
+
+    <string name="notif_take_short_break_title">Take a short break</string>
+    <string name="notif_take_short_break_text">Rest for a while and take a short break</string>
+    <string name="notif_short_break_title">Short break</string>
+    <string name="notif_short_break_text">@string/state_text_short_break</string>
+
+    <string name="notif_take_long_break_title">Take a long break</string>
+    <string name="notif_take_long_break_text">Go and enjoy your long break, you made it</string>
+    <string name="notif_long_break_title">Long break</string>
+    <string name="notif_long_break_text">@string/state_text_long_break</string>
+
+    <string name="notif_restart_title">Again?</string>
+    <string name="notif_restart_text">Do we start another pomodoro?</string>
 
     <!-- Main Activity -->
     <string name="home_tab">Home</string>

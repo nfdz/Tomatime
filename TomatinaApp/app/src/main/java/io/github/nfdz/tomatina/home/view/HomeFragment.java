@@ -3,6 +3,7 @@ package io.github.nfdz.tomatina.home.view;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.Guideline;
@@ -29,6 +30,7 @@ import io.github.nfdz.tomatina.home.HomeContract;
 import io.github.nfdz.tomatina.home.presenter.HomePresenter;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import timber.log.Timber;
 
 public class HomeFragment extends Fragment implements HomeContract.View, Observer<RealmResults<PomodoroRealm>> {
 
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         return new HomeFragment();
     }
 
+    private static long CLOCK_RATE_MILLIS = 1000;
     private static float ALPHA_DISABLED_BUTTON = 0.5f;
 
     @BindView(R.id.home_tv_state) TextView home_tv_state;
@@ -57,6 +60,8 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
     private HomeContract.Presenter presenter;
     private LiveData<RealmResults<PomodoroRealm>> bindedData = null;
     private PomodoroRealm shownPomodoroRealm;
+    private Handler handler;
+    private ClockTask clockTask;
 
     public HomeFragment() {
     }
@@ -72,6 +77,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        handler = new Handler();
         presenter = new HomePresenter(this);
         presenter.create();
     }
@@ -80,6 +86,32 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
     public void onDestroyView() {
         presenter.destroy();
         super.onDestroyView();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (clockTask == null) {
+            clockTask = new ClockTask();
+            handler.postDelayed(clockTask, CLOCK_RATE_MILLIS);
+        }
+        if (bindedData != null) {
+            bindedData.observe(this, this);
+        } else {
+            onChanged(null);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (bindedData != null) {
+            bindedData.removeObservers(this);
+        }
+        if (clockTask != null) {
+            clockTask.cancelled = true;
+            clockTask = null;
+        }
+        super.onStop();
     }
 
     @OnClick(R.id.home_btn_toggle_pomodoro)
@@ -117,7 +149,6 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         } else {
             onChanged(null);
         }
-        showSaveInfoError();
     }
 
     @Override
@@ -309,6 +340,53 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
             seconds = "0" + seconds;
         }
         return minutes + ":" + seconds;
+    }
+
+    private class ClockTask implements Runnable {
+
+        private boolean cancelled;
+
+        @Override
+        public void run() {
+            if (!cancelled) {
+                try {
+                    long ellapsedTime;
+                    int progress;
+                    long maxTime;
+                    switch (shownPomodoroRealm.getState()) {
+                        case PomodoroState.WORKING:
+                            ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
+                            progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
+                            maxTime = shownPomodoroRealm.getPomodoroTimeInMillis();
+                            break;
+                        case PomodoroState.SHORT_BREAK:
+                            ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
+                            progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
+                            maxTime = shownPomodoroRealm.getShortBreakTimeInMillis();
+                            break;
+                        case PomodoroState.LONG_BREAK:
+                            ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
+                            progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
+                            maxTime = shownPomodoroRealm.getLongBreakTimeInMillis();
+                            break;
+                        case PomodoroState.FINISHED:
+                        case PomodoroState.NONE:
+                        default:
+                            ellapsedTime = 0;
+                            progress = 0;
+                            maxTime = 0;
+                    }
+                    home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
+                    home_tv_progress_total.setText("/ " + getTimerTextFor(maxTime));
+                    progress = Math.min(progress, 100);
+                    setStageProgressBar(progress);
+                } catch (Exception e) {
+                    Timber.e(e, "There was an error processing tick");
+                } finally {
+                    handler.postDelayed(this, CLOCK_RATE_MILLIS);
+                }
+            }
+        }
     }
 
 }

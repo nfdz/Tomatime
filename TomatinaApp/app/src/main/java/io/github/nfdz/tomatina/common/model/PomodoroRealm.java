@@ -29,17 +29,21 @@ public class PomodoroRealm extends RealmObject {
     private int pomodorosToLongBreak;
 
     public PomodoroRealm() {
-        this.id = System.currentTimeMillis();
-        this.startTimeMillis = -1;
+        this.id = 0;
+        this.startTimeMillis = 0;
         this.state = PomodoroState.NONE;
-        this.counter = -1;
+        this.counter = 0;
         this.title = "";
         this.notes = "";
-        this.pomodoroTimeInMillis = -1;
-        this.shortBreakTimeInMillis = -1;
-        this.longBreakTimeInMillis = -1;
-        this.pomodorosToLongBreak = -1;
+        this.pomodoroTimeInMillis = 0;
+        this.shortBreakTimeInMillis = 0;
+        this.longBreakTimeInMillis = 0;
+        this.pomodorosToLongBreak = 0;
 
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public void setStartTimeMillis(long startTimeMillis) {

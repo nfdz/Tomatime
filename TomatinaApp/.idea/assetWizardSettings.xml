@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/home/nfdz/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/av/ic_skip_next_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/home/nfdz/Android/android-studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_check_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_skip_dark" />
+                            <entry key="outputName" value="ic_check_dark" />
                             <entry key="sourceFile" value="$USER_HOME$" />
                           </map>
                         </option>
