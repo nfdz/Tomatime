@@ -127,4 +127,8 @@ public class PomodoroRealm extends RealmObject {
         return "PomodoroRealm={" + id + ", " + title + ", " + startTimeMillis + ", " + state + "}";
     }
 
+    public boolean isOngoing() {
+        return state == PomodoroState.WORKING || state == PomodoroState.SHORT_BREAK || state == PomodoroState.LONG_BREAK;
+    }
+
 }

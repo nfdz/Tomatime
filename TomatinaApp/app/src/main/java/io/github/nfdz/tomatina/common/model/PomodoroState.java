@@ -15,9 +15,11 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
         PomodoroState.FINISHED
 })
 public @interface PomodoroState {
+
     int NONE = 0;
     int WORKING = 100;
     int SHORT_BREAK = 200;
     int LONG_BREAK = 300;
     int FINISHED = 400;
+
 }

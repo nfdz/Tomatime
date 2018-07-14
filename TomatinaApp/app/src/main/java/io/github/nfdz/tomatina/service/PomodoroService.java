@@ -24,9 +24,6 @@ import timber.log.Timber;
 
 public class PomodoroService extends Service {
 
-    limpiar al iniciar la app
-    reiniciar no va
-
     public static void startPomodoro(Context context) {
         Intent starter = new Intent(context, PomodoroService.class);
         starter.setAction(START_POMODORO_ACTION);
@@ -56,6 +53,9 @@ public class PomodoroService extends Service {
     public static final String SKIP_STAGE_ACTION = "skip_stage";
 
     private Handler handler;
+    private boolean destroyed;
+
+    // Pomodoro state
     private long pomodoroId;
     private long stateStartTime;
     private @PomodoroState int pomodoroState;
@@ -66,8 +66,6 @@ public class PomodoroService extends Service {
     private int pomodoroCounter;
     private boolean waitingContinue;
 
-    private boolean destroyed;
-
     public PomodoroService() {
         super();
     }
@@ -77,6 +75,7 @@ public class PomodoroService extends Service {
         super.onCreate();
         destroyed = false;
         handler = new Handler();
+        resetState();
         handler.postDelayed(new WatcherTask(), WATCHER_RATE_MILLIS);
         Timber.d("Pomodoro service created");
     }
@@ -118,6 +117,18 @@ public class PomodoroService extends Service {
             }
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void resetState() {
+        pomodoroId = 0;
+        stateStartTime = 0;
+        pomodoroState = PomodoroState.NONE;
+        pomodoroTimeInMillis = 0;
+        shortBreakTimeInMillis = 0;
+        longBreakTimeInMillis = 0;
+        pomodorosToLongBreak = 0;
+        pomodoroCounter = 0;
+        waitingContinue = false;
     }
 
     private void handleStartPomodoro() {
@@ -304,6 +315,7 @@ public class PomodoroService extends Service {
             });
 
             if (nextState == PomodoroState.FINISHED) {
+                resetState();
                 startForeground(NOTIFICATION_ID,
                         createNotification(notifTitle,
                                 notifText,
@@ -489,6 +501,7 @@ public class PomodoroService extends Service {
                 Timber.e(error, "There was an error finishing pomodoro");
             }
         });
+        resetState();
         startForeground(NOTIFICATION_ID,
                 createNotification(getString(R.string.notif_restart_title),
                         getString(R.string.notif_restart_text),
