@@ -79,4 +79,10 @@ public class SettingsPreferencesUtils {
         return getPreferences().getBoolean(key, defaultValue);
     }
 
+    public static boolean getAskConfirmationToContinueFlag() {
+        String key = TomatinaApp.INSTANCE.getString(R.string.pref_confirmation_key);
+        boolean defaultValue = Boolean.parseBoolean(TomatinaApp.INSTANCE.getString(R.string.pref_confirmation_default));
+        return getPreferences().getBoolean(key, defaultValue);
+    }
+
 }

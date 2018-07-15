@@ -58,6 +58,11 @@
     <string name="pref_vibration_title">Vibration</string>
     <string name="pref_vibration_summary">The device will vibrate several times to alert you of the events</string>
 
+    <string name="pref_confirmation_key" translatable="false">pomodoro-confirmation</string>
+    <string name="pref_confirmation_default" translatable="false">true</string>
+    <string name="pref_confirmation_title">Confirmation</string>
+    <string name="pref_confirmation_summary">Pomodoro waits for you to confirm each phase change</string>
+
     <string name="pref_pomodoro_time_key" translatable="false">pomodoro-work-time</string>
     <string name="pref_pomodoro_time_default" translatable="false">25</string>
     <string name="pref_pomodoro_time_title">Work time</string>
