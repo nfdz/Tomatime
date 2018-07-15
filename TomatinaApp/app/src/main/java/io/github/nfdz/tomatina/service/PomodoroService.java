@@ -42,15 +42,15 @@ public class PomodoroService extends Service {
         context.startService(starter);
     }
 
-    private static final long WATCHER_RATE_MILLIS = 5000;
-
     public static final String CHANNEL_ID = "tomatina_channel";
     public static final int NOTIFICATION_ID = 5341;
 
     public static final String START_POMODORO_ACTION = "start_pomodoro";
-    public static final String CONTINUE_POMODORO_ACTION = "continue_pomodoro";
     public static final String STOP_POMODORO_ACTION = "stop_pomodoro";
     public static final String SKIP_STAGE_ACTION = "skip_stage";
+    public static final String CONTINUE_POMODORO_ACTION = "continue_pomodoro";
+
+    private static final long WATCHER_RATE_MILLIS = 2000;
 
     private Handler handler;
     private boolean destroyed;
@@ -427,16 +427,19 @@ public class PomodoroService extends Service {
                                         triggerGoToLongBreakNotification();
                                     }
                                 }
+                                break;
                             case PomodoroState.SHORT_BREAK:
                                 if (now > (stateStartTime + shortBreakTimeInMillis)) {
                                     waitingContinue = true;
                                     triggerGoToWorkNotification();
                                 }
+                                break;
                             case PomodoroState.LONG_BREAK:
                                 if (now > (stateStartTime + longBreakTimeInMillis)) {
                                     waitingContinue = true;
                                     handlePomodoroFinish();
                                 }
+                                break;
                             case PomodoroState.FINISHED:
                             case PomodoroState.NONE:
                             default:
@@ -459,6 +462,7 @@ public class PomodoroService extends Service {
                         false,
                         true,
                         true));
+        triggerWaitingContinueBroadcast();
     }
 
     private void triggerGoToShortBreakNotification() {
@@ -469,6 +473,7 @@ public class PomodoroService extends Service {
                         false,
                         true,
                         true));
+        triggerWaitingContinueBroadcast();
     }
 
     private void triggerGoToLongBreakNotification() {
@@ -479,6 +484,7 @@ public class PomodoroService extends Service {
                         false,
                         true,
                         true));
+        triggerWaitingContinueBroadcast();
     }
 
     private void handlePomodoroFinish() {
@@ -509,6 +515,15 @@ public class PomodoroService extends Service {
                         false,
                         false,
                         true));
+    }
+
+    private void triggerWaitingContinueBroadcast() {
+        try {
+            Intent intent = new Intent(CONTINUE_POMODORO_ACTION);
+            sendBroadcast(intent);
+        } catch (Exception e) {
+            Timber.e(e, "Cannot send waiting continue broadcast");
+        }
     }
 
 }
