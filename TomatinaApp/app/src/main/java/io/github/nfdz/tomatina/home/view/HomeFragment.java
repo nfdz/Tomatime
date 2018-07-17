@@ -14,6 +14,7 @@ import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import io.github.nfdz.tomatina.common.utils.SnackbarUtils;
 import io.github.nfdz.tomatina.home.HomeContract;
 import io.github.nfdz.tomatina.home.presenter.HomePresenter;
 import io.github.nfdz.tomatina.service.PomodoroService;
+import io.github.nfdz.tomatina.settings.view.SettingsActivity;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import timber.log.Timber;
@@ -162,7 +164,11 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
 
     @OnClick(R.id.home_btn_settings_pomodoro)
     public void onSettingsPomodoroClick() {
-        // TODO navigate to settings
+        try {
+            SettingsActivity.start(getActivity());
+        } catch (Exception e) {
+            Timber.e(e, "Cannot start settings activity");
+        }
     }
 
     @Override

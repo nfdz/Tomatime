@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="number_picker_attrs">
+        <attr name="min_number" format="integer" />
+        <attr name="max_number" format="integer" />
+        <attr name="suffix" format="string" />
+    </declare-styleable>
+</resources>

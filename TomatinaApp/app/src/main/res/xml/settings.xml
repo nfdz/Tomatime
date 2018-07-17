@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="@string/prefs_pomodoro_title"
+        android:key="@string/prefs_pomodoro_key">
+
+        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+            android:key="@string/pref_pomodoro_time_key"
+            android:title="@string/pref_pomodoro_time_title"
+            android:defaultValue="@string/pref_pomodoro_time_default"
+            app:min_number="5"
+            app:max_number="60"
+            app:suffix="@string/settings_unit_minutes"
+            style="@style/AppPreference.DialogPreference" />
+
+        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+            android:key="@string/pref_short_break_time_key"
+            android:title="@string/pref_short_break_time_title"
+            android:defaultValue="@string/pref_short_break_time_default"
+            app:min_number="2"
+            app:max_number="60"
+            app:suffix="@string/settings_unit_minutes"
+            style="@style/AppPreference.DialogPreference" />
+
+        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+            android:key="@string/pref_long_break_time_key"
+            android:title="@string/pref_long_break_time_title"
+            android:defaultValue="@string/pref_long_break_time_default"
+            app:min_number="5"
+            app:max_number="60"
+            app:suffix="@string/settings_unit_minutes"
+            style="@style/AppPreference.DialogPreference" />
+
+        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+            android:key="@string/pref_pomodoros_to_long_break_key"
+            android:title="@string/pref_pomodoros_to_long_break_title"
+            android:defaultValue="@string/pref_pomodoros_to_long_break_default"
+            app:min_number="2"
+            app:max_number="15"
+            app:suffix="@string/settings_unit_pomodoros"
+            style="@style/AppPreference.DialogPreference" />
+
+        <Preference
+            android:title="@string/pref_restore_default_title"
+            android:key="@string/pref_restore_default_key"
+            android:summary="@string/pref_restore_default_summary"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/prefs_notification_title"
+        android:key="@string/prefs_notification_key">
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_sound_key"
+            android:title="@string/pref_sound_title"
+            android:summary="@string/pref_sound_summary"
+            android:defaultValue="@string/pref_sound_default" />
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_vibration_key"
+            android:title="@string/pref_vibration_title"
+            android:summary="@string/pref_vibration_summary"
+            android:defaultValue="@string/pref_vibration_default" />
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_confirmation_key"
+            android:title="@string/pref_confirmation_title"
+            android:summary="@string/pref_confirmation_summary"
+            android:defaultValue="@string/pref_confirmation_default" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

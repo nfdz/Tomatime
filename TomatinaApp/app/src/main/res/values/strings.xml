@@ -42,13 +42,18 @@
     <string name="state_text_long_break">Congrats! You reach the long break!</string>
     <string name="state_text_none">What are you waiting for?</string>
 
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_unit_minutes">minutes</string>
+    <string name="settings_unit_pomodoros">pomodoros</string>
+
     <!-- Settings Preferences -->
     <string name="prefs_pomodoro_title">Pomodoro settings</string>
     <string name="prefs_pomodoro_key" translatable="false">pomodoro-settings</string>
     <string name="prefs_notification_title">Notification settings</string>
     <string name="prefs_notification_key" translatable="false">notification-settings</string>
 
-    <string name="pref_sound_key" translatable="false">pomodoro-alarm</string>
+    <string name="pref_sound_key" translatable="false">pomodoro-sound</string>
     <string name="pref_sound_default" translatable="false">true</string>
     <string name="pref_sound_title">Sound</string>
     <string name="pref_sound_summary">Pomodoro events will be alerted with sounds</string>
@@ -61,7 +66,7 @@
     <string name="pref_confirmation_key" translatable="false">pomodoro-confirmation</string>
     <string name="pref_confirmation_default" translatable="false">true</string>
     <string name="pref_confirmation_title">Confirmation</string>
-    <string name="pref_confirmation_summary">Pomodoro waits for you to confirm each phase change</string>
+    <string name="pref_confirmation_summary">Notify each phase change and waits for you to confirm to continue</string>
 
     <string name="pref_pomodoro_time_key" translatable="false">pomodoro-work-time</string>
     <string name="pref_pomodoro_time_default" translatable="false">25</string>

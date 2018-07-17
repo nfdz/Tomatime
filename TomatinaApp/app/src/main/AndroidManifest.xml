@@ -12,12 +12,17 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".main.view.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".settings.view.SettingsActivity"
+            android:theme="@style/SettingsTheme"
+            android:screenOrientation="portrait" />
 
         <service android:name=".service.PomodoroService" />
 

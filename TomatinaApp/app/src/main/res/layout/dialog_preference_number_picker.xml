@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <NumberPicker
+        android:id="@+id/dialog_number_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/dialog_tv_suffix"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="minutes"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginLeft="16sp"
+        android:layout_marginStart="16sp"
+        app:layout_constraintTop_toTopOf="@+id/dialog_number_picker"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_number_picker"
+        app:layout_constraintLeft_toRightOf="@+id/dialog_number_picker"/>
+
+</android.support.constraint.ConstraintLayout>
