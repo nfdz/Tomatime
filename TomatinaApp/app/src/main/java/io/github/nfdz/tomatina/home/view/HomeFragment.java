@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -14,7 +15,7 @@ import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,8 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import timber.log.Timber;
 
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+
 public class HomeFragment extends Fragment implements HomeContract.View, Observer<RealmResults<PomodoroRealm>> {
 
     public static HomeFragment newInstance() {
@@ -47,6 +50,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
 
     private static long CLOCK_RATE_MILLIS = 1000;
     private static float ALPHA_DISABLED_BUTTON = 0.5f;
+    private static int MAX_INDICATORS_TO_DRAW = 5;
 
     @BindView(R.id.home_tv_state) TextView home_tv_state;
     @BindView(R.id.home_tv_progress_current) TextView home_tv_progress_current;
@@ -340,7 +344,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(false);
         home_iv_global_long_break.setSelected(true);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak()-1);
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter()-1, shownPomodoroRealm.getPomodorosToLongBreak()-1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -356,6 +360,14 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
     }
 
     private void setupIndicator(LinearLayout indicatorContainer, int progress, int total) {
+        if (shownPomodoroRealm != null && shownPomodoroRealm.getPomodorosToLongBreak() > MAX_INDICATORS_TO_DRAW) {
+            setupTextIndicator(indicatorContainer, progress, total);
+        } else {
+            setupPrettyIndicator(indicatorContainer, progress, total);
+        }
+    }
+
+    private void setupPrettyIndicator(LinearLayout indicatorContainer, int progress, int total) {
         indicatorContainer.removeAllViews();
         Context context = indicatorContainer.getContext();
         int size = getResources().getDimensionPixelSize(R.dimen.home_indicator_size);
@@ -369,6 +381,21 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
             indicatorIv.setLayoutParams(layoutParams);
             indicatorContainer.addView(indicatorIv);
         }
+    }
+
+    private void setupTextIndicator(LinearLayout indicatorContainer, int progress, int total) {
+        indicatorContainer.removeAllViews();
+        Context context = indicatorContainer.getContext();
+        TextView indicatorTv = new TextView(context);
+        indicatorTv.setGravity(Gravity.CENTER);
+        indicatorTv.setTypeface(indicatorTv.getTypeface(), Typeface.BOLD);
+        String text = Integer.toString(progress) + "/" + Integer.toString(total);
+        indicatorTv.setText(text);
+        int size = getResources().getDimensionPixelSize(R.dimen.home_indicator_size);
+        indicatorTv.setTextSize(COMPLEX_UNIT_PX, size);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,1);
+        indicatorTv.setLayoutParams(layoutParams);
+        indicatorContainer.addView(indicatorTv);
     }
 
     private void setStageProgressBar(float ratio) {
