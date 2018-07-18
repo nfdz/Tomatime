@@ -358,7 +358,7 @@ public class PomodoroService extends Service {
             Intent starter = new Intent(this, PomodoroService.class);
             starter.setAction(START_POMODORO_ACTION);
             PendingIntent pendingIntent = PendingIntent.getService(this, 0, starter, 0);
-            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_play_dark, getString(R.string.notif_action_start_pomodoro), pendingIntent);
+            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_notif_play_light, getString(R.string.notif_action_start_pomodoro), pendingIntent);
             builder.addAction(action);
         }
 
@@ -366,7 +366,7 @@ public class PomodoroService extends Service {
             Intent starter = new Intent(this, PomodoroService.class);
             starter.setAction(SKIP_STAGE_ACTION);
             PendingIntent pendingIntent = PendingIntent.getService(this, 0, starter, 0);
-            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_skip_dark, getString(R.string.notif_action_skip_stage), pendingIntent);
+            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_notif_skip_light, getString(R.string.notif_action_skip_stage), pendingIntent);
             builder.addAction(action);
         }
 
@@ -374,7 +374,7 @@ public class PomodoroService extends Service {
             Intent starter = new Intent(this, PomodoroService.class);
             starter.setAction(CONTINUE_POMODORO_ACTION);
             PendingIntent pendingIntent = PendingIntent.getService(this, 0, starter, 0);
-            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_check_dark, getString(R.string.notif_action_continue_pomodoro), pendingIntent);
+            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_notif_check_light, getString(R.string.notif_action_continue_pomodoro), pendingIntent);
             builder.addAction(action);
         }
 
@@ -382,7 +382,7 @@ public class PomodoroService extends Service {
             Intent starter = new Intent(this, PomodoroService.class);
             starter.setAction(STOP_POMODORO_ACTION);
             PendingIntent pendingIntent = PendingIntent.getService(this, 0, starter, 0);
-            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_stop_dark, getString(R.string.notif_action_stop_pomodoro), pendingIntent);
+            NotificationCompat.Action action = new NotificationCompat.Action(R.drawable.ic_notif_stop_light, getString(R.string.notif_action_stop_pomodoro), pendingIntent);
             builder.addAction(action);
         }
 
