@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.common.dialog.PomodoroInfoDialog;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
 import io.github.nfdz.tomatina.common.utils.SnackbarUtils;
@@ -42,7 +43,9 @@ import timber.log.Timber;
 
 import static android.util.TypedValue.COMPLEX_UNIT_PX;
 
-public class HomeFragment extends Fragment implements HomeContract.View, Observer<RealmResults<PomodoroRealm>> {
+public class HomeFragment extends Fragment implements HomeContract.View,
+        PomodoroInfoDialog.UpdateInfoCallback,
+        Observer<RealmResults<PomodoroRealm>> {
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -163,7 +166,11 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
 
     @OnClick(R.id.home_btn_info_pomodoro)
     public void onInfoPomodoroClick() {
-        // TODO open dialog
+        if (shownPomodoroRealm != null) {
+            PomodoroInfoDialog dialog = PomodoroInfoDialog.newInstance(shownPomodoroRealm.getPomodoroInfo());
+            dialog.setCallback(this);
+            dialog.show(getFragmentManager(), "pomodoro_info_dialog");
+        }
     }
 
     @OnClick(R.id.home_btn_settings_pomodoro)
@@ -268,9 +275,9 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getPomodoroTimeInMillis()));
-        int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
+        int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress/100f);
+        setStageProgressBar(progress / 100f);
         if (progress == 100) handleWaitingContinueEvent();
         // TODO icono home_iv_anim.setImageResource();
 
@@ -279,7 +286,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(false);
         home_iv_global_long_break.setSelected(false);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak()-1);
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak() - 1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -301,9 +308,9 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getShortBreakTimeInMillis()));
-        int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
+        int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress/100f);
+        setStageProgressBar(progress / 100f);
         if (progress == 100) handleWaitingContinueEvent();
         // TODO icono home_iv_anim.setImageResource();
 
@@ -312,7 +319,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(true);
         home_iv_global_long_break.setSelected(false);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter()-1, shownPomodoroRealm.getPomodorosToLongBreak()-1);
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter() - 1, shownPomodoroRealm.getPomodorosToLongBreak() - 1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -334,9 +341,9 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
         home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getLongBreakTimeInMillis()));
-        int progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
+        int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
-        setStageProgressBar(progress/100f);
+        setStageProgressBar(progress / 100f);
         // TODO icono home_iv_anim.setImageResource();
 
         // global summary section
@@ -344,7 +351,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         home_iv_global_short_break.setSelected(false);
         home_iv_global_long_break.setSelected(true);
         setupIndicator(home_ll_global_working_container, shownPomodoroRealm.getCounter(), shownPomodoroRealm.getPomodorosToLongBreak());
-        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter()-1, shownPomodoroRealm.getPomodorosToLongBreak()-1);
+        setupIndicator(home_ll_global_short_break_container, shownPomodoroRealm.getCounter() - 1, shownPomodoroRealm.getPomodorosToLongBreak() - 1);
         setupIndicator(home_ll_global_long_break_container, 0, 1);
 
         // bottom buttons
@@ -393,7 +400,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         indicatorTv.setText(text);
         int size = getResources().getDimensionPixelSize(R.dimen.home_indicator_size);
         indicatorTv.setTextSize(COMPLEX_UNIT_PX, size);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,1);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         indicatorTv.setLayoutParams(layoutParams);
         indicatorContainer.addView(indicatorTv);
     }
@@ -420,6 +427,13 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
         return minutes + ":" + seconds;
     }
 
+    @Override
+    public void onUpdateInfo(String title, String notes, String category) {
+        if (shownPomodoroRealm != null) {
+            presenter.savePomodoroInfo(shownPomodoroRealm.getId(), title, notes, category);
+        }
+    }
+
     private class ClockTask implements Runnable {
 
         private boolean cancelled;
@@ -435,17 +449,17 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
                         switch (shownPomodoroRealm.getState()) {
                             case PomodoroState.WORKING:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-                                progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
+                                progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getPomodoroTimeInMillis();
                                 break;
                             case PomodoroState.SHORT_BREAK:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-                                progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
+                                progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getShortBreakTimeInMillis();
                                 break;
                             case PomodoroState.LONG_BREAK:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-                                progress = (int) (((ellapsedTime + 0.0f)/shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
+                                progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getLongBreakTimeInMillis();
                                 break;
                             case PomodoroState.FINISHED:
@@ -458,7 +472,7 @@ public class HomeFragment extends Fragment implements HomeContract.View, Observe
                         home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
                         home_tv_progress_total.setText("/ " + getTimerTextFor(maxTime));
                         progress = Math.min(progress, 100);
-                        setStageProgressBar(progress/100f);
+                        setStageProgressBar(progress / 100f);
                     }
                 } catch (Exception e) {
                     Timber.e(e, "There was an error processing tick");

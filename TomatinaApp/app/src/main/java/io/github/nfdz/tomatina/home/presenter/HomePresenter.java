@@ -31,12 +31,17 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void savePomodoroInfo(long id, String title, String notes) {
+    public void savePomodoroInfo(long id, String title, String notes, String category) {
         if (view != null && interactor != null) {
-            interactor.savePomodoroInfo(id, title, notes, new HomeContract.Interactor.SaveInfoCallback() {
+            interactor.savePomodoroInfo(id, title, notes, category, new HomeContract.Interactor.SaveInfoCallback() {
                 @Override
                 public void onSuccess() {
                     // nothing
+                }
+
+                @Override
+                public void onConflict() {
+                    // TODO
                 }
                 @Override
                 public void onError() {

@@ -42,10 +42,20 @@
     <string name="state_text_long_break">Congrats! You reach the long break!</string>
     <string name="state_text_none">What are you waiting for?</string>
 
+    <!-- Pomodoro Info dialog -->
+    <string name="info_dialog_title">Information</string>
+    <string name="info_dialog_title_label">Title</string>
+    <string name="info_dialog_notes_label">Notes</string>
+    <string name="info_dialog_category_label">Category</string>
+    <string name="info_dialog_save">Save</string>
+    <string name="info_dialog_close">Close</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_unit_minutes">minutes</string>
     <string name="settings_unit_pomodoros">pomodoros</string>
+    <string name="settings_save">Save</string>
+    <string name="settings_close">Close</string>
 
     <!-- Settings Preferences -->
     <string name="prefs_pomodoro_title">Pomodoro settings</string>

@@ -9,6 +9,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:alertDialogTheme">@style/AppAlertDialog</item>
     </style>
 
     <style name="SettingsTheme" parent="Theme.AppCompat">
@@ -34,8 +35,8 @@
 
     <!-- Style for a DialogPreference Entry -->
     <style name="AppPreference.DialogPreference">
-        <item name="positiveButtonText">@android:string/ok</item>
-        <item name="negativeButtonText">@android:string/cancel</item>
+        <item name="positiveButtonText">@string/settings_save</item>
+        <item name="negativeButtonText">@string/settings_close</item>
     </style>
 
     <style name="AppAlertDialog" parent="Theme.AppCompat.Dialog.Alert">

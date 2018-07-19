@@ -16,10 +16,6 @@ public class PomodoroRealm extends RealmObject {
 
     private int counter;
 
-    private String title;
-
-    private String notes;
-
     private long pomodoroTimeInMillis;
 
     private long shortBreakTimeInMillis;
@@ -28,18 +24,18 @@ public class PomodoroRealm extends RealmObject {
 
     private int pomodorosToLongBreak;
 
+    private PomodoroInfoRealm info;
+
     public PomodoroRealm() {
         this.id = 0;
         this.startTimeMillis = 0;
         this.state = PomodoroState.NONE;
         this.counter = 0;
-        this.title = "";
-        this.notes = "";
         this.pomodoroTimeInMillis = 0;
         this.shortBreakTimeInMillis = 0;
         this.longBreakTimeInMillis = 0;
         this.pomodorosToLongBreak = 0;
-
+        this.info = null;
     }
 
     public void setId(long id) {
@@ -70,24 +66,8 @@ public class PomodoroRealm extends RealmObject {
         this.counter = counter;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     public long getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getNotes() {
-        return notes;
     }
 
     public long getPomodoroTimeInMillis() {
@@ -122,9 +102,17 @@ public class PomodoroRealm extends RealmObject {
         this.pomodorosToLongBreak = pomodorosToLongBreak;
     }
 
+    public void setPomodoroInfo(PomodoroInfoRealm info) {
+        this.info = info;
+    }
+
+    public PomodoroInfoRealm getPomodoroInfo() {
+        return info;
+    }
+
     @Override
     public String toString() {
-        return "PomodoroRealm={" + id + ", " + title + ", " + startTimeMillis + ", " + state + "}";
+        return "PomodoroRealm={" + id + ", " + startTimeMillis + ", " + state + "}";
     }
 
     public boolean isOngoing() {
