@@ -50,6 +50,26 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/prefs_behaviour_title"
+        android:key="@string/prefs_behaviour_key">
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_overlay_key"
+            android:title="@string/pref_overlay_title"
+            android:summary="@string/pref_overlay_summary"
+            android:defaultValue="@string/pref_overlay_default"
+            style="@style/AppPreference.DialogPreference"/>
+
+        <SwitchPreferenceCompat
+            android:key="@string/pref_confirmation_key"
+            android:title="@string/pref_confirmation_title"
+            android:summary="@string/pref_confirmation_summary"
+            android:defaultValue="@string/pref_confirmation_default"
+            style="@style/AppPreference.DialogPreference"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/prefs_notification_title"
         android:key="@string/prefs_notification_key">
 
@@ -65,13 +85,6 @@
             android:title="@string/pref_vibration_title"
             android:summary="@string/pref_vibration_summary"
             android:defaultValue="@string/pref_vibration_default"
-            style="@style/AppPreference.DialogPreference"/>
-
-        <SwitchPreferenceCompat
-            android:key="@string/pref_confirmation_key"
-            android:title="@string/pref_confirmation_title"
-            android:summary="@string/pref_confirmation_summary"
-            android:defaultValue="@string/pref_confirmation_default"
             style="@style/AppPreference.DialogPreference"/>
 
     </PreferenceCategory>

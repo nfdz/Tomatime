@@ -23,6 +23,8 @@ public class TomatinaApp extends Application {
         setupLogger();
         setupRealm();
         clearOutdatedPomodoroIfAny();
+
+        // TODO ask overlay permission to enable overlay by default
     }
 
     private void setupLogger() {

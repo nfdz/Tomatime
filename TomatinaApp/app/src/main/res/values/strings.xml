@@ -62,6 +62,8 @@
     <string name="prefs_pomodoro_key" translatable="false">pomodoro-settings</string>
     <string name="prefs_notification_title">Notification settings</string>
     <string name="prefs_notification_key" translatable="false">notification-settings</string>
+    <string name="prefs_behaviour_title">Behaviour settings</string>
+    <string name="prefs_behaviour_key" translatable="false">behaviour-settings</string>
 
     <string name="pref_sound_key" translatable="false">pomodoro-sound</string>
     <string name="pref_sound_default" translatable="false">true</string>
@@ -77,6 +79,11 @@
     <string name="pref_confirmation_default" translatable="false">true</string>
     <string name="pref_confirmation_title">Confirmation</string>
     <string name="pref_confirmation_summary">Notify each phase change and waits for you to confirm to continue</string>
+
+    <string name="pref_overlay_key" translatable="false">overlay-view</string>
+    <string name="pref_overlay_default" translatable="false">false</string>
+    <string name="pref_overlay_title">Overlay during pomodoro</string>
+    <string name="pref_overlay_summary">Overlay the screen during the pomodoro to avoid procrastinating</string>
 
     <string name="pref_pomodoro_time_key" translatable="false">pomodoro-work-time</string>
     <string name="pref_pomodoro_time_default" translatable="false">25</string>

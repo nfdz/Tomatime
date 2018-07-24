@@ -1,5 +1,7 @@
 package io.github.nfdz.tomatina.main.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -18,6 +20,10 @@ import io.github.nfdz.tomatina.home.view.HomeFragment;
 import io.github.nfdz.tomatina.user.view.UserFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static void start(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
 
     @BindView(R.id.main_activity_vp) ViewPager main_activity_vp;
     @BindView(R.id.main_activity_tl) TabLayout main_activity_tl;

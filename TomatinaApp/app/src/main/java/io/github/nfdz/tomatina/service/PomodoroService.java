@@ -17,6 +17,8 @@ import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.TomatinaApp;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
+import io.github.nfdz.tomatina.common.utils.LifecycleUtils;
+import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatina.common.utils.SettingsPreferencesUtils;
 import io.github.nfdz.tomatina.main.view.MainActivity;
 import io.realm.Realm;
@@ -52,6 +54,7 @@ public class PomodoroService extends Service {
 
     private static final long WATCHER_RATE_MILLIS = 2000;
 
+    private OverlayHandler overlayHandler;
     private Handler handler;
     private boolean destroyed;
 
@@ -75,6 +78,7 @@ public class PomodoroService extends Service {
         super.onCreate();
         destroyed = false;
         handler = new Handler();
+        overlayHandler = new OverlayHandler(this);
         resetState();
         handler.postDelayed(new WatcherTask(), WATCHER_RATE_MILLIS);
         Timber.d("Pomodoro service created");
@@ -415,6 +419,9 @@ public class PomodoroService extends Service {
         public void run() {
             if (!destroyed) {
                 try {
+                    boolean overlayEnabled = false;
+
+                    // Process pomodoro
                     if (pomodoroId > 0 && !waitingContinue) {
                         long now = System.currentTimeMillis();
                         switch (pomodoroState) {
@@ -427,6 +434,7 @@ public class PomodoroService extends Service {
                                         triggerGoToLongBreakNotification();
                                     }
                                 }
+                                overlayEnabled = true;
                                 break;
                             case PomodoroState.SHORT_BREAK:
                                 if (now > (stateStartTime + shortBreakTimeInMillis)) {
@@ -444,6 +452,16 @@ public class PomodoroService extends Service {
                             case PomodoroState.NONE:
                             default:
                         }
+                    }
+
+                    // Process overlay view
+                    if (overlayEnabled &&
+                            OverlayPermissionHelper.hasOverlayPermission(PomodoroService.this) &&
+                            SettingsPreferencesUtils.getOverlayViewFlag() &&
+                            !LifecycleUtils.isAppInForeground(PomodoroService.this)) {
+                        overlayHandler.show();
+                    } else {
+                        overlayHandler.hide();
                     }
                 } catch (Exception e) {
                     Timber.e(e, "There was an error processing watcher");

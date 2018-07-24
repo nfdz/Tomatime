@@ -1,16 +1,27 @@
 package io.github.nfdz.tomatina.settings.view;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.SwitchPreferenceCompat;
 
 import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatina.common.utils.SettingsPreferencesUtils;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener, OverlayPermissionHelper.Callback {
+
+    private OverlayPermissionHelper overlayPermissionHelper;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        overlayPermissionHelper = new OverlayPermissionHelper(getActivity(), this);
+    }
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -70,7 +81,35 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         } else if (key.equals(getString(R.string.pref_pomodoros_to_long_break_key))) {
             int defaultValue = Integer.parseInt(getString(R.string.pref_pomodoros_to_long_break_default));
             ((NumberPickerPreference) findPreference(key)).setValue(sharedPreferences.getInt(key, defaultValue));
+        } else if (key.equals(getString(R.string.pref_overlay_key))) {
+            boolean defaultValue = Boolean.parseBoolean(getString(R.string.pref_overlay_default));
+            boolean overlayEnabled = sharedPreferences.getBoolean(key, defaultValue);
+            ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(overlayEnabled);
+            if (overlayEnabled && !overlayPermissionHelper.hasOverlayPermission()) {
+                sharedPreferences.edit().putBoolean(key, false).apply();
+
+                // TODO explain permission before request
+                overlayPermissionHelper.request();
+            }
         }
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        overlayPermissionHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onPermissionsGranted() {
+        SettingsPreferencesUtils.setOverlayViewFlag(true);
+
+        // TODO set preference manually?
+    }
+
+    @Override
+    public void onPermissionsDenied() {
+        SettingsPreferencesUtils.setOverlayViewFlag(false);
+    }
 }

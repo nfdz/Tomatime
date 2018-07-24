@@ -85,4 +85,15 @@ public class SettingsPreferencesUtils {
         return getPreferences().getBoolean(key, defaultValue);
     }
 
+    public static boolean getOverlayViewFlag() {
+        String key = TomatinaApp.INSTANCE.getString(R.string.pref_overlay_key);
+        boolean defaultValue = Boolean.parseBoolean(TomatinaApp.INSTANCE.getString(R.string.pref_overlay_default));
+        return getPreferences().getBoolean(key, defaultValue);
+    }
+
+    public static void setOverlayViewFlag(boolean enabled) {
+        String key = TomatinaApp.INSTANCE.getString(R.string.pref_overlay_key);
+        getPreferences().edit().putBoolean(key, enabled).apply();
+    }
+
 }
