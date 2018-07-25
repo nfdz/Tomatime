@@ -52,7 +52,7 @@ public class PomodoroService extends Service {
     public static final String SKIP_STAGE_ACTION = "skip_stage";
     public static final String CONTINUE_POMODORO_ACTION = "continue_pomodoro";
 
-    private static final long WATCHER_RATE_MILLIS = 2000;
+    private static final long WATCHER_RATE_MILLIS = 500;
 
     private OverlayHandler overlayHandler;
     private Handler handler;

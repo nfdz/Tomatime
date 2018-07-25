@@ -20,7 +20,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overlayPermissionHelper = new OverlayPermissionHelper(getActivity(), this);
+        overlayPermissionHelper = new OverlayPermissionHelper(this, this);
     }
 
     @Override
@@ -84,16 +84,16 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         } else if (key.equals(getString(R.string.pref_overlay_key))) {
             boolean defaultValue = Boolean.parseBoolean(getString(R.string.pref_overlay_default));
             boolean overlayEnabled = sharedPreferences.getBoolean(key, defaultValue);
-            ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(overlayEnabled);
             if (overlayEnabled && !overlayPermissionHelper.hasOverlayPermission()) {
-                sharedPreferences.edit().putBoolean(key, false).apply();
+                overlayEnabled = false;
+                sharedPreferences.edit().putBoolean(key, overlayEnabled).apply();
 
                 // TODO explain permission before request
                 overlayPermissionHelper.request();
             }
+            ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(overlayEnabled);
         }
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,13 +103,14 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
 
     @Override
     public void onPermissionsGranted() {
+        ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(true);
         SettingsPreferencesUtils.setOverlayViewFlag(true);
-
-        // TODO set preference manually?
     }
 
     @Override
     public void onPermissionsDenied() {
+        ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(false);
         SettingsPreferencesUtils.setOverlayViewFlag(false);
     }
+
 }

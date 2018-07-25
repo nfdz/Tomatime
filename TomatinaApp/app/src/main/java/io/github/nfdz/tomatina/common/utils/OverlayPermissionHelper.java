@@ -1,11 +1,11 @@
 package io.github.nfdz.tomatina.common.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.app.Fragment;
 
 public class OverlayPermissionHelper {
 
@@ -17,17 +17,17 @@ public class OverlayPermissionHelper {
     }
 
     private final Callback callback;
-    private final Activity activity;
+    private final Fragment fragment;
 
-    public OverlayPermissionHelper(Activity activity, Callback callback) {
+    public OverlayPermissionHelper(Fragment fragment, Callback callback) {
         this.callback = callback;
-        this.activity = activity;
+        this.fragment = fragment;
     }
 
     public void request() {
         if (!hasOverlayPermission()) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + activity.getPackageName()));
-            activity.startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST);
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + fragment.getActivity().getPackageName()));
+            fragment.startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST);
         } else {
             callback.onPermissionsGranted();
         }
@@ -44,7 +44,7 @@ public class OverlayPermissionHelper {
     }
 
     public boolean hasOverlayPermission() {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(activity);
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(fragment.getActivity());
     }
 
     public static boolean hasOverlayPermission(Context context) {
