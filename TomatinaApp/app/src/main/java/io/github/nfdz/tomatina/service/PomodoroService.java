@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.TomatinaApp;
+import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
 import io.github.nfdz.tomatina.common.utils.LifecycleUtils;
@@ -28,6 +29,13 @@ public class PomodoroService extends Service {
 
     public static void startPomodoro(Context context) {
         Intent starter = new Intent(context, PomodoroService.class);
+        starter.setAction(START_POMODORO_ACTION);
+        context.startService(starter);
+    }
+
+    public static void startPomodoro(Context context, PomodoroInfoRealm info) {
+        Intent starter = new Intent(context, PomodoroService.class);
+        starter.putExtra(INFO_KEY_EXTRA, info.getKey());
         starter.setAction(START_POMODORO_ACTION);
         context.startService(starter);
     }
@@ -52,6 +60,8 @@ public class PomodoroService extends Service {
     public static final String SKIP_STAGE_ACTION = "skip_stage";
     public static final String CONTINUE_POMODORO_ACTION = "continue_pomodoro";
 
+    public static final String INFO_KEY_EXTRA = "info_key";
+
     private static final long WATCHER_RATE_MILLIS = 500;
 
     private OverlayHandler overlayHandler;
@@ -68,6 +78,7 @@ public class PomodoroService extends Service {
     private int pomodorosToLongBreak;
     private int pomodoroCounter;
     private boolean waitingContinue;
+    private String infoKey;
 
     public PomodoroService() {
         super();
@@ -104,6 +115,7 @@ public class PomodoroService extends Service {
             switch (action) {
                 case START_POMODORO_ACTION:
                     Timber.d("Start command received");
+                    infoKey = intent.getStringExtra(INFO_KEY_EXTRA);
                     handleStartPomodoro();
                     break;
                 case STOP_POMODORO_ACTION:
@@ -147,15 +159,20 @@ public class PomodoroService extends Service {
             TomatinaApp.REALM.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(@NonNull Realm realm) {
-                    PomodoroRealm pomodoro = new PomodoroRealm();
-                    pomodoro.setId(id);
+                    PomodoroRealm pomodoro = realm.createObject(PomodoroRealm.class, id);
                     pomodoro.setStartTimeMillis(startTime);
                     pomodoro.setState(state);
                     pomodoro.setPomodoroTimeInMillis(pomodoroTimeInMillis);
                     pomodoro.setShortBreakTimeInMillis(shortBreakTimeInMillis);
                     pomodoro.setLongBreakTimeInMillis(longBreakTimeInMillis);
                     pomodoro.setPomodorosToLongBreak(pomodorosToLongBreak);
-                    realm.copyToRealmOrUpdate(pomodoro);
+
+                    if (infoKey != null) {
+                        PomodoroInfoRealm info = realm.where(PomodoroInfoRealm.class).equalTo(PomodoroInfoRealm.KEY_FIELD, infoKey).findFirst();
+                        if (info != null) {
+                            pomodoro.setPomodoroInfo(info);
+                        }
+                    }
                 }
             }, new Realm.Transaction.OnSuccess() {
                 @Override

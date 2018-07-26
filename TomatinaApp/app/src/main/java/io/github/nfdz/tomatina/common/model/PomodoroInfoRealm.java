@@ -1,9 +1,11 @@
 package io.github.nfdz.tomatina.common.model;
 
+import android.support.annotation.NonNull;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class PomodoroInfoRealm extends RealmObject {
+public class PomodoroInfoRealm extends RealmObject implements Comparable<PomodoroInfoRealm> {
 
     @PrimaryKey
     private String key;
@@ -16,6 +18,7 @@ public class PomodoroInfoRealm extends RealmObject {
     private String category;
 
     public PomodoroInfoRealm() {
+        this.key = "";
         this.title = "";
         this.notes = "";
         this.category = "";
@@ -62,4 +65,21 @@ public class PomodoroInfoRealm extends RealmObject {
         return title.trim().replace(" ", "");
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PomodoroInfoRealm that = (PomodoroInfoRealm) o;
+        return (key == that.key) || (key != null && key.equals(that.key));
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 + (key == null ? 0 : key.hashCode());
+    }
+
+    @Override
+    public int compareTo(@NonNull PomodoroInfoRealm o) {
+        return title.compareTo(o.title);
+    }
 }
