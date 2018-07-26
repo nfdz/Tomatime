@@ -6,6 +6,9 @@ import io.realm.annotations.PrimaryKey;
 public class PomodoroInfoRealm extends RealmObject {
 
     @PrimaryKey
+    private String key;
+    public static final String KEY_FIELD = "key";
+
     private String title;
 
     private String notes;
@@ -18,6 +21,10 @@ public class PomodoroInfoRealm extends RealmObject {
         this.category = "";
     }
 
+    public String getKey() {
+        return key;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -28,6 +35,10 @@ public class PomodoroInfoRealm extends RealmObject {
 
     public String getCategory() {
         return category;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public void setTitle(String title) {
@@ -44,7 +55,11 @@ public class PomodoroInfoRealm extends RealmObject {
 
     @Override
     public String toString() {
-        return "PomodoroInfoRealm={" + title + ", " + notes + ", " + category + "}";
+        return "PomodoroInfoRealm={" + key + ", " + title + ", " + notes + ", " + category + "}";
+    }
+
+    public static String buildKeyFromTitle(String title) {
+        return title.trim().replace(" ", "");
     }
 
 }

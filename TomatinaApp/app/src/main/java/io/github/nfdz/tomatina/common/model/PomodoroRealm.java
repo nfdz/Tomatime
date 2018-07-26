@@ -25,6 +25,7 @@ public class PomodoroRealm extends RealmObject {
     private int pomodorosToLongBreak;
 
     private PomodoroInfoRealm info;
+    public static final String INFO_FIELD = "info";
 
     public PomodoroRealm() {
         this.id = 0;

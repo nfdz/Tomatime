@@ -10,6 +10,7 @@ public interface HomeContract {
     interface View {
         void bindViewToLiveData(LiveData<RealmResults<PomodoroRealm>> data);
         void showSaveInfoError();
+        void showSaveInfoConflict(long id, String title, String notes, String category);
     }
 
     interface Presenter {
@@ -19,6 +20,8 @@ public interface HomeContract {
         void onStopPomodoroClick();
         void onSkipStageClick();
         void savePomodoroInfo(long id, String title, String notes, String category);
+        void overwritePomodoroInfo(long id, String title, String notes, String category);
+        void useExistingPomodoroInfo(long id, String title, String notes, String category);
     }
 
     interface Interactor {
@@ -34,7 +37,13 @@ public interface HomeContract {
             void onConflict();
             void onError();
         }
-        void savePomodoroInfo(long id, String title, String notes, String category, SaveInfoCallback callback);
+        void savePomodoroInfo(long id,
+                              String title,
+                              String notes,
+                              String category,
+                              boolean solveConflict,
+                              boolean overwriteIfNeed,
+                              SaveInfoCallback callback);
     }
 
 }

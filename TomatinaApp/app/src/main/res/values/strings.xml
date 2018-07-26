@@ -34,7 +34,7 @@
     <string name="historical_tab">Historical</string>
 
     <!-- Home -->
-    <string name="home_save_info_error">Ups! Notes cannot be saved :(</string>
+    <string name="home_save_info_error">Ups! Information cannot be saved :(</string>
 
     <!-- States -->
     <string name="state_text_working">Stop procrastinating! Work! Go!</string>
@@ -49,6 +49,12 @@
     <string name="info_dialog_category_label">Category</string>
     <string name="info_dialog_save">Save</string>
     <string name="info_dialog_close">Close</string>
+
+    <string name="info_conflict_dialog_title">Conflict</string>
+    <string name="info_conflict_dialog_content">There is another pomodoro with the same title. Do you want to replace its content?</string>
+    <string name="info_conflict_dialog_overwrite">Yes</string>
+    <string name="info_conflict_dialog_existing">No</string>
+    <string name="info_conflict_dialog_cancel">Cancel</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

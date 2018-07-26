@@ -27,4 +27,7 @@
     <dimen name="home_button_margin_horizontal">10dp</dimen>
     <dimen name="home_progress_icon_size">84dp</dimen>
 
+    <!-- Info dialog -->
+    <dimen name="info_notes_height">160dp</dimen>
+
 </resources>

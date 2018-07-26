@@ -44,6 +44,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
         <!-- Text color -->
         <item name="android:textColorPrimary">@color/textColorLight</item>
         <!-- Used for the background -->

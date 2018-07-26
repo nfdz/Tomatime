@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
@@ -15,6 +16,7 @@ import android.support.constraint.Guideline;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,6 +200,36 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @Override
     public void showSaveInfoError() {
         SnackbarUtils.show(getView(), R.string.home_save_info_error, Snackbar.LENGTH_LONG);
+    }
+
+    @Override
+    public void showSaveInfoConflict(final long id, final String title, final String notes, final String category) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppAlertDialog);
+        builder.setTitle(R.string.info_conflict_dialog_title)
+                .setMessage(R.string.info_conflict_dialog_content)
+                .setPositiveButton(R.string.info_conflict_dialog_overwrite,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                presenter.overwritePomodoroInfo(id, title, notes, category);
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setNeutralButton(R.string.info_conflict_dialog_existing,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                presenter.useExistingPomodoroInfo(id, title, notes, category);
+                                dialog.dismiss();
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.info_conflict_dialog_cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dialog.dismiss();
+                            }
+                        }
+                ).show();
     }
 
     @Override
@@ -428,7 +460,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     @Override
-    public void onUpdateInfo(String title, String notes, String category) {
+    public void onInfoChange(String title, String notes, String category) {
         if (shownPomodoroRealm != null) {
             presenter.savePomodoroInfo(shownPomodoroRealm.getId(), title, notes, category);
         }

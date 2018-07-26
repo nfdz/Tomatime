@@ -9,14 +9,17 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 
 public class PomodoroInfoDialog extends DialogFragment {
 
     public interface UpdateInfoCallback {
-        void onUpdateInfo(String title, String notes, String category);
+        void onInfoChange(String title, String notes, String category);
     }
 
     public static PomodoroInfoDialog newInstance(@Nullable PomodoroInfoRealm info) {
@@ -34,6 +37,10 @@ public class PomodoroInfoDialog extends DialogFragment {
     private static final String TITLE_EXTRA = "title";
     private static final String NOTES_EXTRA = "notes";
     private static final String CATEGORY_EXTRA = "category";
+
+    @BindView(R.id.info_tied_title) EditText info_tied_title;
+    @BindView(R.id.info_tied_notes) EditText info_tied_notes;
+    @BindView(R.id.info_tied_category) EditText info_tied_category;
 
     private UpdateInfoCallback callback;
 
@@ -58,11 +65,16 @@ public class PomodoroInfoDialog extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppAlertDialog);
-
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_pomodoro_info, null);
+        ButterKnife.bind(this, dialogView);
+        info_tied_category.append(initialCategory);
+        info_tied_notes.setText(initialNotes);
+        info_tied_title.append(initialTitle);
+        info_tied_category.clearFocus();
+        info_tied_notes.clearFocus();
+        info_tied_title.clearFocus();
         builder.setView(dialogView);
 
         final AlertDialog dialog = builder.setTitle(R.string.info_dialog_title)
@@ -70,7 +82,15 @@ public class PomodoroInfoDialog extends DialogFragment {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 if (callback != null) {
-                                    //callback.onUpdateInfo();
+                                    String title = info_tied_title.getText().toString();
+                                    String notes = info_tied_notes.getText().toString();
+                                    String category = info_tied_category.getText().toString();
+                                    boolean anyChange = !initialTitle.equals(title) ||
+                                            !initialCategory.equals(category) ||
+                                            !initialNotes.equals(notes);
+                                    if (anyChange) {
+                                        callback.onInfoChange(title, notes, category);
+                                    }
                                 }
                                 dialog.dismiss();
                             }

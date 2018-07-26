@@ -31,17 +31,62 @@ public class HomePresenter implements HomeContract.Presenter {
     }
 
     @Override
-    public void savePomodoroInfo(long id, String title, String notes, String category) {
+    public void savePomodoroInfo(final long id, final String title, final String notes, final String category) {
         if (view != null && interactor != null) {
-            interactor.savePomodoroInfo(id, title, notes, category, new HomeContract.Interactor.SaveInfoCallback() {
+            interactor.savePomodoroInfo(id, title, notes, category, false, false, new HomeContract.Interactor.SaveInfoCallback() {
                 @Override
                 public void onSuccess() {
                     // nothing
                 }
-
                 @Override
                 public void onConflict() {
-                    // TODO
+                    if (view != null) {
+                        view.showSaveInfoConflict(id, title, notes, category);
+                    }
+                }
+                @Override
+                public void onError() {
+                    if (view != null) {
+                        view.showSaveInfoError();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void overwritePomodoroInfo(long id, String title, String notes, String category) {
+        if (view != null && interactor != null) {
+            interactor.savePomodoroInfo(id, title, notes, category, true, true, new HomeContract.Interactor.SaveInfoCallback() {
+                @Override
+                public void onSuccess() {
+                    // nothing
+                }
+                @Override
+                public void onConflict() {
+                    // do nothing
+                }
+                @Override
+                public void onError() {
+                    if (view != null) {
+                        view.showSaveInfoError();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void useExistingPomodoroInfo(long id, String title, String notes, String category) {
+        if (view != null && interactor != null) {
+            interactor.savePomodoroInfo(id, title, notes, category, true, false, new HomeContract.Interactor.SaveInfoCallback() {
+                @Override
+                public void onSuccess() {
+                    // nothing
+                }
+                @Override
+                public void onConflict() {
+                    // do nothing
                 }
                 @Override
                 public void onError() {
