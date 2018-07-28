@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/historical_category_margin_horizontal"
+    android:paddingRight="@dimen/historical_category_margin_horizontal">
+
+    <TextView
+        android:id="@+id/item_tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:background="@drawable/shape_category_selected"
+        android:foreground="?attr/selectableItemBackground"
+        tools:textColor="@color/textColorDark"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        tools:text="TODO" />
+
+</FrameLayout>

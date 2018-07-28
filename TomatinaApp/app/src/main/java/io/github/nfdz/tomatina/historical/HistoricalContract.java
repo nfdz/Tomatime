@@ -11,29 +11,29 @@ import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 public interface HistoricalContract {
 
     interface View {
-        void showData(Map<PomodoroInfoRealm,List<PomodoroRealm>> data);
-        void showCategories(List<String> categories);
-        void setSelectedCategories(List<String> selectedCategories);
+        void showData(SortedMap<PomodoroInfoRealm,List<PomodoroRealm>> data);
+        void showCategories(Set<String> categories);
+        void setSelectedCategories(Set<String> selectedCategories);
+        void showSaveInfoError();
+        void showSaveInfoConflict(List<PomodoroRealm> pomodoros, String title, String notes, String category);
     }
 
     interface Presenter {
         void create();
         void destroy();
         void onCategoryClick(String category);
-        void savePomodoroInfo(long id, String title, String notes, String category);
-        void overwritePomodoroInfo(long id, String title, String notes, String category);
-        void useExistingPomodoroInfo(long id, String title, String notes, String category);
+        void savePomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
+        void overwritePomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
+        void useExistingPomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
     }
 
     interface Interactor {
-        void initialize();
+        void initialize(DataListener listener);
         void destroy();
 
-        interface LoadDataCallback {
-            void onSuccess(Set<String> categories, SortedMap<PomodoroInfoRealm,List<PomodoroRealm>> data);
-            void onError();
+        interface DataListener {
+            void onNotifyData(Set<String> categories, SortedMap<PomodoroInfoRealm,List<PomodoroRealm>> data);
         }
-        void loadDataAsync(LoadDataCallback callback);
 
         void startPomodoro(PomodoroInfoRealm info);
 

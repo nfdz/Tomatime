@@ -28,9 +28,12 @@
     <dimen name="home_progress_icon_size">84dp</dimen>
 
     <!-- Info dialog -->
-    <dimen name="info_notes_height">140dp</dimen>
+    <dimen name="info_notes_height">120dp</dimen>
 
     <!-- Historical -->
     <dimen name="historical_categories_height">55dp</dimen>
+    <dimen name="historical_category_margin_horizontal">5dp</dimen>
+    <dimen name="historical_category_padding_horizontal">20dp</dimen>
+    <dimen name="historical_category_padding_vertical">10dp</dimen>
 
 </resources>

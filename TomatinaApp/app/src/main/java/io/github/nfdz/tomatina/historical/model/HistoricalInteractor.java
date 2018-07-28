@@ -17,21 +17,41 @@ import io.github.nfdz.tomatina.common.utils.RealmUtils;
 import io.github.nfdz.tomatina.historical.HistoricalContract;
 import io.github.nfdz.tomatina.service.PomodoroService;
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 import timber.log.Timber;
 
-public class HistoricalInteractor implements HistoricalContract.Interactor {
+public class HistoricalInteractor implements HistoricalContract.Interactor, RealmChangeListener<RealmResults<PomodoroRealm>> {
+
+    private DataListener listener;
+    private RealmResults<PomodoroRealm> observedData;
 
     @Override
-    public void initialize() {
+    public void initialize(DataListener listener) {
+        this.listener = listener;
+        if (observedData == null) {
+            observedData = TomatinaApp.REALM.where(PomodoroRealm.class).findAllAsync();
+            observedData.addChangeListener(this);
+        }
     }
 
     @Override
     public void destroy() {
+        if (observedData != null) {
+            observedData.removeChangeListener(this);
+            observedData = null;
+        }
     }
 
     @Override
-    public void loadDataAsync(final LoadDataCallback callback) {
+    public void onChange(@NonNull RealmResults<PomodoroRealm> pomodoroRealms) {
+        if (listener != null) {
+            Timber.d("There is some changes, reloading historical data...");
+            loadDataAsync();
+        }
+    }
+
+    private void loadDataAsync() {
         final PomodoroInfoRealm noInfo = new PomodoroInfoRealm();
         noInfo.setTitle(TomatinaApp.INSTANCE.getString(R.string.historical_no_info_title));
         final Set<String> categories = new HashSet<>();
@@ -55,17 +75,17 @@ public class HistoricalInteractor implements HistoricalContract.Interactor {
                     }
                     pomodorosOfInfo.add(pomodoro);
                 }
+                categories.remove("");
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
             public void onSuccess() {
-                callback.onSuccess(categories, data);
+                listener.onNotifyData(categories, data);
             }
         }, new Realm.Transaction.OnError() {
             @Override
             public void onError(@NonNull Throwable error) {
                 Timber.e(error, "Problem loading pomodoros");
-                callback.onError();
             }
         });
     }
