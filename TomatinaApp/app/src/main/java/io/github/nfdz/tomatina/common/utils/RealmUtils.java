@@ -1,8 +1,11 @@
 package io.github.nfdz.tomatina.common.utils;
 
 import android.arch.lifecycle.LiveData;
+import android.text.TextUtils;
 
 import io.github.nfdz.tomatina.BuildConfig;
+import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.TomatinaApp;
 import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.realm.Realm;
@@ -59,12 +62,15 @@ public class RealmUtils {
     }
 
     public static void savePomodoroInfo(Realm realm,
-                                        final long id,
-                                        final String title,
-                                        final String notes,
-                                        final String category,
-                                        final boolean solveConflict,
-                                        final boolean overwriteIfNeed) {
+                                        long id,
+                                        String title,
+                                        String notes,
+                                        String category,
+                                        boolean solveConflict,
+                                        boolean overwriteIfNeed) {
+        if (TextUtils.isEmpty(title)) {
+            title = TomatinaApp.INSTANCE.getString(R.string.historical_no_info_title);
+        }
         String key = PomodoroInfoRealm.buildKeyFromTitle(title);
         PomodoroRealm pomodoro = realm.where(PomodoroRealm.class).equalTo(PomodoroRealm.ID_FIELD, id).findFirst();
         PomodoroInfoRealm currentInfo = pomodoro.getPomodoroInfo();

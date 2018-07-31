@@ -1,6 +1,7 @@
 package io.github.nfdz.tomatina.historical.model;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import io.github.nfdz.tomatina.service.PomodoroService;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 import timber.log.Timber;
 
 public class HistoricalInteractor implements HistoricalContract.Interactor, RealmChangeListener<RealmResults<PomodoroRealm>> {
@@ -60,7 +62,8 @@ public class HistoricalInteractor implements HistoricalContract.Interactor, Real
         TomatinaApp.REALM.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
-                RealmResults<PomodoroRealm> pomodoros = realm.where(PomodoroRealm.class).findAll();
+                RealmResults<PomodoroRealm> pomodoros = realm.where(PomodoroRealm.class)
+                        .sort(PomodoroRealm.START_TIME_FIELD, Sort.DESCENDING).findAll();
                 Map<PomodoroInfoRealm,List<PomodoroRealm>> map = new HashMap<>();
                 for (PomodoroRealm pomodoro : pomodoros) {
                     PomodoroInfoRealm info = pomodoro.getPomodoroInfo();
@@ -82,7 +85,8 @@ public class HistoricalInteractor implements HistoricalContract.Interactor, Real
                             info.getTitle(),
                             info.getNotes(),
                             info.getCategory(),
-                            entry.getValue().size()));
+                            entry.getValue().size(),
+                            entry.getValue().get(0).getStartTimeMillis()));
                 }
                 Collections.sort(data);
                 categories.remove("");
@@ -102,7 +106,6 @@ public class HistoricalInteractor implements HistoricalContract.Interactor, Real
 
     @Override
     public void startPomodoro(PomodoroHistoricalEntry entry) {
-        PomodoroService.stopPomodoro(TomatinaApp.INSTANCE);
         PomodoroService.startPomodoro(TomatinaApp.INSTANCE, entry.infoKey);
     }
 
@@ -111,9 +114,16 @@ public class HistoricalInteractor implements HistoricalContract.Interactor, Real
         TomatinaApp.REALM.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
-                RealmResults<PomodoroRealm> results = realm.where(PomodoroRealm.class)
-                        .equalTo(PomodoroRealm.INFO_FIELD + "." + PomodoroInfoRealm.KEY_FIELD, entry.infoKey)
-                        .findAll();
+                RealmResults<PomodoroRealm> results;
+                if (TextUtils.isEmpty(entry.infoKey)) {
+                    results = realm.where(PomodoroRealm.class)
+                            .isNull(PomodoroRealm.INFO_FIELD)
+                            .findAll();
+                } else {
+                    results = realm.where(PomodoroRealm.class)
+                            .equalTo(PomodoroRealm.INFO_FIELD + "." + PomodoroInfoRealm.KEY_FIELD, entry.infoKey)
+                            .findAll();
+                }
                 if (results != null && !results.isEmpty()) {
                     for (PomodoroRealm pomodoro : results) {
                         if (!pomodoro.isOngoing()) {
@@ -147,11 +157,20 @@ public class HistoricalInteractor implements HistoricalContract.Interactor, Real
         TomatinaApp.REALM.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
-                RealmResults<PomodoroRealm> pomodoros = realm.where(PomodoroRealm.class)
-                        .equalTo(PomodoroRealm.INFO_FIELD + "." + PomodoroInfoRealm.KEY_FIELD, entry.infoKey)
-                        .findAll();
+                RealmResults<PomodoroRealm> pomodoros;
+                if (TextUtils.isEmpty(entry.infoKey)) {
+                    pomodoros = realm.where(PomodoroRealm.class)
+                            .isNull(PomodoroRealm.INFO_FIELD)
+                            .findAll();
+                } else {
+                    pomodoros = realm.where(PomodoroRealm.class)
+                            .equalTo(PomodoroRealm.INFO_FIELD + "." + PomodoroInfoRealm.KEY_FIELD, entry.infoKey)
+                            .findAll();
+                }
+                boolean savedFirstOne = false;
                 for (PomodoroRealm pomodoro : pomodoros) {
-                    RealmUtils.savePomodoroInfo(realm, pomodoro.getId(), title, notes, category, solveConflict, overwriteIfNeed);
+                    RealmUtils.savePomodoroInfo(realm, pomodoro.getId(), title, notes, category, solveConflict || savedFirstOne, overwriteIfNeed);
+                    savedFirstOne = true;
                 }
             }
         }, new Realm.Transaction.OnSuccess() {

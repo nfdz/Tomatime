@@ -116,11 +116,14 @@ public class PomodoroService extends Service {
                 case START_POMODORO_ACTION:
                     Timber.d("Start command received");
                     infoKey = intent.getStringExtra(INFO_KEY_EXTRA);
+                    handleStopPomodoro();
+                    resetState();
                     handleStartPomodoro();
                     break;
                 case STOP_POMODORO_ACTION:
                     Timber.d("Stop command received");
                     handleStopPomodoro();
+                    stopForegroundService();
                     break;
                 case CONTINUE_POMODORO_ACTION:
                     Timber.d("Continue command received");
@@ -226,7 +229,6 @@ public class PomodoroService extends Service {
                 }
             });
         }
-        stopForegroundService();
     }
 
     private void handleContinuePomodoro() {

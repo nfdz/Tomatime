@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,7 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
 
     @BindView(R.id.historical_rv_categories) RecyclerView historical_rv_categories;
     @BindView(R.id.historical_rv_pomodoros) RecyclerView historical_rv_pomodoros;
+    @BindView(R.id.historical_tv_no_categories) TextView historical_tv_no_categories;
 
     private HistoricalContract.Presenter presenter;
     private CategoriesAdapter categoriesAdapter;
@@ -89,6 +91,7 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
 
     @Override
     public void showCategories(Set<String> categories) {
+        historical_tv_no_categories.setVisibility(categories == null || categories.isEmpty() ? View.VISIBLE : View.GONE);
         categoriesAdapter.setCategories(categories);
     }
 

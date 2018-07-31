@@ -8,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatina.R;
-import io.github.nfdz.tomatina.TomatinaApp;
 import io.github.nfdz.tomatina.historical.model.PomodoroHistoricalEntry;
 import timber.log.Timber;
 
@@ -28,12 +29,20 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
 
     private final LayoutInflater layoutInflater;
     private final Callback callback;
+    private final int verticalMargin;
+    private final int horizontalMargin;
+    private final DateFormat dateFormat;
+    private final DateFormat timeFormat;
 
     private List<PomodoroHistoricalEntry> data;
 
     public PomodorosAdapter(Context context, Callback callback) {
         this.callback = callback;
         this.layoutInflater = LayoutInflater.from(context);
+        this.verticalMargin = context.getResources().getDimensionPixelSize(R.dimen.historical_pomodoro_margin_vertical);
+        this.horizontalMargin = context.getResources().getDimensionPixelSize(R.dimen.historical_pomodoro_margin_horizontal);
+        this.dateFormat = android.text.format.DateFormat.getDateFormat(context);
+        this.timeFormat = android.text.format.DateFormat.getTimeFormat(context);
     }
 
     public void setData(List<PomodoroHistoricalEntry> data) {
@@ -52,7 +61,9 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
     public void onBindViewHolder(@NonNull PomodoroViewHolder holder, int position) {
         try {
             PomodoroHistoricalEntry entry = data.get(position);
-            holder.bindEntry(entry);
+            boolean isFirstOne = position == 0;
+            boolean isLastOne = position == (data.size() - 1);
+            holder.bindEntry(entry, isFirstOne, isLastOne);
         } catch (Exception e) {
             Timber.e(e, "Cannot bind pomodoro entry view holder");
         }
@@ -66,17 +77,24 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
     public class PomodoroViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.item_pomodoro_tv_counter) TextView item_pomodoro_tv_counter;
-        @BindView(R.id.item_pomodoro_tv_counter_label) TextView item_pomodoro_tv_counter_label;
         @BindView(R.id.item_pomodoro_tv_title) TextView item_pomodoro_tv_title;
+        @BindView(R.id.item_pomodoro_tv_date) TextView item_pomodoro_tv_date;
 
         PomodoroViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindEntry(PomodoroHistoricalEntry entry) {
+        public void bindEntry(PomodoroHistoricalEntry entry, boolean isFirstOne, boolean isLastOne) {
+            itemView.setPadding(horizontalMargin,
+                    isFirstOne ? verticalMargin * 2 : verticalMargin,
+                    horizontalMargin,
+                    isLastOne ? verticalMargin * 2 : verticalMargin);
             item_pomodoro_tv_counter.setText(String.valueOf(entry.pomodorosCounter));
             item_pomodoro_tv_title.setText(entry.title);
+            Date timestampDate = new Date(entry.lastTimestamp);
+            String formattedDate = timeFormat.format(timestampDate) + " " + dateFormat.format(timestampDate);
+            item_pomodoro_tv_date.setText(formattedDate);
         }
 
         @OnClick(R.id.item_pomodoro_root)

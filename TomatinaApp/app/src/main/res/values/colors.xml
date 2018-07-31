@@ -7,6 +7,7 @@
     <color name="colorAccentRed">#A01010</color>
 
     <color name="light_alpha_10">#10FEFEFE</color>
+    <color name="light_alpha_75">#BEFEFEFE</color>
     <color name="dark_alpha_50">#7F313131</color>
     <color name="dark_alpha_75">#BE313131</color>
 

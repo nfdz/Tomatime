@@ -13,6 +13,7 @@
         tools:background="@drawable/shape_category_selected"
         android:foreground="?attr/selectableItemBackground"
         tools:textColor="@color/textColorDark"
+        android:textSize="@dimen/historical_category_text_size"
         android:layout_gravity="center"
         android:textStyle="bold"
         tools:text="TODO" />

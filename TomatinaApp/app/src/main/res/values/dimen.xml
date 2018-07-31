@@ -36,14 +36,15 @@
     <dimen name="historical_category_padding_horizontal">20dp</dimen>
     <dimen name="historical_category_padding_vertical">10dp</dimen>
     <dimen name="historical_category_radius">360dp</dimen>
+    <dimen name="historical_category_text_size">14sp</dimen>
     <dimen name="historical_pomodoro_padding_horizontal">20dp</dimen>
     <dimen name="historical_pomodoro_padding_vertical">10dp</dimen>
-    <dimen name="historical_pomodoro_margin_horizontal">25dp</dimen>
+    <dimen name="historical_pomodoro_margin_horizontal">10dp</dimen>
     <dimen name="historical_pomodoro_margin_vertical">5dp</dimen>
-    <dimen name="historical_pomodoro_height">65dp</dimen>
-    <dimen name="historical_pomodoro_radius">10dp</dimen>
+    <dimen name="historical_pomodoro_height">60dp</dimen>
+    <dimen name="historical_pomodoro_radius">8dp</dimen>
     <dimen name="historical_pomodoro_title_size">16sp</dimen>
-    <dimen name="historical_pomodoro_counter_size">24sp</dimen>
+    <dimen name="historical_pomodoro_counter_size">10sp</dimen>
     <dimen name="historical_pomodoro_counter_label_size">10sp</dimen>
     <dimen name="historical_pomodoro_icon_size">20sp</dimen>
 
