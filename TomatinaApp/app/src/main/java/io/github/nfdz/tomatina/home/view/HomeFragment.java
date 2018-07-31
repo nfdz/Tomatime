@@ -32,6 +32,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.common.dialog.PomodoroInfoDialog;
+import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
 import io.github.nfdz.tomatina.common.utils.SnackbarUtils;
@@ -169,7 +170,10 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @OnClick(R.id.home_btn_info_pomodoro)
     public void onInfoPomodoroClick() {
         if (shownPomodoroRealm != null) {
-            PomodoroInfoDialog dialog = PomodoroInfoDialog.newInstance(shownPomodoroRealm.getPomodoroInfo());
+            PomodoroInfoRealm info = shownPomodoroRealm.getPomodoroInfo();
+            PomodoroInfoDialog dialog = info != null ?
+                    PomodoroInfoDialog.newInstance(info.getTitle(), info.getNotes(), info.getCategory())
+                    : PomodoroInfoDialog.newInstance("", "", "");
             dialog.setCallback(this);
             dialog.show(getFragmentManager(), "pomodoro_info_dialog");
         }

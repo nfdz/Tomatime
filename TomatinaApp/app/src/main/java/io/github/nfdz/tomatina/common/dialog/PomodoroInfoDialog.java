@@ -14,7 +14,6 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.nfdz.tomatina.R;
-import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 
 public class PomodoroInfoDialog extends DialogFragment {
 
@@ -22,15 +21,13 @@ public class PomodoroInfoDialog extends DialogFragment {
         void onInfoChange(String title, String notes, String category);
     }
 
-    public static PomodoroInfoDialog newInstance(@Nullable PomodoroInfoRealm info) {
+    public static PomodoroInfoDialog newInstance(@Nullable String title, @Nullable String notes, @Nullable String category) {
         PomodoroInfoDialog fragment = new PomodoroInfoDialog();
-        if (info != null) {
-            Bundle args = new Bundle();
-            args.putString(TITLE_EXTRA, info.getTitle());
-            args.putString(NOTES_EXTRA, info.getNotes());
-            args.putString(CATEGORY_EXTRA, info.getCategory());
-            fragment.setArguments(args);
-        }
+        Bundle args = new Bundle();
+        args.putString(TITLE_EXTRA, title);
+        args.putString(NOTES_EXTRA, notes);
+        args.putString(CATEGORY_EXTRA, category);
+        fragment.setArguments(args);
         return fragment;
     }
 

@@ -58,6 +58,7 @@
 
     <!-- Historical -->
     <string name="historical_no_info_title">No title</string>
+    <string name="historical_pomodoro_counter_label">pomodoros</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

@@ -33,9 +33,9 @@ public class PomodoroService extends Service {
         context.startService(starter);
     }
 
-    public static void startPomodoro(Context context, PomodoroInfoRealm info) {
+    public static void startPomodoro(Context context, String infoKey) {
         Intent starter = new Intent(context, PomodoroService.class);
-        starter.putExtra(INFO_KEY_EXTRA, info.getKey());
+        starter.putExtra(INFO_KEY_EXTRA, infoKey);
         starter.setAction(START_POMODORO_ACTION);
         context.startService(starter);
     }

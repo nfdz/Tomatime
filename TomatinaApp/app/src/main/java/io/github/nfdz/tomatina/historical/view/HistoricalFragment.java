@@ -15,18 +15,18 @@ import android.view.ViewGroup;
 
 import java.util.List;
 import java.util.Set;
-import java.util.SortedMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.nfdz.tomatina.R;
-import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
-import io.github.nfdz.tomatina.common.model.PomodoroRealm;
+import io.github.nfdz.tomatina.common.dialog.PomodoroInfoDialog;
 import io.github.nfdz.tomatina.common.utils.SnackbarUtils;
 import io.github.nfdz.tomatina.historical.HistoricalContract;
+import io.github.nfdz.tomatina.historical.model.PomodoroHistoricalEntry;
 import io.github.nfdz.tomatina.historical.presenter.HistoricalPresenter;
 
-public class HistoricalFragment extends Fragment implements HistoricalContract.View, CategoriesAdapter.Callback {
+public class HistoricalFragment extends Fragment implements HistoricalContract.View,
+        CategoriesAdapter.Callback, PomodorosAdapter.Callback, PomodoroInfoDialog.UpdateInfoCallback {
 
     public static HistoricalFragment newInstance() {
         return new HistoricalFragment();
@@ -37,6 +37,8 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
 
     private HistoricalContract.Presenter presenter;
     private CategoriesAdapter categoriesAdapter;
+    private PomodorosAdapter pomodorosAdapter;
+    private PomodoroHistoricalEntry dialogEntry;
 
     public HistoricalFragment() {
     }
@@ -69,18 +71,20 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
     }
 
     private void setupCategories() {
-        categoriesAdapter = new CategoriesAdapter(this);
+        categoriesAdapter = new CategoriesAdapter(getActivity(), this);
         historical_rv_categories.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         historical_rv_categories.setAdapter(categoriesAdapter);
     }
 
     private void setupPomodoros() {
-        // TODO
+        pomodorosAdapter = new PomodorosAdapter(getActivity(), this);
+        historical_rv_pomodoros.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        historical_rv_pomodoros.setAdapter(pomodorosAdapter);
     }
 
     @Override
-    public void showData(SortedMap<PomodoroInfoRealm, List<PomodoroRealm>> data) {
-
+    public void showData(List<PomodoroHistoricalEntry> data) {
+        pomodorosAdapter.setData(data);
     }
 
     @Override
@@ -94,19 +98,27 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
     }
 
     @Override
+    public void showPomodoroInfoDialog(PomodoroHistoricalEntry entry) {
+        this.dialogEntry = entry;
+        PomodoroInfoDialog dialog = PomodoroInfoDialog.newInstance(entry.title, entry.notes, entry.category);
+        dialog.setCallback(this);
+        dialog.show(getFragmentManager(), "pomodoro_info_dialog");
+    }
+
+    @Override
     public void showSaveInfoError() {
         SnackbarUtils.show(getView(), R.string.home_save_info_error, Snackbar.LENGTH_LONG);
     }
 
     @Override
-    public void showSaveInfoConflict(final List<PomodoroRealm> pomodoros, final String title, final String notes, final String category) {
+    public void showSaveInfoConflict(final PomodoroHistoricalEntry entry, final String title, final String notes, final String category) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.AppAlertDialog);
         builder.setTitle(R.string.info_conflict_dialog_title)
                 .setMessage(R.string.info_conflict_dialog_content)
                 .setPositiveButton(R.string.info_conflict_dialog_overwrite,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                presenter.overwritePomodoroInfo(pomodoros, title, notes, category);
+                                presenter.overwritePomodoroInfo(entry, title, notes, category);
                                 dialog.dismiss();
                             }
                         }
@@ -114,7 +126,7 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
                 .setNeutralButton(R.string.info_conflict_dialog_existing,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                presenter.useExistingPomodoroInfo(pomodoros, title, notes, category);
+                                presenter.useExistingPomodoroInfo(entry, title, notes, category);
                                 dialog.dismiss();
                             }
                         }
@@ -129,7 +141,36 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
     }
 
     @Override
+    public void navigateToPomodoro() {
+        // TODO
+    }
+
+    @Override
     public void onCategoryClick(String category) {
         presenter.onCategoryClick(category);
     }
+
+    @Override
+    public void onInfoChange(String title, String notes, String category) {
+        if (dialogEntry != null) {
+            presenter.savePomodoroInfo(dialogEntry, title, notes, category);
+            dialogEntry = null;
+        }
+    }
+
+    @Override
+    public void onPomodoroClick(PomodoroHistoricalEntry entry) {
+        presenter.onPomodoroClick(entry);
+    }
+
+    @Override
+    public void onStartPomodoroClick(PomodoroHistoricalEntry entry) {
+        presenter.onStartPomodoroClick(entry);
+    }
+
+    @Override
+    public void onDeletePomodoroClick(PomodoroHistoricalEntry entry) {
+        presenter.onDeletePomodoroClick(entry);
+    }
+
 }

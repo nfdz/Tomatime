@@ -1,5 +1,6 @@
 package io.github.nfdz.tomatina.historical.view;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -32,12 +33,12 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
     private List<String> categories;
     private Set<String> selectedCategories;
 
-    public CategoriesAdapter(Callback callback) {
+    public CategoriesAdapter(Context context, Callback callback) {
         this.callback = callback;
-        this.layoutInflater = LayoutInflater.from(TomatinaApp.INSTANCE);
-        this.selectedTextColor = ContextCompat.getColor(TomatinaApp.INSTANCE, R.color.textColorDark);
-        this.unselectedTextColor = ContextCompat.getColor(TomatinaApp.INSTANCE, R.color.textColorLight);
-        this.horizontalMargin = TomatinaApp.INSTANCE.getResources().getDimensionPixelSize(R.dimen.historical_category_margin_horizontal);
+        this.layoutInflater = LayoutInflater.from(context);
+        this.selectedTextColor = ContextCompat.getColor(context, R.color.textColorDark);
+        this.unselectedTextColor = ContextCompat.getColor(context, R.color.textColorLight);
+        this.horizontalMargin = context.getResources().getDimensionPixelSize(R.dimen.historical_category_margin_horizontal);
     }
 
     public void setCategories(Set<String> categories) {
@@ -112,4 +113,5 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
         }
 
     }
+
 }

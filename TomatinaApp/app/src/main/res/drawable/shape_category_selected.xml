@@ -8,7 +8,7 @@
 
     <solid android:color="@color/light" />
 
-    <corners android:radius="360dp" />
+    <corners android:radius="@dimen/historical_category_radius" />
 
     <padding
         android:left="@dimen/historical_category_padding_horizontal"

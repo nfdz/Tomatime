@@ -1,30 +1,35 @@
 package io.github.nfdz.tomatina.historical;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
 import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
+import io.github.nfdz.tomatina.historical.model.PomodoroHistoricalEntry;
 
 public interface HistoricalContract {
 
     interface View {
-        void showData(SortedMap<PomodoroInfoRealm,List<PomodoroRealm>> data);
+        void showData(List<PomodoroHistoricalEntry> data);
         void showCategories(Set<String> categories);
         void setSelectedCategories(Set<String> selectedCategories);
+        void showPomodoroInfoDialog(PomodoroHistoricalEntry entry);
         void showSaveInfoError();
-        void showSaveInfoConflict(List<PomodoroRealm> pomodoros, String title, String notes, String category);
+        void showSaveInfoConflict(PomodoroHistoricalEntry entry, String title, String notes, String category);
+        void navigateToPomodoro();
     }
 
     interface Presenter {
         void create();
         void destroy();
         void onCategoryClick(String category);
-        void savePomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
-        void overwritePomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
-        void useExistingPomodoroInfo(List<PomodoroRealm> pomodoros, String title, String notes, String category);
+        void onPomodoroClick(PomodoroHistoricalEntry entry);
+        void onStartPomodoroClick(PomodoroHistoricalEntry entry);
+        void onDeletePomodoroClick(PomodoroHistoricalEntry entry);
+        void savePomodoroInfo(PomodoroHistoricalEntry entry, String title, String notes, String category);
+        void overwritePomodoroInfo(PomodoroHistoricalEntry entry, String title, String notes, String category);
+        void useExistingPomodoroInfo(PomodoroHistoricalEntry entry, String title, String notes, String category);
     }
 
     interface Interactor {
@@ -32,23 +37,23 @@ public interface HistoricalContract {
         void destroy();
 
         interface DataListener {
-            void onNotifyData(Set<String> categories, SortedMap<PomodoroInfoRealm,List<PomodoroRealm>> data);
+            void onNotifyData(Set<String> categories, List<PomodoroHistoricalEntry> data);
         }
 
-        void startPomodoro(PomodoroInfoRealm info);
+        void startPomodoro(PomodoroHistoricalEntry entry);
 
         interface DeleteCallback {
             void onSuccess();
             void onError();
         }
-        void deletePomodoros(PomodoroInfoRealm info, DeleteCallback callback);
+        void deletePomodoros(PomodoroHistoricalEntry entry, DeleteCallback callback);
 
         interface SaveInfoCallback {
             void onSuccess();
             void onConflict();
             void onError();
         }
-        void savePomodoroInfo(List<PomodoroRealm> pomodoros,
+        void savePomodoroInfo(PomodoroHistoricalEntry entry,
                               String title,
                               String notes,
                               String category,
