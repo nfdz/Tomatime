@@ -7,11 +7,18 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.TomatinaApp;
@@ -62,11 +69,16 @@ public class PomodoroService extends Service {
 
     public static final String INFO_KEY_EXTRA = "info_key";
 
-    private static final long WATCHER_RATE_MILLIS = 500;
+    private static final long WATCHER_RATE_MILLIS = 1000;
+    private static final long INSIST_FREQUENCY_MILLIS = 45000; // 45 sec
+
+    private static final long[] VIBRATION_PATTERN = new long[]{0, 1000, 100, 200, 100, 200, 100, 200, 100, 200, 100, 1000};
+    private static final  int[] VIBRATION_AMPLITUDES = new int[]{0, 255, 120, 255, 120, 255, 120, 255, 120, 255, 120, 255};
 
     private OverlayHandler overlayHandler;
     private Handler handler;
     private boolean destroyed;
+    private Vibrator vibrator;
 
     // Pomodoro state
     private long pomodoroId;
@@ -78,6 +90,7 @@ public class PomodoroService extends Service {
     private int pomodorosToLongBreak;
     private int pomodoroCounter;
     private boolean waitingContinue;
+    private long waitingContinueTimestamp;
     private String infoKey;
 
     public PomodoroService() {
@@ -88,6 +101,7 @@ public class PomodoroService extends Service {
     public void onCreate() {
         super.onCreate();
         destroyed = false;
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         handler = new Handler();
         overlayHandler = new OverlayHandler(this);
         resetState();
@@ -366,6 +380,9 @@ public class PomodoroService extends Service {
         builder.setContentTitle(title);
         builder.setContentText(text);
         builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+
+//        builder.setLights(lightColor, 4000, 2000);
 
         // Force heads up notification
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -428,6 +445,9 @@ public class PomodoroService extends Service {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
             channel.setVibrationPattern(null);
+            channel.enableLights(false);
+//            channel.setLightColor(lightColor);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
             channel.setSound(null, null);
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             if (notificationManager != null) {
@@ -442,32 +462,44 @@ public class PomodoroService extends Service {
             if (!destroyed) {
                 try {
                     boolean overlayEnabled = false;
+                    long now = System.currentTimeMillis();
 
                     // Process pomodoro
+                    if (waitingContinue) {
+                        boolean shouldInsist = SettingsPreferencesUtils.getInsistAlertFlag() &&
+                                (now - waitingContinueTimestamp) > INSIST_FREQUENCY_MILLIS;
+                        waitingContinue = !shouldInsist;
+                    }
+
                     if (pomodoroId > 0 && !waitingContinue) {
-                        long now = System.currentTimeMillis();
                         switch (pomodoroState) {
                             case PomodoroState.WORKING:
                                 if (now > (stateStartTime + pomodoroTimeInMillis)) {
                                     waitingContinue = true;
+                                    waitingContinueTimestamp = now;
                                     if (pomodoroCounter + 1 < pomodorosToLongBreak) {
                                         triggerGoToShortBreakNotification();
                                     } else {
                                         triggerGoToLongBreakNotification();
                                     }
+                                    alertIfNeeded();
                                 }
                                 overlayEnabled = true;
                                 break;
                             case PomodoroState.SHORT_BREAK:
                                 if (now > (stateStartTime + shortBreakTimeInMillis)) {
                                     waitingContinue = true;
+                                    waitingContinueTimestamp = now;
                                     triggerGoToWorkNotification();
+                                    alertIfNeeded();
                                 }
                                 break;
                             case PomodoroState.LONG_BREAK:
                                 if (now > (stateStartTime + longBreakTimeInMillis)) {
                                     waitingContinue = true;
+                                    waitingContinueTimestamp = now;
                                     handlePomodoroFinish();
+                                    alertIfNeeded();
                                 }
                                 break;
                             case PomodoroState.FINISHED:
@@ -564,6 +596,55 @@ public class PomodoroService extends Service {
         } catch (Exception e) {
             Timber.e(e, "Cannot send waiting continue broadcast");
         }
+    }
+
+    private void alertIfNeeded() {
+        if (vibrator != null && SettingsPreferencesUtils.getVibrationEnabledFlag()) {
+            vibrate();
+        }
+
+        if (SettingsPreferencesUtils.getSoundEnabledFlag()) {
+            sound();
+        }
+    }
+
+    private void vibrate() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (vibrator.hasAmplitudeControl()) {
+                VibrationEffect effect = VibrationEffect.createWaveform(VIBRATION_PATTERN, VIBRATION_AMPLITUDES, -1);
+                vibrator.vibrate(effect);
+            } else {
+                VibrationEffect effect = VibrationEffect.createWaveform(VIBRATION_PATTERN, -1);
+                vibrator.vibrate(effect);
+            }
+        } else {
+            vibrator.vibrate(VIBRATION_PATTERN, -1);
+        }
+    }
+
+    private void sound() {
+        try {
+            // TODO
+            String customSoundClipId = "";
+            Ringtone r = RingtoneManager.getRingtone(this, getNotificationSoundUri(getApplicationContext(), customSoundClipId));
+            r.play();
+        } catch (Exception e) {
+            Timber.e(e, "Cannot play event ringtone");
+        }
+    }
+
+    public static Uri getNotificationSoundUri(Context context, String soundClipId) {
+        if (!TextUtils.isEmpty(soundClipId)) {
+            RingtoneManager manager = new RingtoneManager(context);
+            manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+            Cursor cursor = manager.getCursor();
+            while (cursor.moveToNext()) {
+                if (soundClipId.equals(cursor.getString(RingtoneManager.ID_COLUMN_INDEX))) {
+                    return Uri.parse(cursor.getString(RingtoneManager.URI_COLUMN_INDEX)+"/"+cursor.getString(RingtoneManager.ID_COLUMN_INDEX));
+                }
+            }
+        }
+        return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     }
 
 }
