@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.preference.PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:title="@string/prefs_pomodoro_title"
         android:key="@string/prefs_pomodoro_key">
 
@@ -42,14 +43,14 @@
             app:suffix="@string/settings_unit_pomodoros"
             style="@style/AppPreference.DialogPreference" />
 
-        <Preference
+        <android.support.v7.preference.Preference
             android:title="@string/pref_restore_default_title"
             android:key="@string/pref_restore_default_key"
             android:summary="@string/pref_restore_default_summary"/>
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:title="@string/prefs_behaviour_title"
         android:key="@string/prefs_behaviour_key">
 
@@ -67,18 +68,11 @@
             android:defaultValue="@string/pref_insist_default"
             style="@style/AppPreference.DialogPreference"/>
 
-    </PreferenceCategory>
+    </android.support.v7.preference.PreferenceCategory>
 
-    <PreferenceCategory
+    <android.support.v7.preference.PreferenceCategory
         android:title="@string/prefs_notification_title"
         android:key="@string/prefs_notification_key">
-
-        <SwitchPreferenceCompat
-            android:key="@string/pref_sound_key"
-            android:title="@string/pref_sound_title"
-            android:summary="@string/pref_sound_summary"
-            android:defaultValue="@string/pref_sound_default"
-            style="@style/AppPreference.DialogPreference"/>
 
         <SwitchPreferenceCompat
             android:key="@string/pref_vibration_key"
@@ -87,6 +81,23 @@
             android:defaultValue="@string/pref_vibration_default"
             style="@style/AppPreference.DialogPreference"/>
 
-    </PreferenceCategory>
+        <SwitchPreferenceCompat
+            android:key="@string/pref_sound_key"
+            android:title="@string/pref_sound_title"
+            android:summary="@string/pref_sound_summary"
+            android:defaultValue="@string/pref_sound_default"
+            style="@style/AppPreference.DialogPreference"/>
 
-</PreferenceScreen>
+        <android.support.v7.preference.ListPreference
+            android:key="@string/pref_sound_custom_key"
+            android:title="@string/pref_sound_custom_title"
+            android:defaultValue="@string/pref_sound_custom_default"
+            android:dependency="@string/pref_sound_key"
+            android:entries="@array/pref_sound_custom_entries_label"
+            android:entryValues="@array/pref_sound_custom_entries_values"
+            android:summary="%s"
+            style="@style/AppPreference.DialogPreference" />
+
+    </android.support.v7.preference.PreferenceCategory>
+
+</android.support.v7.preference.PreferenceScreen>

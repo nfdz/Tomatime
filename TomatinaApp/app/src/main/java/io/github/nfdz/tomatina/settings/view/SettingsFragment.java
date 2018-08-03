@@ -2,11 +2,16 @@ package io.github.nfdz.tomatina.settings.view;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.SwitchPreferenceCompat;
+
+import java.util.ArrayList;
 
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
@@ -26,7 +31,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.settings, rootKey);
-        setupRestoreButton();
+        setupView();
     }
 
     @Override
@@ -41,6 +46,11 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
+    private void setupView() {
+        setupRestoreButton();
+        setupAvailableSounds();
+    }
+
     private void setupRestoreButton() {
         Preference restoreDefaultPrefs = findPreference(getString(R.string.pref_restore_default_key));
         restoreDefaultPrefs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -50,6 +60,26 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 return true;
             }
         });
+    }
+
+    private void setupAvailableSounds() {
+        RingtoneManager manager = new RingtoneManager(getActivity());
+        manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+        Cursor cursor = manager.getCursor();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> ids = new ArrayList<>();
+        String defaultSound = getString(R.string.pref_sound_custom_default);
+        names.add(defaultSound);
+        ids.add(defaultSound);
+        while (cursor.moveToNext()) {
+            String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
+            String name = cursor.getString((RingtoneManager.TITLE_COLUMN_INDEX));
+            names.add(name);
+            ids.add(id);
+        }
+        ListPreference customSoundPref = (ListPreference) findPreference(getString(R.string.pref_sound_custom_key));
+        customSoundPref.setEntries(names.toArray(new String[]{}));
+        customSoundPref.setEntryValues(ids.toArray(new String[]{}));
     }
 
     @Override

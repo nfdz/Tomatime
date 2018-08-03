@@ -73,6 +73,11 @@ public class SettingsPreferencesUtils {
         return getPreferences().getBoolean(key, defaultValue);
     }
 
+    public static String getCustomSoundId() {
+        String key = TomatinaApp.INSTANCE.getString(R.string.pref_sound_custom_key);
+        return getPreferences().getString(key, "");
+    }
+
     public static boolean getVibrationEnabledFlag() {
         String key = TomatinaApp.INSTANCE.getString(R.string.pref_vibration_key);
         boolean defaultValue = Boolean.parseBoolean(TomatinaApp.INSTANCE.getString(R.string.pref_vibration_default));

@@ -602,7 +602,6 @@ public class PomodoroService extends Service {
         if (vibrator != null && SettingsPreferencesUtils.getVibrationEnabledFlag()) {
             vibrate();
         }
-
         if (SettingsPreferencesUtils.getSoundEnabledFlag()) {
             sound();
         }
@@ -624,8 +623,7 @@ public class PomodoroService extends Service {
 
     private void sound() {
         try {
-            // TODO
-            String customSoundClipId = "";
+            String customSoundClipId = SettingsPreferencesUtils.getCustomSoundId();
             Ringtone r = RingtoneManager.getRingtone(this, getNotificationSoundUri(getApplicationContext(), customSoundClipId));
             r.play();
         } catch (Exception e) {
