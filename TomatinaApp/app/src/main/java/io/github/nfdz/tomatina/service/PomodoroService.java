@@ -123,6 +123,8 @@ public class PomodoroService extends Service {
                 case STOP_POMODORO_ACTION:
                     Timber.d("Stop command received");
                     handleStopPomodoro();
+                    resetState();
+                    overlayHandler.hide();
                     stopForegroundService();
                     break;
                 case CONTINUE_POMODORO_ACTION:
