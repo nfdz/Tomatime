@@ -1,6 +1,7 @@
 package io.github.nfdz.tomatina.historical.model;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 public class PomodoroHistoricalEntry implements Comparable<PomodoroHistoricalEntry> {
 
@@ -35,4 +36,28 @@ public class PomodoroHistoricalEntry implements Comparable<PomodoroHistoricalEnt
         return (o.lastTimestamp < lastTimestamp) ? -1 : ((o.lastTimestamp == lastTimestamp) ? 0 : 1);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PomodoroHistoricalEntry entry = (PomodoroHistoricalEntry) o;
+        return pomodorosCounter == entry.pomodorosCounter &&
+                lastTimestamp == entry.lastTimestamp &&
+                TextUtils.equals(infoKey, entry.infoKey) &&
+                TextUtils.equals(title, entry.title) &&
+                TextUtils.equals(notes, entry.notes) &&
+                TextUtils.equals(category, entry.category);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 31 * result + (infoKey == null ? 0 : infoKey.hashCode());
+        result = 31 * result + (title == null ? 0 : title.hashCode());
+        result = 31 * result + (notes == null ? 0 : notes.hashCode());
+        result = 31 * result + (category == null ? 0 : category.hashCode());
+        result = 31 * result + pomodorosCounter;
+        result = 31 * result + (int)(lastTimestamp ^ (lastTimestamp >>> 32));
+        return result;
+    }
 }

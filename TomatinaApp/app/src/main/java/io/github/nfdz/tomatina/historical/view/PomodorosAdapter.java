@@ -2,7 +2,9 @@ package io.github.nfdz.tomatina.historical.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.common.utils.SimpleDiffUtilListCallback;
 import io.github.nfdz.tomatina.historical.model.PomodoroHistoricalEntry;
 import timber.log.Timber;
 
@@ -27,6 +30,7 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
         void onDeletePomodoroClick(PomodoroHistoricalEntry entry);
     }
 
+    private final PomodoroEqualsStrategy strategy;
     private final LayoutInflater layoutInflater;
     private final Callback callback;
     private final int verticalMargin;
@@ -37,6 +41,7 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
     private List<PomodoroHistoricalEntry> data;
 
     public PomodorosAdapter(Context context, Callback callback) {
+        this.strategy = new PomodoroEqualsStrategy();
         this.callback = callback;
         this.layoutInflater = LayoutInflater.from(context);
         this.verticalMargin = context.getResources().getDimensionPixelSize(R.dimen.historical_pomodoro_margin_vertical);
@@ -46,8 +51,9 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
     }
 
     public void setData(List<PomodoroHistoricalEntry> data) {
+        DiffUtil.DiffResult result = DiffUtil.calculateDiff(new SimpleDiffUtilListCallback<>(this.data, data, strategy));
         this.data = data;
-        notifyDataSetChanged();
+        result.dispatchUpdatesTo(this);
     }
 
     @NonNull
@@ -127,6 +133,17 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
             }
         }
 
+    }
+
+    private static class PomodoroEqualsStrategy implements SimpleDiffUtilListCallback.EqualsStrategy<PomodoroHistoricalEntry> {
+        @Override
+        public boolean sameItem(PomodoroHistoricalEntry item1, PomodoroHistoricalEntry item2) {
+            return TextUtils.equals(item1.infoKey, item2.infoKey);
+        }
+        @Override
+        public boolean sameContent(PomodoroHistoricalEntry item1, PomodoroHistoricalEntry item2) {
+            return item1.equals(item2);
+        }
     }
 
 }
