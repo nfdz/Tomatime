@@ -49,6 +49,7 @@
     <string name="info_dialog_category_label">Category</string>
     <string name="info_dialog_save">Save</string>
     <string name="info_dialog_close">Close</string>
+    <string name="info_no_title_value">(no title)</string>
 
     <string name="info_conflict_dialog_title">Conflict</string>
     <string name="info_conflict_dialog_content">There are other pomodoros with the same title. \nIf you keep going, it will link with them. Do you want to replace its content or to use it as it is (notes and category)?</string>
@@ -57,7 +58,7 @@
     <string name="info_conflict_dialog_cancel">Cancel</string>
 
     <!-- Historical -->
-    <string name="historical_no_info_title">No title</string>
+    <string name="historical_no_info_title">(no info)</string>
     <string name="historical_no_categories">No categories</string>
     <string name="historical_pomodoros_counter_label">pomodoros</string>
 

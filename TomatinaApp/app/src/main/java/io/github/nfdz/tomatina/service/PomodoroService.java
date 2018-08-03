@@ -210,11 +210,12 @@ public class PomodoroService extends Service {
     private void handleStopPomodoro() {
         if (pomodoroId > 0) {
             final long id = pomodoroId;
+            final long finishTime = System.currentTimeMillis();
             TomatinaApp.REALM.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(@NonNull Realm realm) {
                     PomodoroRealm pomodoro = realm.where(PomodoroRealm.class).equalTo(PomodoroRealm.ID_FIELD, id).findFirst();
-                    pomodoro.setStartTimeMillis(System.currentTimeMillis());
+                    pomodoro.setStartTimeMillis(finishTime);
                     pomodoro.setState(PomodoroState.FINISHED);
                 }
             }, new Realm.Transaction.OnSuccess() {

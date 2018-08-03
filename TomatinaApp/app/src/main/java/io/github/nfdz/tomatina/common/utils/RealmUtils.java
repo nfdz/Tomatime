@@ -69,7 +69,7 @@ public class RealmUtils {
                                         boolean solveConflict,
                                         boolean overwriteIfNeed) {
         if (TextUtils.isEmpty(title)) {
-            title = TomatinaApp.INSTANCE.getString(R.string.historical_no_info_title);
+            title = TomatinaApp.INSTANCE.getString(R.string.info_no_title_value);
         }
         String key = PomodoroInfoRealm.buildKeyFromTitle(title);
         PomodoroRealm pomodoro = realm.where(PomodoroRealm.class).equalTo(PomodoroRealm.ID_FIELD, id).findFirst();
