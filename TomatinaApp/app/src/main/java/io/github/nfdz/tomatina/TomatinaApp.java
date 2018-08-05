@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatDelegate;
 
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
+import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatina.common.utils.RealmUtils;
+import io.github.nfdz.tomatina.common.utils.SettingsPreferencesUtils;
 import io.realm.Realm;
 import io.realm.Sort;
 import timber.log.Timber;
@@ -23,8 +25,7 @@ public class TomatinaApp extends Application {
         setupLogger();
         setupRealm();
         clearOutdatedPomodoroIfAny();
-
-        // TODO ask overlay permission to enable overlay by default
+        handleFirstTime();
     }
 
     private void setupLogger() {
@@ -52,6 +53,15 @@ public class TomatinaApp extends Application {
             REALM.commitTransaction();
         } catch (Exception e) {
             Timber.e(e, "There was an error clearing outdated pomodoro");
+        }
+    }
+
+    private void handleFirstTime() {
+        if (SettingsPreferencesUtils.getAndSetFirstTimeFlag()) {
+            // Enable overlay by default if it is possible
+            if (OverlayPermissionHelper.hasOverlayPermission(this)) {
+                SettingsPreferencesUtils.setOverlayViewFlag(true);
+            }
         }
     }
 

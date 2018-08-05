@@ -101,4 +101,13 @@ public class SettingsPreferencesUtils {
         getPreferences().edit().putBoolean(key, enabled).apply();
     }
 
+    public static boolean getAndSetFirstTimeFlag() {
+        String key = "first_time";
+        boolean value = getPreferences().getBoolean(key, true);
+        if (value) {
+            getPreferences().edit().putBoolean(key, false).apply();
+        }
+        return value;
+    }
+
 }
