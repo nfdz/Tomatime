@@ -263,6 +263,20 @@
         app:layout_constraintRight_toRightOf="@+id/home_guideline_anim" />
 
     <!-- Alert events views -->
+    <!--<ViewStub-->
+        <!--android:id="@+id/home_vs_continue"-->
+        <!--android:inflatedId="@+id/details"-->
+        <!--android:layout="@layout/"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+
+    <!--<ViewStub-->
+        <!--android:id="@+id/home_vs_break"-->
+        <!--android:inflatedId="@+id/details"-->
+        <!--android:layout="@layout/"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+
     <View
         android:id="@+id/home_layer_warn"
         android:layout_width="match_parent"

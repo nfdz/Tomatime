@@ -252,6 +252,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void updateView(PomodoroRealm pomodoroRealm) {
+        hideWarningLayer();
         this.shownPomodoroRealm = pomodoroRealm;
         if (pomodoroRealm == null) {
             showEmptyMode();
@@ -276,7 +277,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showEmptyMode() {
-        hideWarningLayer();
         // top section
         home_tv_state.setText(R.string.state_text_none);
         home_tv_progress_current.setText(getTimerTextFor(0));
@@ -305,7 +305,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showWorkingMode() {
-        hideWarningLayer();
         // top section
         home_tv_state.setText(R.string.state_text_working);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
@@ -338,7 +337,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showShortBreakMode() {
-        hideWarningLayer();
         // top section
         home_tv_state.setText(R.string.state_text_short_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
@@ -371,7 +369,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showLongBreakMode() {
-        hideWarningLayer();
         // top section
         home_tv_state.setText(R.string.state_text_long_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
