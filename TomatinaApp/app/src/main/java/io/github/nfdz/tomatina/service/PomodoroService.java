@@ -7,18 +7,12 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
-import android.text.TextUtils;
 
 import io.github.nfdz.tomatina.R;
 import io.github.nfdz.tomatina.TomatinaApp;
@@ -26,6 +20,7 @@ import io.github.nfdz.tomatina.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroRealm;
 import io.github.nfdz.tomatina.common.model.PomodoroState;
 import io.github.nfdz.tomatina.common.utils.LifecycleUtils;
+import io.github.nfdz.tomatina.common.utils.NotificationUtils;
 import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatina.common.utils.SettingsPreferencesUtils;
 import io.github.nfdz.tomatina.main.view.MainActivity;
@@ -71,9 +66,6 @@ public class PomodoroService extends Service {
 
     private static final long WATCHER_RATE_MILLIS = 1000;
     private static final long INSIST_FREQUENCY_MILLIS = 45000; // 45 sec
-
-    private static final long[] VIBRATION_PATTERN = new long[]{0, 1000, 100, 200, 100, 200, 100, 200, 100, 200, 100, 1000};
-    private static final  int[] VIBRATION_AMPLITUDES = new int[]{0, 255, 120, 255, 120, 255, 120, 255, 120, 255, 120, 255};
 
     private OverlayHandler overlayHandler;
     private Handler handler;
@@ -600,49 +592,13 @@ public class PomodoroService extends Service {
 
     private void alertIfNeeded() {
         if (vibrator != null && SettingsPreferencesUtils.getVibrationEnabledFlag()) {
-            vibrate();
+            NotificationUtils.vibrate(vibrator);
         }
         if (SettingsPreferencesUtils.getSoundEnabledFlag()) {
-            sound();
+            NotificationUtils.sound(this, SettingsPreferencesUtils.getCustomSoundId());
         }
     }
 
-    private void vibrate() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            if (vibrator.hasAmplitudeControl()) {
-                VibrationEffect effect = VibrationEffect.createWaveform(VIBRATION_PATTERN, VIBRATION_AMPLITUDES, -1);
-                vibrator.vibrate(effect);
-            } else {
-                VibrationEffect effect = VibrationEffect.createWaveform(VIBRATION_PATTERN, -1);
-                vibrator.vibrate(effect);
-            }
-        } else {
-            vibrator.vibrate(VIBRATION_PATTERN, -1);
-        }
-    }
 
-    private void sound() {
-        try {
-            String customSoundClipId = SettingsPreferencesUtils.getCustomSoundId();
-            Ringtone r = RingtoneManager.getRingtone(this, getNotificationSoundUri(getApplicationContext(), customSoundClipId));
-            r.play();
-        } catch (Exception e) {
-            Timber.e(e, "Cannot play event ringtone");
-        }
-    }
-
-    public static Uri getNotificationSoundUri(Context context, String soundClipId) {
-        if (!TextUtils.isEmpty(soundClipId)) {
-            RingtoneManager manager = new RingtoneManager(context);
-            manager.setType(RingtoneManager.TYPE_NOTIFICATION);
-            Cursor cursor = manager.getCursor();
-            while (cursor.moveToNext()) {
-                if (soundClipId.equals(cursor.getString(RingtoneManager.ID_COLUMN_INDEX))) {
-                    return Uri.parse(cursor.getString(RingtoneManager.URI_COLUMN_INDEX)+"/"+cursor.getString(RingtoneManager.ID_COLUMN_INDEX));
-                }
-            }
-        }
-        return RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-    }
 
 }

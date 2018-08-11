@@ -3,6 +3,7 @@ package io.github.nfdz.tomatina.settings.view;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -14,8 +15,10 @@ import android.support.v7.preference.SwitchPreferenceCompat;
 import java.util.ArrayList;
 
 import io.github.nfdz.tomatina.R;
+import io.github.nfdz.tomatina.common.utils.NotificationUtils;
 import io.github.nfdz.tomatina.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatina.common.utils.SettingsPreferencesUtils;
+import timber.log.Timber;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener, OverlayPermissionHelper.Callback {
@@ -122,6 +125,8 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 overlayPermissionHelper.request();
             }
             ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(overlayEnabled);
+        } else if (key.equals(getString(R.string.pref_sound_custom_key))) {
+            NotificationUtils.sound(getActivity(), SettingsPreferencesUtils.getCustomSoundId());
         }
     }
 
