@@ -46,6 +46,11 @@ public class HomeInteractor implements HomeContract.Interactor {
     }
 
     @Override
+    public void skipFinishStage() {
+        PomodoroService.skipFinishStage(TomatinaApp.INSTANCE);
+    }
+
+    @Override
     public void savePomodoroInfo(final long id,
                                  final String title,
                                  final String notes,

@@ -54,6 +54,12 @@ public class PomodoroService extends Service {
         context.startService(starter);
     }
 
+    public static void skipFinishStage(Context context) {
+        Intent starter = new Intent(context, PomodoroService.class);
+        starter.setAction(CONTINUE_POMODORO_ACTION);
+        context.startService(starter);
+    }
+
     public static final String CHANNEL_ID = "tomatina_channel";
     public static final int NOTIFICATION_ID = 5341;
 

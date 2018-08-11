@@ -19,6 +19,7 @@ public interface HomeContract {
         void onStartPomodoroClick();
         void onStopPomodoroClick();
         void onSkipStageClick();
+        void onContinueClick();
         void savePomodoroInfo(long id, String title, String notes, String category);
         void overwritePomodoroInfo(long id, String title, String notes, String category);
         void useExistingPomodoroInfo(long id, String title, String notes, String category);
@@ -31,6 +32,7 @@ public interface HomeContract {
         void startPomodoro();
         void stopPomodoro();
         void skipStage();
+        void skipFinishStage();
 
         interface SaveInfoCallback {
             void onSuccess();

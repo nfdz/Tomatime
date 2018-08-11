@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @BindView(R.id.home_guideline_anim) Guideline home_guideline_anim;
     @BindView(R.id.home_iv_anim) ImageView home_iv_anim;
     @BindView(R.id.home_layer_warn) View home_layer_warn;
+    @BindView(R.id.home_btn_continue) View home_btn_continue;
 
     private HomeContract.Presenter presenter;
     private LiveData<RealmResults<PomodoroRealm>> bindedData = null;
@@ -187,6 +188,11 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         }
     }
 
+    @OnClick(R.id.home_btn_continue)
+    public void onContinueClick() {
+        presenter.onContinueClick();
+    }
+
     @Override
     public void bindViewToLiveData(LiveData<RealmResults<PomodoroRealm>> data) {
         if (bindedData != null) {
@@ -251,7 +257,8 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void updateView(PomodoroRealm pomodoroRealm) {
-        hideWarningLayer();
+        hideBreakLayer();
+        hideContinue();
         this.shownPomodoroRealm = pomodoroRealm;
         if (pomodoroRealm == null) {
             showEmptyMode();
@@ -368,6 +375,8 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         home_btn_info_pomodoro.setAlpha(1f);
         home_btn_settings_pomodoro.setEnabled(false);
         home_btn_settings_pomodoro.setAlpha(ALPHA_DISABLED_BUTTON);
+
+        showBreakLayer();
     }
 
     private void showLongBreakMode() {
@@ -401,6 +410,8 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         home_btn_info_pomodoro.setAlpha(1f);
         home_btn_settings_pomodoro.setEnabled(false);
         home_btn_settings_pomodoro.setAlpha(ALPHA_DISABLED_BUTTON);
+
+        showBreakLayer();
     }
 
     private void setupIndicator(LinearLayout indicatorContainer, int progress, int total) {
@@ -555,24 +566,32 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     private void handleContinueToWork() {
         // TODO
-        showWarningLayer();
+        showContinue();
     }
 
     private void handleContinueToShortBreak() {
         // TODO
-        showWarningLayer();
+        showContinue();
     }
 
     private void handleContinueToLongBreak() {
         // TODO
-        showWarningLayer();
+        showContinue();
     }
 
-    private void showWarningLayer() {
+    private void showContinue() {
+        home_btn_continue.setVisibility(View.VISIBLE);
+    }
+
+    private void hideContinue() {
+        home_btn_continue.setVisibility(View.GONE);
+    }
+
+    private void showBreakLayer() {
         home_layer_warn.setVisibility(View.VISIBLE);
     }
 
-    private void hideWarningLayer() {
+    private void hideBreakLayer() {
         home_layer_warn.setVisibility(View.GONE);
     }
 

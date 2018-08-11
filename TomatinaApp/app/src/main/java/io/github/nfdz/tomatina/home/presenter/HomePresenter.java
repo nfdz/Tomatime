@@ -119,4 +119,11 @@ public class HomePresenter implements HomeContract.Presenter {
         }
     }
 
+    @Override
+    public void onContinueClick() {
+        if (view != null && interactor != null) {
+            interactor.skipFinishStage();
+        }
+    }
+
 }
