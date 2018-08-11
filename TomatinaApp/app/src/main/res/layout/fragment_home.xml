@@ -18,29 +18,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <View
-        android:id="@+id/home_bg_state"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/light_alpha_10"
-        app:layout_constraintTop_toTopOf="@+id/home_tv_state"
-        app:layout_constraintBottom_toBottomOf="@+id/home_tv_state"
-        app:layout_constraintLeft_toLeftOf="@+id/home_tv_state"
-        app:layout_constraintRight_toRightOf="@+id/home_tv_state" />
-
-    <TextView
-        android:id="@+id/home_tv_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/home_state_size"
-        tools:text="Work!"
-        android:textColor="@color/textColorLight"
-        android:padding="@dimen/home_bg_margin"
-        android:layout_marginTop="@dimen/home_state_margin_top"
-        app:layout_constraintTop_toBottomOf="@+id/home_tv_logo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
-
     <!-- Current progress -->
 
     <View
@@ -53,6 +30,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <View
+        android:id="@+id/home_bg_progress_fill"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/light_alpha_10"
+        app:layout_constraintTop_toTopOf="@+id/home_tv_progress_current"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@+id/home_guideline_anim" />
+
     <TextView
         android:id="@+id/home_tv_progress_current"
         android:layout_width="wrap_content"
@@ -63,7 +50,7 @@
         android:textSize="@dimen/home_progress_current_size"
         android:paddingTop="@dimen/home_bg_margin"
         android:paddingBottom="@dimen/home_bg_margin"
-        android:layout_marginBottom="@dimen/home_progress_current_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_logo"
         app:layout_constraintBottom_toTopOf="@+id/home_iv_global_working"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -76,6 +63,7 @@
         android:paddingTop="@dimen/home_bg_margin"
         android:paddingBottom="@dimen/home_bg_margin"
         android:textStyle="bold"
+        android:textSize="@dimen/home_progress_total_size"
         tools:text="/00:00"
         app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintLeft_toRightOf="@+id/home_tv_progress_current"/>
@@ -249,7 +237,7 @@
         android:id="@+id/home_guideline_anim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.15"
+        app:layout_constraintGuide_percent="0.0"
         android:orientation="vertical" />
 
     <ImageView
@@ -257,7 +245,6 @@
         android:layout_width="@dimen/home_progress_icon_size"
         android:layout_height="@dimen/home_progress_icon_size"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
-        app:layout_constraintTop_toBottomOf="@+id/home_tv_state"
         app:layout_constraintBottom_toTopOf="@+id/home_tv_progress_current"
         app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim"
         app:layout_constraintRight_toRightOf="@+id/home_guideline_anim" />

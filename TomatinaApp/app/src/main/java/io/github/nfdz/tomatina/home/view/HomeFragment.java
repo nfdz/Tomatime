@@ -58,7 +58,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     private static float ALPHA_DISABLED_BUTTON = 0.5f;
     private static int MAX_INDICATORS_TO_DRAW = 5;
 
-    @BindView(R.id.home_tv_state) TextView home_tv_state;
     @BindView(R.id.home_tv_progress_current) TextView home_tv_progress_current;
     @BindView(R.id.home_tv_progress_total) TextView home_tv_progress_total;
     @BindView(R.id.home_iv_global_working) ImageView home_iv_global_working;
@@ -278,7 +277,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     private void showEmptyMode() {
         // top section
-        home_tv_state.setText(R.string.state_text_none);
         home_tv_progress_current.setText(getTimerTextFor(0));
         home_tv_progress_total.setText("/ " + getTimerTextFor(0));
         setStageProgressBar(0);
@@ -306,7 +304,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     private void showWorkingMode() {
         // top section
-        home_tv_state.setText(R.string.state_text_working);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
@@ -341,7 +338,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     private void showShortBreakMode() {
         // top section
-        home_tv_state.setText(R.string.state_text_short_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
@@ -376,7 +372,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     private void showLongBreakMode() {
         // top section
-        home_tv_state.setText(R.string.state_text_long_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
@@ -448,8 +443,9 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void setStageProgressBar(float ratio) {
-        float adaptedRatio = ratio * 0.7f + 0.15f;
-        home_guideline_anim.setGuidelinePercent(adaptedRatio);
+        // TODO
+        //float adaptedRatio = ratio * 0.7f + 0.15f;
+        home_guideline_anim.setGuidelinePercent(ratio);
     }
 
     private String getTimerTextFor(long time) {
