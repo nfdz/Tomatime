@@ -308,10 +308,13 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         // top section
         home_tv_state.setText(R.string.state_text_working);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
-        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getPomodoroTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
+        if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) {
+            ellapsedTime = shownPomodoroRealm.getPomodoroTimeInMillis();
+        }
+        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
+        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getPomodoroTimeInMillis()));
         setStageProgressBar(progress / 100f);
         if (progress == 100) handleWaitingContinueEvent();
         // TODO icono home_iv_anim.setImageResource();
@@ -340,10 +343,13 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         // top section
         home_tv_state.setText(R.string.state_text_short_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
-        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getShortBreakTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
+        if (ellapsedTime > shownPomodoroRealm.getShortBreakTimeInMillis()) {
+            ellapsedTime = shownPomodoroRealm.getShortBreakTimeInMillis();
+        }
+        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
+        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getShortBreakTimeInMillis()));
         setStageProgressBar(progress / 100f);
         if (progress == 100) handleWaitingContinueEvent();
         // TODO icono home_iv_anim.setImageResource();
@@ -372,10 +378,13 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         // top section
         home_tv_state.setText(R.string.state_text_long_break);
         long ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
-        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
-        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getLongBreakTimeInMillis()));
         int progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
         progress = Math.min(progress, 100);
+        if (ellapsedTime > shownPomodoroRealm.getLongBreakTimeInMillis()) {
+            ellapsedTime = shownPomodoroRealm.getLongBreakTimeInMillis();
+        }
+        home_tv_progress_current.setText(getTimerTextFor(ellapsedTime));
+        home_tv_progress_total.setText("/ " + getTimerTextFor(shownPomodoroRealm.getLongBreakTimeInMillis()));
         setStageProgressBar(progress / 100f);
         // TODO icono home_iv_anim.setImageResource();
 
@@ -446,7 +455,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     private String getTimerTextFor(long time) {
         long minutesRaw = TimeUnit.MILLISECONDS.toMinutes(time);
         if (minutesRaw > 60) {
-            return "+60:00";
+            return "+59:59";
         }
         String minutes = Long.toString(minutesRaw);
         if (minutes.length() == 1) {
@@ -484,16 +493,19 @@ public class HomeFragment extends Fragment implements HomeContract.View,
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
                                 progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getPomodoroTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getPomodoroTimeInMillis();
+                                if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) ellapsedTime = shownPomodoroRealm.getPomodoroTimeInMillis();
                                 break;
                             case PomodoroState.SHORT_BREAK:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
                                 progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getShortBreakTimeInMillis();
+                                if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) ellapsedTime = shownPomodoroRealm.getShortBreakTimeInMillis();
                                 break;
                             case PomodoroState.LONG_BREAK:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
                                 progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getLongBreakTimeInMillis();
+                                if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) ellapsedTime = shownPomodoroRealm.getLongBreakTimeInMillis();
                                 break;
                             case PomodoroState.FINISHED:
                             case PomodoroState.NONE:
