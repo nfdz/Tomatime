@@ -495,13 +495,13 @@ public class HomeFragment extends Fragment implements HomeContract.View,
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
                                 progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getShortBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getShortBreakTimeInMillis();
-                                if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) ellapsedTime = shownPomodoroRealm.getShortBreakTimeInMillis();
+                                if (ellapsedTime > shownPomodoroRealm.getShortBreakTimeInMillis()) ellapsedTime = shownPomodoroRealm.getShortBreakTimeInMillis();
                                 break;
                             case PomodoroState.LONG_BREAK:
                                 ellapsedTime = System.currentTimeMillis() - shownPomodoroRealm.getStartTimeMillis();
                                 progress = (int) (((ellapsedTime + 0.0f) / shownPomodoroRealm.getLongBreakTimeInMillis()) * 100);
                                 maxTime = shownPomodoroRealm.getLongBreakTimeInMillis();
-                                if (ellapsedTime > shownPomodoroRealm.getPomodoroTimeInMillis()) ellapsedTime = shownPomodoroRealm.getLongBreakTimeInMillis();
+                                if (ellapsedTime > shownPomodoroRealm.getLongBreakTimeInMillis()) ellapsedTime = shownPomodoroRealm.getLongBreakTimeInMillis();
                                 break;
                             case PomodoroState.FINISHED:
                             case PomodoroState.NONE:
