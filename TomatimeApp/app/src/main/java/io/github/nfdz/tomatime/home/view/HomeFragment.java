@@ -579,6 +579,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void handleContinueToWork() {
+        hideBreakLayer();
         showContinue();
     }
 
