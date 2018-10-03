@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import io.github.nfdz.tomatime.R;
 import io.github.nfdz.tomatime.TomatimeApp;
@@ -124,28 +125,34 @@ public class PomodoroService extends Service {
         if (intent != null) {
             String action = intent.getAction();
             action = action == null ? "" : action;
+            long timestamp = System.currentTimeMillis();
             switch (action) {
                 case START_POMODORO_ACTION:
                     Timber.d("Start command received");
-                    infoKey = intent.getStringExtra(INFO_KEY_EXTRA);
-                    handleStopPomodoro();
-                    resetState();
-                    handleStartPomodoro();
+                    String newInfoKey = intent.getStringExtra(INFO_KEY_EXTRA);
+                    if (pomodoroId <= 0 || !TextUtils.equals(newInfoKey, infoKey)) {
+                        infoKey = newInfoKey;
+                        handleStopPomodoro(timestamp);
+                        resetState();
+                        handleStartPomodoro(timestamp + 1);
+                    } else {
+                        Timber.d("Avoid start command because it is already ongoing");
+                    }
                     break;
                 case STOP_POMODORO_ACTION:
                     Timber.d("Stop command received");
-                    handleStopPomodoro();
+                    handleStopPomodoro(timestamp);
                     resetState();
                     overlayHandler.hide();
                     stopForegroundService();
                     break;
                 case CONTINUE_POMODORO_ACTION:
                     Timber.d("Continue command received");
-                    handleContinuePomodoro();
+                    handleContinuePomodoro(timestamp);
                     break;
                 case SKIP_STAGE_ACTION:
                     Timber.d("Skip command received");
-                    handleSkipStage();
+                    handleSkipStage(timestamp);
                     break;
             }
         }
@@ -164,11 +171,11 @@ public class PomodoroService extends Service {
         waitingContinue = false;
     }
 
-    private void handleStartPomodoro() {
+    private void handleStartPomodoro(long timestamp) {
         if (pomodoroId <= 0) {
-            final long id = System.currentTimeMillis();
+            final long id = timestamp;
             final int state = PomodoroState.WORKING;
-            final long startTime = System.currentTimeMillis();
+            final long startTime = timestamp;
             final long pomodoroTimeInMillis = SettingsPreferencesUtils.getPomodoroTimeInMillis();
             final long shortBreakTimeInMillis = SettingsPreferencesUtils.getShortBreakTimeInMillis();
             final long longBreakTimeInMillis = SettingsPreferencesUtils.getLongBreakTimeInMillis();
@@ -221,10 +228,10 @@ public class PomodoroService extends Service {
         }
     }
 
-    private void handleStopPomodoro() {
+    private void handleStopPomodoro(long timestamp) {
         if (pomodoroId > 0) {
             final long id = pomodoroId;
-            final long finishTime = System.currentTimeMillis();
+            final long finishTime = timestamp;
             TomatimeApp.REALM.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(@NonNull Realm realm) {
@@ -246,7 +253,7 @@ public class PomodoroService extends Service {
         }
     }
 
-    private void handleContinuePomodoro() {
+    private void handleContinuePomodoro(long timestamp) {
         if (pomodoroId > 0 && waitingContinue) {
             waitingContinue = false;
             final int nextState;
@@ -269,7 +276,7 @@ public class PomodoroService extends Service {
                 notifText = getString(R.string.notif_working_text);
             }
             pomodoroState = nextState;
-            final long now = System.currentTimeMillis();
+            final long now = timestamp;
             stateStartTime = now;
             final long id = pomodoroId;
             final int counter = pomodoroCounter;
@@ -302,7 +309,7 @@ public class PomodoroService extends Service {
         }
     }
 
-    private void handleSkipStage() {
+    private void handleSkipStage(long timestamp) {
         if (pomodoroId > 0) {
             final int nextState;
             String notifTitle;
@@ -328,7 +335,7 @@ public class PomodoroService extends Service {
                 notifText = getString(R.string.notif_restart_text);
             }
             pomodoroState = nextState;
-            final long now = System.currentTimeMillis();
+            final long now = timestamp;
             stateStartTime = now;
             final long id = pomodoroId;
             final int counter = pomodoroCounter;
@@ -496,7 +503,7 @@ public class PomodoroService extends Service {
                                 if (now > (stateStartTime + longBreakTimeInMillis)) {
                                     waitingContinue = true;
                                     waitingContinueTimestamp = now;
-                                    handlePomodoroFinish();
+                                    handlePomodoroFinish(now);
                                     alertIfNeeded();
                                 }
                                 break;
@@ -557,13 +564,13 @@ public class PomodoroService extends Service {
         triggerWaitingContinueBroadcast();
     }
 
-    private void handlePomodoroFinish() {
+    private void handlePomodoroFinish(final long timestamp) {
         final long id = pomodoroId;
         TomatimeApp.REALM.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm realm) {
                 PomodoroRealm pomodoro = realm.where(PomodoroRealm.class).equalTo(PomodoroRealm.ID_FIELD, id).findFirst();
-                pomodoro.setStartTimeMillis(System.currentTimeMillis());
+                pomodoro.setStartTimeMillis(timestamp);
                 pomodoro.setState(PomodoroState.FINISHED);
             }
         }, new Realm.Transaction.OnSuccess() {

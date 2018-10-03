@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +107,9 @@ public class HistoricalFragment extends Fragment implements HistoricalContract.V
     @Override
     public void showPomodoroInfoDialog(PomodoroHistoricalEntry entry) {
         this.dialogEntry = entry;
-        PomodoroInfoDialog dialog = PomodoroInfoDialog.newInstance(entry.title, entry.notes, entry.category);
+        PomodoroInfoDialog dialog = TextUtils.isEmpty(entry.infoKey) ?
+                PomodoroInfoDialog.newInstance("", "", "")
+                : PomodoroInfoDialog.newInstance(entry.title, entry.notes, entry.category);
         dialog.setCallback(this);
         dialog.show(getFragmentManager(), "pomodoro_info_dialog");
     }

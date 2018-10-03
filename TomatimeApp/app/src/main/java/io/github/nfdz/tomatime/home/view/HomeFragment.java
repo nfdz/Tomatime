@@ -125,10 +125,10 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         } else {
             onChanged(null);
         }
-        registeWaitingReceiver();
+        registerWaitingReceiver();
     }
 
-    private void registeWaitingReceiver() {
+    private void registerWaitingReceiver() {
         try {
             IntentFilter filter = new IntentFilter(PomodoroService.CONTINUE_POMODORO_ACTION);
             getActivity().registerReceiver(waitingContinueReceiver, filter);
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
 
     @Override
     public void onStop() {
-        unregisteWaitingReceiver();
+        unregisterWaitingReceiver();
         if (bindedData != null) {
             bindedData.removeObservers(this);
         }
@@ -150,7 +150,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         super.onStop();
     }
 
-    private void unregisteWaitingReceiver() {
+    private void unregisterWaitingReceiver() {
         try {
             getActivity().unregisterReceiver(waitingContinueReceiver);
         } catch (Exception e) {
