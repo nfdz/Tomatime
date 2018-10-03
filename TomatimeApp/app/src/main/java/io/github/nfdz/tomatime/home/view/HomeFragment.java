@@ -57,9 +57,9 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         return new HomeFragment();
     }
 
-    private static long CLOCK_RATE_MILLIS = 1000;
-    private static float ALPHA_DISABLED_BUTTON = 0.5f;
-    private static int MAX_INDICATORS_TO_DRAW = 4;
+    private static final long CLOCK_RATE_MILLIS = 1000;
+    private static final float ALPHA_DISABLED_BUTTON = 0.5f;
+    private static final int MAX_INDICATORS_TO_DRAW = 4;
 
     @BindView(R.id.home_tv_progress_current) TextView home_tv_progress_current;
     @BindView(R.id.home_tv_progress_total) TextView home_tv_progress_total;
@@ -76,8 +76,8 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @BindView(R.id.home_guideline_anim) Guideline home_guideline_anim;
     @BindView(R.id.home_iv_anim) ImageView home_iv_anim;
     @BindView(R.id.home_bg_progress_fill_indicator) View home_bg_progress_fill_indicator;
-    @BindView(R.id.home_layer_warn) View home_layer_warn;
-    @BindView(R.id.home_btn_continue) View home_btn_continue;
+    @BindView(R.id.home_cl_continue) View home_cl_continue;
+    @BindView(R.id.home_cl_break) View home_cl_break;
 
     private HomeContract.Presenter presenter;
     private LiveData<RealmResults<PomodoroRealm>> bindedData = null;
@@ -196,6 +196,11 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @OnClick(R.id.home_btn_continue)
     public void onContinueClick() {
         presenter.onContinueClick();
+    }
+
+    @OnClick(R.id.home_iv_break_close)
+    public void onCloseBreakLayerClick() {
+        hideBreakLayer();
     }
 
     @Override
@@ -574,34 +579,31 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void handleContinueToWork() {
-        // TODO
         showContinue();
     }
 
     private void handleContinueToShortBreak() {
-        // TODO
         showContinue();
     }
 
     private void handleContinueToLongBreak() {
-        // TODO
         showContinue();
     }
 
     private void showContinue() {
-        home_btn_continue.setVisibility(View.VISIBLE);
+        home_cl_continue.setVisibility(View.VISIBLE);
     }
 
     private void hideContinue() {
-        home_btn_continue.setVisibility(View.GONE);
+        home_cl_continue.setVisibility(View.GONE);
     }
 
     private void showBreakLayer() {
-        home_layer_warn.setVisibility(View.VISIBLE);
+        home_cl_break.setVisibility(View.VISIBLE);
     }
 
     private void hideBreakLayer() {
-        home_layer_warn.setVisibility(View.GONE);
+        home_cl_break.setVisibility(View.GONE);
     }
 
     private void setWorkingGif() {

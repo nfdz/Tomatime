@@ -262,7 +262,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim"
         app:layout_constraintRight_toRightOf="@+id/home_guideline_anim"/>
 
-    <!-- Alert events views -->
+    <!-- TODO move alert views to view stubs -->
     <!--<ViewStub-->
         <!--android:id="@+id/home_vs_continue"-->
         <!--android:inflatedId="@+id/details"-->
@@ -270,40 +270,80 @@
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content" />-->
 
-    <!--<ViewStub-->
-        <!--android:id="@+id/home_vs_break"-->
-        <!--android:inflatedId="@+id/details"-->
-        <!--android:layout="@layout/"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content" />-->
-
-    <View
-        android:id="@+id/home_layer_warn"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark_alpha_75"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/home_cl_continue"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_radial_gradient"
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/home_btn_continue"
+        <Button
+            android:id="@+id/home_btn_continue"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/home_continue_height"
+            android:background="@color/colorAccent"
+            android:foreground="?attr/selectableItemBackground"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:text="@string/home_continue"
+            android:textSize="@dimen/home_continue_text_size"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/home_cl_break"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorAccent"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:text="¿Continue?"
+        android:background="@drawable/shape_radial_gradient"
+        android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:textColor="@android:color/black"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/home_iv_anim"
-        app:layout_constraintBottom_toBottomOf="@+id/home_iv_anim"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/home_iv_break_close"
+            android:layout_width="@dimen/home_break_layer_close_size"
+            android:layout_height="@dimen/home_break_layer_close_size"
+            app:srcCompat="@drawable/ic_close"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toTopOf="@+id/home_iv_break"
+            app:layout_constraintLeft_toRightOf="@+id/home_iv_break"/>
+
+        <ImageView
+            android:id="@+id/home_iv_break"
+            android:layout_width="@dimen/home_break_layer_icon_size"
+            android:layout_height="@dimen/home_break_layer_icon_size"
+            app:srcCompat="@mipmap/ic_launcher"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/home_tv_break"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_break_message"
+            android:textSize="@dimen/home_break_layer_text_size"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@+id/home_iv_break"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

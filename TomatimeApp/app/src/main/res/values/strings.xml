@@ -36,6 +36,8 @@
     <!-- Home -->
     <string name="home_save_info_error">Ups! Information cannot be saved :(</string>
     <string name="home_delete_info_error">Ups! Information cannot be removed :(</string>
+    <string name="home_continue">Continue</string>
+    <string name="home_break_message">Let\'s procrastinate!</string>
 
     <!-- States -->
     <string name="state_text_working">Stop procrastinating! Work! Go!</string>
