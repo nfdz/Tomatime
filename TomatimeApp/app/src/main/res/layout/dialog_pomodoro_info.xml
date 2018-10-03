@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/info_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_dialog_title_label"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:textSize="@dimen/info_label_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="?dialogPreferredPadding"
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingRight="?dialogPreferredPadding" />
+
+    <EditText
+        android:id="@+id/info_et_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorDark"
+        android:maxLength="50"
+        android:maxLines="1"
+        android:inputType="text"
+        android:textStyle="bold"
+        android:layout_marginLeft="?dialogPreferredPadding"
+        android:layout_marginRight="?dialogPreferredPadding"
+        app:layout_constraintTop_toBottomOf="@+id/info_tv_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/info_tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_dialog_category_label"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:textSize="@dimen/info_label_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_et_title"
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingRight="?dialogPreferredPadding" />
+
+    <EditText
+        android:id="@+id/info_et_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLength="50"
+        android:textColor="@color/textColorDark"
+        android:maxLines="1"
+        android:inputType="text"
+        android:layout_marginLeft="?dialogPreferredPadding"
+        android:layout_marginRight="?dialogPreferredPadding"
+        app:layout_constraintTop_toBottomOf="@+id/info_tv_category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/info_tv_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/info_dialog_notes_label"
+        android:textStyle="bold"
+        android:textColor="@color/textColorDark"
+        android:textSize="@dimen/info_label_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/info_et_category"
+        android:paddingLeft="?dialogPreferredPadding"
+        android:paddingRight="?dialogPreferredPadding" />
+
+    <EditText
+        android:id="@+id/info_et_notes"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/info_notes_height"
+        android:maxLength="1024"
+        android:textColor="@color/textColorDark"
+        android:inputType="textMultiLine"
+        android:maxLines="200"
+        android:overScrollMode="always"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="vertical"
+        android:layout_marginLeft="?dialogPreferredPadding"
+        android:layout_marginRight="?dialogPreferredPadding"
+        app:layout_constraintTop_toBottomOf="@+id/info_tv_notes"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

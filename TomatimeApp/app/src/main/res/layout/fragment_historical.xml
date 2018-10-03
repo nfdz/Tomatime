@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/historical_tv_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/historical_categories_label"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:textSize="@dimen/info_label_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/historical_category_padding_vertical"
+        android:layout_marginLeft="@dimen/historical_category_padding_horizontal"
+        android:layout_marginStart="@dimen/historical_category_padding_horizontal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/historical_rv_categories"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/historical_categories_height"
+        android:background="@color/light_alpha_10"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/historical_category_padding_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/historical_tv_categories"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/historical_tv_no_categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorDark"
+        android:textSize="@dimen/historical_category_text_size"
+        android:text="@string/historical_no_categories"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="@+id/historical_rv_categories"
+        app:layout_constraintRight_toRightOf="@+id/historical_rv_categories"
+        app:layout_constraintTop_toTopOf="@+id/historical_rv_categories"
+        app:layout_constraintBottom_toBottomOf="@+id/historical_rv_categories"/>
+
+    <TextView
+        android:id="@+id/historical_tv_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/historical_records_label"
+        android:textColor="@color/textColorDark"
+        android:textStyle="bold"
+        android:textSize="@dimen/info_label_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/historical_rv_categories"
+        android:layout_marginTop="@dimen/historical_category_padding_vertical"
+        android:layout_marginLeft="@dimen/historical_category_padding_horizontal"
+        android:layout_marginStart="@dimen/historical_category_padding_horizontal" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/historical_rv_pomodoros"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:layout_marginTop="@dimen/historical_category_padding_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/historical_tv_records"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/historical_tv_no_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/textColorDark"
+        android:textSize="@dimen/historical_category_text_size"
+        android:text="@string/historical_no_records"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/historical_category_padding_vertical"
+        app:layout_constraintLeft_toLeftOf="@+id/historical_rv_pomodoros"
+        app:layout_constraintRight_toRightOf="@+id/historical_rv_pomodoros"
+        app:layout_constraintTop_toTopOf="@+id/historical_rv_pomodoros"/>
+
+</android.support.constraint.ConstraintLayout>
