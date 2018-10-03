@@ -66,23 +66,27 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     }
 
     private void setupAvailableSounds() {
-        RingtoneManager manager = new RingtoneManager(getActivity());
-        manager.setType(RingtoneManager.TYPE_NOTIFICATION);
-        Cursor cursor = manager.getCursor();
-        ArrayList<String> names = new ArrayList<>();
-        ArrayList<String> ids = new ArrayList<>();
-        String defaultSound = getString(R.string.pref_sound_custom_default);
-        names.add(defaultSound);
-        ids.add(defaultSound);
-        while (cursor.moveToNext()) {
-            String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
-            String name = cursor.getString((RingtoneManager.TITLE_COLUMN_INDEX));
-            names.add(name);
-            ids.add(id);
+        try {
+            RingtoneManager manager = new RingtoneManager(getActivity());
+            manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+            Cursor cursor = manager.getCursor();
+            ArrayList<String> names = new ArrayList<>();
+            ArrayList<String> ids = new ArrayList<>();
+            String defaultSound = getString(R.string.pref_sound_custom_default);
+            names.add(defaultSound);
+            ids.add(defaultSound);
+            while (cursor.moveToNext()) {
+                String id = cursor.getString(RingtoneManager.ID_COLUMN_INDEX);
+                String name = cursor.getString((RingtoneManager.TITLE_COLUMN_INDEX));
+                names.add(name);
+                ids.add(id);
+            }
+            ListPreference customSoundPref = (ListPreference) findPreference(getString(R.string.pref_sound_custom_key));
+            customSoundPref.setEntries(names.toArray(new String[]{}));
+            customSoundPref.setEntryValues(ids.toArray(new String[]{}));
+        } catch (Exception e) {
+            Timber.e(e, "Cannot setup available sounds");
         }
-        ListPreference customSoundPref = (ListPreference) findPreference(getString(R.string.pref_sound_custom_key));
-        customSoundPref.setEntries(names.toArray(new String[]{}));
-        customSoundPref.setEntryValues(ids.toArray(new String[]{}));
     }
 
     @Override
