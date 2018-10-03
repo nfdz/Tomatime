@@ -4,7 +4,7 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "io.github.nfdz.tomatina"
+        applicationId "io.github.nfdz.tomatime"
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1

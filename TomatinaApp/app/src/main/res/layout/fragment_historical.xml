@@ -19,7 +19,7 @@
         android:id="@+id/historical_tv_no_categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColorLight"
+        android:textColor="@color/textColorDark"
         android:textStyle="bold"
         android:textSize="@dimen/historical_category_text_size"
         android:text="@string/historical_no_categories"

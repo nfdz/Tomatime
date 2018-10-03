@@ -3,11 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <android.support.v7.preference.PreferenceCategory
+    <io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory
         android:title="@string/prefs_pomodoro_title"
         android:key="@string/prefs_pomodoro_key">
 
-        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+        <io.github.nfdz.tomatime.settings.view.NumberPickerPreference
             android:key="@string/pref_pomodoro_time_key"
             android:title="@string/pref_pomodoro_time_title"
             android:defaultValue="@string/pref_pomodoro_time_default"
@@ -16,7 +16,7 @@
             app:suffix="@string/settings_unit_minutes"
             style="@style/AppPreference.DialogPreference" />
 
-        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+        <io.github.nfdz.tomatime.settings.view.NumberPickerPreference
             android:key="@string/pref_short_break_time_key"
             android:title="@string/pref_short_break_time_title"
             android:defaultValue="@string/pref_short_break_time_default"
@@ -25,7 +25,7 @@
             app:suffix="@string/settings_unit_minutes"
             style="@style/AppPreference.DialogPreference" />
 
-        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+        <io.github.nfdz.tomatime.settings.view.NumberPickerPreference
             android:key="@string/pref_long_break_time_key"
             android:title="@string/pref_long_break_time_title"
             android:defaultValue="@string/pref_long_break_time_default"
@@ -34,7 +34,7 @@
             app:suffix="@string/settings_unit_minutes"
             style="@style/AppPreference.DialogPreference" />
 
-        <io.github.nfdz.tomatina.settings.view.NumberPickerPreference
+        <io.github.nfdz.tomatime.settings.view.NumberPickerPreference
             android:key="@string/pref_pomodoros_to_long_break_key"
             android:title="@string/pref_pomodoros_to_long_break_title"
             android:defaultValue="@string/pref_pomodoros_to_long_break_default"
@@ -48,9 +48,9 @@
             android:key="@string/pref_restore_default_key"
             android:summary="@string/pref_restore_default_summary"/>
 
-    </android.support.v7.preference.PreferenceCategory>
+    </io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
+    <io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory
         android:title="@string/prefs_behaviour_title"
         android:key="@string/prefs_behaviour_key">
 
@@ -68,9 +68,9 @@
             android:defaultValue="@string/pref_insist_default"
             style="@style/AppPreference.DialogPreference"/>
 
-    </android.support.v7.preference.PreferenceCategory>
+    </io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory
+    <io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory
         android:title="@string/prefs_notification_title"
         android:key="@string/prefs_notification_key">
 
@@ -98,6 +98,6 @@
             android:summary="%s"
             style="@style/AppPreference.DialogPreference" />
 
-    </android.support.v7.preference.PreferenceCategory>
+    </io.github.nfdz.tomatime.settings.view.DarkPreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

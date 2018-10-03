@@ -2,6 +2,6 @@
 <fragment
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/settings_fragment"
-    android:name="io.github.nfdz.tomatina.settings.view.SettingsFragment"
+    android:name="io.github.nfdz.tomatime.settings.view.SettingsFragment"
     android:layout_height="match_parent"
     android:layout_width="match_parent"/>

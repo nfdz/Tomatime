@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -10,11 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
-        tools:text="Tomatina"
+        tools:text="Tomatime"
         android:textSize="@dimen/home_logo_font_size"
-        android:layout_marginTop="@dimen/home_logo_margin_top"
-        android:textStyle="bold"
+        android:fontFamily="@font/product_sans_regular"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/home_iv_anim"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
@@ -24,7 +25,7 @@
         android:id="@+id/home_bg_progress"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/light_alpha_10"
+        android:background="@color/dark_alpha_10"
         app:layout_constraintTop_toTopOf="@+id/home_tv_progress_current"
         app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,7 +35,7 @@
         android:id="@+id/home_bg_progress_fill"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/light_alpha_10"
+        android:background="@color/dark_alpha_30"
         app:layout_constraintTop_toTopOf="@+id/home_tv_progress_current"
         app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -44,14 +45,14 @@
         android:id="@+id/home_tv_progress_current"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColorLight"
+        android:textColor="@color/colorPrimary"
         tools:text="00:00"
         android:textStyle="bold"
         android:textSize="@dimen/home_progress_current_size"
         android:paddingTop="@dimen/home_bg_margin"
         android:paddingBottom="@dimen/home_bg_margin"
-        app:layout_constraintTop_toBottomOf="@+id/home_tv_logo"
-        app:layout_constraintBottom_toTopOf="@+id/home_iv_global_working"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
@@ -59,7 +60,7 @@
         android:id="@+id/home_tv_progress_total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/textColorLight"
+        android:textColor="@color/colorPrimary"
         android:paddingTop="@dimen/home_bg_margin"
         android:paddingBottom="@dimen/home_bg_margin"
         android:textStyle="bold"
@@ -73,7 +74,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
-        android:background="@color/light"
+        android:background="@color/dark"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_working"
         app:layout_constraintTop_toTopOf="@+id/home_iv_global_working"
@@ -85,7 +86,7 @@
         android:layout_height="@dimen/home_global_progress_section_size"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
         android:background="@drawable/selector_shape_progress"
-        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_short_break"/>
@@ -104,7 +105,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
-        android:background="@color/light"
+        android:background="@color/dark"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_working"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_short_break"
         app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
@@ -116,7 +117,7 @@
         android:layout_height="@dimen/home_global_progress_section_size"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
         android:background="@drawable/selector_shape_progress"
-        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_working"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_long_break"/>
@@ -135,7 +136,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
-        android:background="@color/light"
+        android:background="@color/dark"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_short_break"
         app:layout_constraintRight_toLeftOf="@+id/home_iv_global_long_break"
         app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
@@ -147,7 +148,7 @@
         android:layout_height="@dimen/home_global_progress_section_size"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
         android:background="@drawable/selector_shape_progress"
-        android:layout_marginBottom="@dimen/home_global_progress_section_margin_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_progress_current"
         app:layout_constraintBottom_toTopOf="@+id/home_btn_toggle_pomodoro"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_short_break"
         app:layout_constraintRight_toRightOf="parent"/>
@@ -166,7 +167,7 @@
     <View
         android:layout_width="0dp"
         android:layout_height="@dimen/home_line_width"
-        android:background="@color/light"
+        android:background="@color/dark"
         app:layout_constraintLeft_toRightOf="@+id/home_iv_global_long_break"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_iv_global_short_break"
@@ -240,14 +241,23 @@
         app:layout_constraintGuide_percent="0.0"
         android:orientation="vertical" />
 
+    <View
+        android:id="@+id/home_bg_progress_fill_indicator"
+        android:layout_width="@dimen/home_progress_indicator_size"
+        android:layout_height="@dimen/home_progress_indicator_size"
+        android:background="@drawable/shape_triangle_dark"
+        app:layout_constraintTop_toBottomOf="@+id/home_tv_progress_current"
+        app:layout_constraintBottom_toBottomOf="@+id/home_tv_progress_current"
+        app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim"
+        app:layout_constraintRight_toRightOf="@+id/home_guideline_anim"/>
+
     <ImageView
         android:id="@+id/home_iv_anim"
         android:layout_width="@dimen/home_progress_icon_size"
         android:layout_height="@dimen/home_progress_icon_size"
         app:srcCompat="@android:drawable/ic_dialog_dialer"
         app:layout_constraintBottom_toTopOf="@+id/home_tv_progress_current"
-        app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim"
-        app:layout_constraintRight_toRightOf="@+id/home_guideline_anim" />
+        app:layout_constraintLeft_toLeftOf="@+id/home_guideline_anim" />
 
     <!-- Alert events views -->
     <!--<ViewStub-->

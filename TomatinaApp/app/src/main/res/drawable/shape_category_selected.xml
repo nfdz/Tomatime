@@ -4,9 +4,9 @@
 
     <stroke
         android:width="4dp"
-        android:color="@color/light" />
+        android:color="@color/colorPrimary" />
 
-    <solid android:color="@color/light" />
+    <solid android:color="@color/colorPrimary" />
 
     <corners android:radius="@dimen/historical_category_radius" />
 

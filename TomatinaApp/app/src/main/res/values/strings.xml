@@ -1,7 +1,7 @@
 <resources>
 
-    <string name="app_name">Tomatina</string>
-    <string name="channel_name">Tomatina</string>
+    <string name="app_name">Tomatime</string>
+    <string name="channel_name">Tomatime Pomodoro</string>
     <string name="channel_description">Pomodoro notifications</string>
 
     <!-- Notification -->
@@ -43,7 +43,6 @@
     <string name="state_text_none">What are you waiting for?</string>
 
     <!-- Pomodoro Info dialog -->
-    <string name="info_dialog_title">Information</string>
     <string name="info_dialog_title_label">Title</string>
     <string name="info_dialog_notes_label">Notes</string>
     <string name="info_dialog_category_label">Category</string>
@@ -60,7 +59,7 @@
     <!-- Historical -->
     <string name="historical_no_info_title">(no info)</string>
     <string name="historical_no_categories">No categories</string>
-    <string name="historical_pomodoros_counter_label">pomodoros</string>
+    <string name="historical_duration_min_unit">min</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>

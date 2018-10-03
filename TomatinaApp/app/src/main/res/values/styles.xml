@@ -1,28 +1,29 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/textColorLight</item>
+        <item name="android:textColor">@color/textColorDark</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:windowBackground">@color/light</item>
         <item name="android:alertDialogTheme">@style/AppAlertDialog</item>
     </style>
 
-    <style name="SettingsTheme" parent="Theme.AppCompat">
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">@color/textColorLight</item>
-        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textColorDark</item>
+        <item name="android:windowBackground">@color/light</item>
         <item name="actionBarStyle">@style/SettingsTheme.ActionBar</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
-    <style name="SettingsTheme.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+    <style name="SettingsTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@color/light</item>
         <!-- remove shadow below action bar -->
         <!-- <item name="android:elevation">0dp</item> -->
         <!-- Support library compatibility -->
@@ -39,20 +40,20 @@
         <item name="negativeButtonText">@string/settings_close</item>
     </style>
 
-    <style name="AppAlertDialog" parent="Theme.AppCompat.Dialog.Alert">
+    <style name="AppAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <!-- To tint the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarNeutralButtonStyle">@style/AlertButtonStyle</item>
         <!-- Text color -->
-        <item name="android:textColorPrimary">@color/textColorLight</item>
+        <item name="android:textColorPrimary">@color/textColorDark</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@color/light</item>
     </style>
 
     <style name="AlertButtonStyle" parent="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColorDark</item>
     </style>
 
     <style name="MainTabText" parent="TextAppearance.Design.Tab">
