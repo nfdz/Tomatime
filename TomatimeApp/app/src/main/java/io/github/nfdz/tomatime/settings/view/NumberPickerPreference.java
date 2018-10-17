@@ -3,6 +3,7 @@ package io.github.nfdz.tomatime.settings.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.preference.DialogPreference;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
@@ -36,6 +37,13 @@ public class NumberPickerPreference extends DialogPreference {
                           int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         parseAttributes(context, attrs);
+    }
+
+    @Override
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
+        holder.setDividerAllowedAbove(false);
+        holder.setDividerAllowedBelow(false);
     }
 
     private void parseAttributes(Context context, AttributeSet attrs) {
