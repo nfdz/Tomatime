@@ -9,7 +9,7 @@
     <dimen name="main_activity_tabs_indicator_height">4dp</dimen>
 
     <!-- Home -->
-    <dimen name="home_logo_font_size">42dp</dimen>
+    <dimen name="home_logo_font_size">45dp</dimen>
     <dimen name="home_bg_margin">8dp</dimen>
     <dimen name="home_progress_current_size">55sp</dimen>
     <dimen name="home_progress_total_size">18sp</dimen>
@@ -18,12 +18,12 @@
     <dimen name="home_indicator_size">8dp</dimen>
     <dimen name="home_indicator_margin_horizontal">1dp</dimen>
     <dimen name="home_global_progress_section_size">48dp</dimen>
-    <dimen name="home_global_progress_section_padding">2dp</dimen>
+    <dimen name="home_global_progress_section_padding">6dp</dimen>
     <dimen name="home_global_progress_indicator_margin_top">4dp</dimen>
     <dimen name="home_global_progress_indicator_height">14dp</dimen>
     <dimen name="home_button_margin_bottom">32dp</dimen>
     <dimen name="home_button_margin_horizontal">10dp</dimen>
-    <dimen name="home_progress_icon_size">78dp</dimen>
+    <dimen name="home_progress_icon_size">88dp</dimen>
     <dimen name="home_progress_indicator_size">18dp</dimen>
     <dimen name="home_continue_height">60dp</dimen>
     <dimen name="home_continue_text_size">20sp</dimen>

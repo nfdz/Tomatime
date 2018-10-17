@@ -384,7 +384,7 @@ public class PomodoroService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID);
         builder.setContentTitle(title);
         builder.setContentText(text);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_notif_tomato);
         builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
 //        builder.setLights(lightColor, 4000, 2000);
