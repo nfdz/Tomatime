@@ -68,7 +68,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
     private void setupAvailableSounds() {
         try {
             RingtoneManager manager = new RingtoneManager(getActivity());
-            manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+            manager.setType(RingtoneManager.TYPE_ALARM);
             Cursor cursor = manager.getCursor();
             ArrayList<String> names = new ArrayList<>();
             ArrayList<String> ids = new ArrayList<>();
@@ -130,7 +130,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
             }
             ((SwitchPreferenceCompat) findPreference(getString(R.string.pref_overlay_key))).setChecked(overlayEnabled);
         } else if (key.equals(getString(R.string.pref_sound_custom_key))) {
-            NotificationUtils.sound(getActivity(), SettingsPreferencesUtils.getCustomSoundId());
+            NotificationUtils.soundDemo(getActivity(), SettingsPreferencesUtils.getCustomSoundId());
         }
     }
 

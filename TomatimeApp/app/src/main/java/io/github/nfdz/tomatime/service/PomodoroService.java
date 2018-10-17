@@ -111,6 +111,7 @@ public class PomodoroService extends Service {
     @Override
     public void onDestroy() {
         Timber.d("Pomodoro service destroyed");
+        NotificationUtils.muteIfNeeded();
         destroyed = true;
         super.onDestroy();
     }
@@ -122,6 +123,7 @@ public class PomodoroService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        NotificationUtils.muteIfNeeded();
         if (intent != null) {
             String action = intent.getAction();
             action = action == null ? "" : action;
@@ -608,7 +610,7 @@ public class PomodoroService extends Service {
             NotificationUtils.vibrate(vibrator);
         }
         if (SettingsPreferencesUtils.getSoundEnabledFlag()) {
-            NotificationUtils.sound(this, SettingsPreferencesUtils.getCustomSoundId());
+            NotificationUtils.soundIfNeeded(this, SettingsPreferencesUtils.getCustomSoundId());
         }
     }
 
