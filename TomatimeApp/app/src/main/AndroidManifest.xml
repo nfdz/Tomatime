@@ -30,6 +30,11 @@
 
         <service android:name=".service.PomodoroService" />
 
+        <!-- AdMob App ID -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/app_ads_id"/>
+
     </application>
 
 </manifest>

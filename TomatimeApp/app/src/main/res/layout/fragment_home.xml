@@ -275,14 +275,23 @@
         android:id="@+id/home_cl_continue"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/shape_radial_gradient"
-        android:clickable="true"
-        android:focusable="true"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/gradient_black"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerCrop"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <Button
             android:id="@+id/home_btn_continue"
@@ -305,9 +314,6 @@
         android:id="@+id/home_cl_break"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/shape_radial_gradient"
-        android:clickable="true"
-        android:focusable="true"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -315,22 +321,15 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/home_iv_break_close"
-            android:layout_width="@dimen/home_break_layer_close_size"
-            android:layout_height="@dimen/home_break_layer_close_size"
-            app:srcCompat="@drawable/ic_close"
-            android:background="?attr/selectableItemBackground"
-            app:layout_constraintBottom_toTopOf="@+id/home_iv_break"
-            app:layout_constraintLeft_toRightOf="@+id/home_iv_break"/>
-
-        <ImageView
-            android:id="@+id/home_iv_break"
-            android:layout_width="@dimen/home_break_layer_icon_size"
-            android:layout_height="@dimen/home_break_layer_icon_size"
-            app:srcCompat="@mipmap/ic_launcher"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/gradient_black"
+            android:clickable="true"
+            android:focusable="true"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
@@ -340,10 +339,37 @@
             android:text="@string/home_break_message"
             android:textSize="@dimen/home_break_layer_text_size"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@+id/home_iv_break"
+            android:textColor="@color/light"
+            android:shadowColor="@color/dark"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="0.01"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@+id/home_av_banner"
+            app:layout_constraintRight_toRightOf="@+id/home_av_banner" />
+
+        <ImageView
+            android:id="@+id/home_iv_break_close"
+            android:layout_width="@dimen/home_break_layer_close_size"
+            android:layout_height="@dimen/home_break_layer_close_size"
+            app:srcCompat="@drawable/ic_close"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toTopOf="@+id/home_tv_break"
+            app:layout_constraintRight_toRightOf="@+id/home_av_banner"/>
+
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/home_av_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="66dp"
+            app:layout_constraintTop_toBottomOf="@+id/home_tv_break"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            ads:adSize="LARGE_BANNER"
+            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+        </com.google.android.gms.ads.AdView>
 
     </android.support.constraint.ConstraintLayout>
 

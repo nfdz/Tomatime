@@ -27,6 +27,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +40,7 @@ import io.github.nfdz.tomatime.common.dialog.PomodoroInfoDialog;
 import io.github.nfdz.tomatime.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroState;
+import io.github.nfdz.tomatime.common.utils.SettingsPreferencesUtils;
 import io.github.nfdz.tomatime.common.utils.SnackbarUtils;
 import io.github.nfdz.tomatime.home.HomeContract;
 import io.github.nfdz.tomatime.home.presenter.HomePresenter;
@@ -57,6 +60,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         return new HomeFragment();
     }
 
+    private static final long ELAPSED_TIME_TO_SHOW_AD_MILLIS = TimeUnit.MINUTES.toMillis(20);
     private static final long CLOCK_RATE_MILLIS = 1000;
     private static final float ALPHA_DISABLED_BUTTON = 0.5f;
     private static final int MAX_INDICATORS_TO_DRAW = 4;
@@ -78,6 +82,8 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @BindView(R.id.home_bg_progress_fill_indicator) View home_bg_progress_fill_indicator;
     @BindView(R.id.home_cl_continue) View home_cl_continue;
     @BindView(R.id.home_cl_break) View home_cl_break;
+    @BindView(R.id.home_av_banner) AdView home_av_banner;
+    @BindView(R.id.home_iv_break_close) View home_iv_break_close;
 
     private HomeContract.Presenter presenter;
     private LiveData<RealmResults<PomodoroRealm>> bindedData = null;
@@ -267,7 +273,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void updateView(PomodoroRealm pomodoroRealm) {
-        hideBreakLayer();
         hideContinue();
         this.shownPomodoroRealm = pomodoroRealm;
         if (pomodoroRealm == null) {
@@ -275,17 +280,21 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         } else {
             switch (pomodoroRealm.getState()) {
                 case PomodoroState.WORKING:
+                    hideBreakLayer();
                     showWorkingMode();
                     break;
                 case PomodoroState.SHORT_BREAK:
                     showShortBreakMode();
+                    showBreakLayer();
                     break;
                 case PomodoroState.LONG_BREAK:
                     showLongBreakMode();
+                    showBreakLayer();
                     break;
                 case PomodoroState.FINISHED: // TODO handle finish event
                 case PomodoroState.NONE:
                 default:
+                    hideBreakLayer();
                     this.shownPomodoroRealm = null;
                     showEmptyMode();
             }
@@ -388,8 +397,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         home_btn_info_pomodoro.setAlpha(1f);
         home_btn_settings_pomodoro.setEnabled(false);
         home_btn_settings_pomodoro.setAlpha(ALPHA_DISABLED_BUTTON);
-
-        showBreakLayer();
     }
 
     private void showLongBreakMode() {
@@ -424,8 +431,6 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         home_btn_info_pomodoro.setAlpha(1f);
         home_btn_settings_pomodoro.setEnabled(false);
         home_btn_settings_pomodoro.setAlpha(ALPHA_DISABLED_BUTTON);
-
-        showBreakLayer();
     }
 
     private void setupIndicator(LinearLayout indicatorContainer, int progress, int total) {
@@ -600,7 +605,21 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showBreakLayer() {
-        home_cl_break.setVisibility(View.VISIBLE);
+        long now = System.currentTimeMillis();
+        long lastTime = SettingsPreferencesUtils.getLastTimeAd();
+        if (lastTime == 0) {
+            lastTime = now;
+            SettingsPreferencesUtils.setLastTimeAd(now);
+        }
+        if (now - lastTime > ELAPSED_TIME_TO_SHOW_AD_MILLIS) {
+            Timber.d("Time to show ad reached");
+            SettingsPreferencesUtils.setLastTimeAd(now);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            home_av_banner.loadAd(adRequest);
+            home_cl_break.setVisibility(View.VISIBLE);
+        } else {
+            Timber.d("No time to show ad");
+        }
     }
 
     private void hideBreakLayer() {

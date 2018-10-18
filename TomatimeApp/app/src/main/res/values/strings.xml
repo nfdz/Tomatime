@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="app_ads_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+
     <string name="app_name">Tomatime</string>
     <string name="app_name_logo">&#160;Tomatime&#160;</string>
     <string name="channel_name">Tomatime Pomodoro</string>
@@ -38,7 +40,7 @@
     <string name="home_save_info_error">Ups! Information cannot be saved :(</string>
     <string name="home_delete_info_error">Ups! Information cannot be removed :(</string>
     <string name="home_continue">Continue</string>
-    <string name="home_break_message">Let\'s procrastinate!</string>
+    <string name="home_break_message">Enjoy your time to spare!</string>
 
     <!-- States -->
     <string name="state_text_working">Stop procrastinating! Work! Go!</string>

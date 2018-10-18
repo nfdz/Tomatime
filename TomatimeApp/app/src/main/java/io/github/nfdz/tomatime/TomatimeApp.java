@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatDelegate;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -35,6 +36,7 @@ public class TomatimeApp extends Application {
         setupRealm();
         setupCrashlytics();
         setupAnalytics();
+        setupAds();
         clearOutdatedPomodoroIfAny();
         handleFirstTime();
     }
@@ -77,6 +79,9 @@ public class TomatimeApp extends Application {
         }
     }
 
+    private void setupAds() {
+        MobileAds.initialize(this, getString(R.string.app_ads_id));
+    }
 
     private void clearOutdatedPomodoroIfAny() {
         try {
@@ -112,7 +117,7 @@ public class TomatimeApp extends Application {
 
     public void reportException(@NonNull Exception ex) {
         if (BuildConfig.DEBUG) {
-            Timber.w("CrashlyticsReportDebug", ex);
+            Timber.w(ex, "CrashlyticsReportDebug");
         } else {
             Crashlytics.logException(ex);
         }

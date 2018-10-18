@@ -10,6 +10,9 @@ import io.github.nfdz.tomatime.TomatimeApp;
 
 public class SettingsPreferencesUtils {
 
+    public static final String FIRST_TIME_FLAG_KEY = "first_time";
+    public static final String LAST_TIME_AD_KEY = "last_time_ad";
+
     private static SharedPreferences getPreferences() {
         return PreferenceManager.getDefaultSharedPreferences(TomatimeApp.INSTANCE);
     }
@@ -102,12 +105,19 @@ public class SettingsPreferencesUtils {
     }
 
     public static boolean getAndSetFirstTimeFlag() {
-        String key = "first_time";
-        boolean value = getPreferences().getBoolean(key, true);
+        boolean value = getPreferences().getBoolean(FIRST_TIME_FLAG_KEY, true);
         if (value) {
-            getPreferences().edit().putBoolean(key, false).apply();
+            getPreferences().edit().putBoolean(FIRST_TIME_FLAG_KEY, false).apply();
         }
         return value;
+    }
+
+    public static long getLastTimeAd() {
+        return getPreferences().getLong(LAST_TIME_AD_KEY, 0);
+    }
+
+    public static void setLastTimeAd(long timeMillis) {
+        getPreferences().edit().putLong(LAST_TIME_AD_KEY, timeMillis).apply();
     }
 
 }
