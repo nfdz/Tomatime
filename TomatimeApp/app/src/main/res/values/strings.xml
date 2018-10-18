@@ -1,6 +1,7 @@
 <resources>
 
     <string name="app_name">Tomatime</string>
+    <string name="app_name_logo">&#160;Tomatime&#160;</string>
     <string name="channel_name">Tomatime Pomodoro</string>
     <string name="channel_description">Pomodoro notifications</string>
 
