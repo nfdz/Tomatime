@@ -29,11 +29,11 @@ public class DarkPreferenceCategory extends android.support.v7.preference.Prefer
         super.onBindViewHolder(holder);
         TextView titleView = (TextView) holder.findViewById(android.R.id.title);
         titleView.setTextColor(ContextCompat.getColor(getContext(), R.color.textColorDark));
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            int horizontal = getContext().getResources().getDimensionPixelSize(R.dimen.content_horizontal_padding);
-            int vertical = getContext().getResources().getDimensionPixelSize(R.dimen.content_vertical_padding);
-            titleView.setPadding(horizontal, vertical, 0, 0);
-        }
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+//            int horizontal = getContext().getResources().getDimensionPixelSize(R.dimen.content_horizontal_padding);
+//            int vertical = getContext().getResources().getDimensionPixelSize(R.dimen.content_vertical_padding);
+//            titleView.setPadding(horizontal, vertical, 0, 0);
+//        }
     }
 
 }
