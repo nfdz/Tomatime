@@ -20,6 +20,7 @@ import io.github.nfdz.tomatime.TomatimeApp;
 import io.github.nfdz.tomatime.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroState;
+import io.github.nfdz.tomatime.common.utils.Analytics;
 import io.github.nfdz.tomatime.common.utils.LifecycleUtils;
 import io.github.nfdz.tomatime.common.utils.NotificationUtils;
 import io.github.nfdz.tomatime.common.utils.OverlayPermissionHelper;
@@ -131,6 +132,7 @@ public class PomodoroService extends Service {
             switch (action) {
                 case START_POMODORO_ACTION:
                     Timber.d("Start command received");
+                    TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.START_POMODORO);
                     String newInfoKey = intent.getStringExtra(INFO_KEY_EXTRA);
                     if (pomodoroId <= 0 || !TextUtils.equals(newInfoKey, infoKey)) {
                         infoKey = newInfoKey;
@@ -143,6 +145,7 @@ public class PomodoroService extends Service {
                     break;
                 case STOP_POMODORO_ACTION:
                     Timber.d("Stop command received");
+                    TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.STOP_POMODORO);
                     handleStopPomodoro(timestamp);
                     resetState();
                     overlayHandler.hide();
@@ -150,10 +153,12 @@ public class PomodoroService extends Service {
                     break;
                 case CONTINUE_POMODORO_ACTION:
                     Timber.d("Continue command received");
+                    TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.CONTINUE_STAGE);
                     handleContinuePomodoro(timestamp);
                     break;
                 case SKIP_STAGE_ACTION:
                     Timber.d("Skip command received");
+                    TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.SKIP_STAGE);
                     handleSkipStage(timestamp);
                     break;
             }
@@ -579,6 +584,7 @@ public class PomodoroService extends Service {
             @Override
             public void onSuccess() {
                 Timber.d("Pomodoro finished successfully");
+                TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.FINISHED_POMODORO);
             }
         }, new Realm.Transaction.OnError() {
             @Override

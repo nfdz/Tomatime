@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import io.github.nfdz.tomatime.R;
+import io.github.nfdz.tomatime.TomatimeApp;
+import io.github.nfdz.tomatime.common.utils.Analytics;
 import io.github.nfdz.tomatime.common.utils.NotificationUtils;
 import io.github.nfdz.tomatime.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatime.common.utils.SettingsPreferencesUtils;
@@ -140,6 +142,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         } else if (key.equals(getString(R.string.pref_sound_custom_key))) {
             NotificationUtils.soundDemo(getActivity(), SettingsPreferencesUtils.getCustomSoundId());
         }
+        // Analytics
+        Bundle params = new Bundle();
+        params.putString("settings-key", key);
+        TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.SETTINGS_CHANGE, params);
     }
 
     @Override

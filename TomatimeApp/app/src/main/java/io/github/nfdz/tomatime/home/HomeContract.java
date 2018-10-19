@@ -8,6 +8,7 @@ import io.realm.RealmResults;
 public interface HomeContract {
 
     interface View {
+        void showWelcomeDialog();
         void bindViewToLiveData(LiveData<RealmResults<PomodoroRealm>> data);
         void showSaveInfoError();
         void showSaveInfoConflict(long id, String title, String notes, String category);
@@ -28,6 +29,7 @@ public interface HomeContract {
     interface Interactor {
         void initialize();
         void destroy();
+        boolean handleFirstTime();
         LiveData<RealmResults<PomodoroRealm>> loadDataAsync();
         void startPomodoro();
         void stopPomodoro();

@@ -18,6 +18,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatime.R;
+import io.github.nfdz.tomatime.TomatimeApp;
+import io.github.nfdz.tomatime.common.utils.Analytics;
 import io.github.nfdz.tomatime.common.utils.SimpleDiffUtilListCallback;
 import io.github.nfdz.tomatime.historical.model.PomodoroHistoricalEntry;
 import timber.log.Timber;
@@ -118,6 +120,7 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
             } catch (Exception e) {
                 Timber.e(e, "Cannot handle pomodoro view holder click");
             }
+            TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.EDIT_INFO_ENTRY);
         }
 
         @OnClick(R.id.item_pomodoro_btn_play)
@@ -128,6 +131,7 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
             } catch (Exception e) {
                 Timber.e(e, "Cannot handle pomodoro view holder play click");
             }
+            TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.START_ENTRY);
         }
 
         @OnClick(R.id.item_pomodoro_btn_delete)
@@ -138,6 +142,7 @@ public class PomodorosAdapter extends RecyclerView.Adapter<PomodorosAdapter.Pomo
             } catch (Exception e) {
                 Timber.e(e, "Cannot handle pomodoro view holder delete click");
             }
+            TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.REMOVE_ENTRY);
         }
 
     }

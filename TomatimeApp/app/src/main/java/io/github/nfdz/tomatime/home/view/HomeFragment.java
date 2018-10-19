@@ -36,10 +36,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.github.nfdz.tomatime.R;
+import io.github.nfdz.tomatime.TomatimeApp;
 import io.github.nfdz.tomatime.common.dialog.PomodoroInfoDialog;
 import io.github.nfdz.tomatime.common.model.PomodoroInfoRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroState;
+import io.github.nfdz.tomatime.common.utils.Analytics;
 import io.github.nfdz.tomatime.common.utils.SettingsPreferencesUtils;
 import io.github.nfdz.tomatime.common.utils.SnackbarUtils;
 import io.github.nfdz.tomatime.home.HomeContract;
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private static final long ELAPSED_TIME_TO_SHOW_AD_MILLIS = TimeUnit.MINUTES.toMillis(20);
+    private static final long TIME_TO_SHOW_CLOSE_AD_MILLIS = TimeUnit.SECONDS.toMillis(5);
     private static final long CLOCK_RATE_MILLIS = 1000;
     private static final float ALPHA_DISABLED_BUTTON = 0.5f;
     private static final int MAX_INDICATORS_TO_DRAW = 4;
@@ -111,6 +114,16 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         handler = new Handler();
         presenter = new HomePresenter(this);
         presenter.create();
+    }
+
+    @Override
+    public void showWelcomeDialog() {
+        new AlertDialog.Builder(getActivity(), R.style.AppAlertDialog)
+                .setTitle(R.string.welcome_title)
+                .setMessage(R.string.welcome_content)
+                .setPositiveButton(android.R.string.ok, null)
+                .create()
+                .show();
     }
 
     @Override
@@ -181,6 +194,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     @OnClick(R.id.home_btn_info_pomodoro)
     public void onInfoPomodoroClick() {
         if (shownPomodoroRealm != null) {
+            TomatimeApp.INSTANCE.logAnalytics(Analytics.Event.EDIT_INFO);
             PomodoroInfoRealm info = shownPomodoroRealm.getPomodoroInfo();
             PomodoroInfoDialog dialog = info != null ?
                     PomodoroInfoDialog.newInstance(info.getTitle(), info.getNotes(), info.getCategory())
@@ -616,7 +630,14 @@ public class HomeFragment extends Fragment implements HomeContract.View,
             SettingsPreferencesUtils.setLastTimeAd(now);
             AdRequest adRequest = new AdRequest.Builder().build();
             home_av_banner.loadAd(adRequest);
+            home_iv_break_close.setVisibility(View.GONE);
             home_cl_break.setVisibility(View.VISIBLE);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    home_iv_break_close.setVisibility(View.VISIBLE);
+                }
+            }, TIME_TO_SHOW_CLOSE_AD_MILLIS);
         } else {
             Timber.d("No time to show ad");
         }

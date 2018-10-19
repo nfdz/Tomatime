@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 
 import io.github.nfdz.tomatime.TomatimeApp;
 import io.github.nfdz.tomatime.common.model.PomodoroRealm;
+import io.github.nfdz.tomatime.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatime.common.utils.RealmUtils;
+import io.github.nfdz.tomatime.common.utils.SettingsPreferencesUtils;
 import io.github.nfdz.tomatime.home.HomeContract;
 import io.github.nfdz.tomatime.service.PomodoroService;
 import io.realm.Realm;
@@ -21,6 +23,18 @@ public class HomeInteractor implements HomeContract.Interactor {
 
     @Override
     public void destroy() {
+    }
+
+    @Override
+    public boolean handleFirstTime() {
+        boolean isFirstTime = SettingsPreferencesUtils.getAndSetFirstTimeFlag();
+        if (isFirstTime) {
+            // Enable overlay by default if it is possible
+            if (OverlayPermissionHelper.hasOverlayPermission(TomatimeApp.INSTANCE)) {
+                SettingsPreferencesUtils.setOverlayViewFlag(true);
+            }
+        }
+        return isFirstTime;
     }
 
     @Override

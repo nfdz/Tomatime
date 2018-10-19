@@ -1,7 +1,9 @@
 package io.github.nfdz.tomatime;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.Size;
 import android.support.v7.app.AppCompatDelegate;
 
@@ -13,9 +15,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import io.fabric.sdk.android.Fabric;
 import io.github.nfdz.tomatime.common.model.PomodoroRealm;
 import io.github.nfdz.tomatime.common.model.PomodoroState;
-import io.github.nfdz.tomatime.common.utils.OverlayPermissionHelper;
 import io.github.nfdz.tomatime.common.utils.RealmUtils;
-import io.github.nfdz.tomatime.common.utils.SettingsPreferencesUtils;
 import io.realm.Realm;
 import io.realm.Sort;
 import timber.log.Timber;
@@ -38,7 +38,6 @@ public class TomatimeApp extends Application {
         setupAnalytics();
         setupAds();
         clearOutdatedPomodoroIfAny();
-        handleFirstTime();
     }
 
     private void setupLogger() {
@@ -98,18 +97,13 @@ public class TomatimeApp extends Application {
         }
     }
 
-    private void handleFirstTime() {
-        if (SettingsPreferencesUtils.getAndSetFirstTimeFlag()) {
-            // Enable overlay by default if it is possible
-            if (OverlayPermissionHelper.hasOverlayPermission(this)) {
-                SettingsPreferencesUtils.setOverlayViewFlag(true);
-            }
-        }
+    public void logAnalytics(@NonNull @Size(min = 1L,max = 40L) String event) {
+        logAnalytics(event, null);
     }
 
-    public void logAnalytics(@NonNull @Size(min = 1L,max = 40L) String event) {
+    public void logAnalytics(@NonNull @Size(min = 1L,max = 40L) String event, @Nullable Bundle params) {
         if (!BuildConfig.DEBUG && firebaseAnalytics != null) {
-            firebaseAnalytics.logEvent(event, null);
+            firebaseAnalytics.logEvent(event, params);
         } else {
             Timber.i("AnalyticsDebug: " + event);
         }

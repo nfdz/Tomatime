@@ -17,6 +17,9 @@ public class HomePresenter implements HomeContract.Presenter {
     public void create() {
         if (view != null && interactor != null) {
             interactor.initialize();
+            if (interactor.handleFirstTime()) {
+                view.showWelcomeDialog();
+            }
             view.bindViewToLiveData(interactor.loadDataAsync());
         }
     }

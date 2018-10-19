@@ -2,8 +2,8 @@
 
     <string name="app_ads_id" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
 
-    <string name="app_name">Tomatime</string>
-    <string name="app_name_logo">&#160;Tomatime&#160;</string>
+    <string name="app_name" translatable="false">Tomatime</string>
+    <string name="app_name_logo" translatable="false">&#160;Tomatime&#160;</string>
     <string name="channel_name">Tomatime Pomodoro</string>
     <string name="channel_description">Pomodoro notifications</string>
 
@@ -41,11 +41,13 @@
     <string name="home_delete_info_error">Ups! Information cannot be removed :(</string>
     <string name="home_continue">Continue</string>
     <string name="home_break_message">Enjoy your time to spare!</string>
+    <string name="welcome_title">Welcome</string>
+    <string name="welcome_content">We hope you enjoy using this app to improve your productivity.\nRemember that this app is free and the code is published under GPL on GitHub.\nWe respect your privacy and we only send a few analytics and critical failures to improve the app.\nThank you! &#9829;</string>
 
     <!-- States -->
     <string name="state_text_working">Stop procrastinating! Work! Go!</string>
     <string name="state_text_short_break">Enjoy your short break!</string>
-    <string name="state_text_long_break">Congrats! You reach the long break!</string>
+    <string name="state_text_long_break">You reach the long break!</string>
     <string name="state_text_none">What are you waiting for?</string>
 
     <!-- Pomodoro Info dialog -->
@@ -86,7 +88,7 @@
     <string name="prefs_behaviour_key" translatable="false">behaviour-settings</string>
 
     <string name="pref_sound_key" translatable="false">pomodoro-sound</string>
-    <string name="pref_sound_default" translatable="false">true</string>
+    <string name="pref_sound_default" translatable="false">false</string>
     <string name="pref_sound_title">Sound</string>
     <string name="pref_sound_summary">Pomodoro events will be alerted with sounds</string>
 
@@ -112,7 +114,7 @@
 
     <string name="pref_overlay_key" translatable="false">overlay-view</string>
     <string name="pref_overlay_default" translatable="false">false</string>
-    <string name="pref_overlay_title">Overlay during pomodoro</string>
+    <string name="pref_overlay_title">Overlay screen</string>
     <string name="pref_overlay_summary">Overlay the screen during the pomodoro to avoid procrastinating</string>
 
     <string name="pref_pomodoro_time_key" translatable="false">pomodoro-work-time</string>
@@ -129,7 +131,7 @@
 
     <string name="pref_pomodoros_to_long_break_key" translatable="false">pomodoros-to-long-break</string>
     <string name="pref_pomodoros_to_long_break_default" translatable="false">4</string>
-    <string name="pref_pomodoros_to_long_break_title">Pomodos to long break</string>
+    <string name="pref_pomodoros_to_long_break_title">Pomodoros to long break</string>
 
     <string name="pref_restore_default_key" translatable="false">restore-default-values</string>
     <string name="pref_restore_default_title">Restore default values</string>
