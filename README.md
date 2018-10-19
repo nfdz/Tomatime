@@ -2,7 +2,7 @@
 Android application implementation of pomodoro timer. It is very full of features, light, modern and respects your privacy.
 
 <p align="center">
-  <img src="dev/icon.png?raw=true" alt="Permissions Watcher"/>
+  <img width="250" src="dev/icon.png?raw=true" alt="Permissions Watcher"/>
 </p>
 
 ## Download
