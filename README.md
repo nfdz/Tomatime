@@ -1,22 +1,6 @@
 # Tomatime
 Android application implementation of pomodoro timer. It is very full of features, light, modern and respects your privacy.
 
-Features:
-* Customize your own pomodoro times (working time, short break time, long break time and number of working times to get a long break).
-* Overlay screen to avoid losing focus during work.
-* Configurable alarms that can use sounds and vibrations.
-* A complete historical with the pomodoros you have done grouped by categories.
-* Support that you store additional information about the tasks that are doing.
-
-Underlying principles, there are six steps in the technique:
-1. Decide on the task to be done.
-2. Set the pomodoro timer (traditionally to 25 minutes).
-3. Work on the task until the timer rings.
-4. After the timer rings, put a checkmark on a piece of paper.
-5. If you have fewer than four checkmarks, take a short break (3–5 minutes), then go to step 2.
-6. After four pomodoros, take a longer break (15–30 minutes), reset your checkmark count to zero, then go to step 1.
-
-
 <p align="center">
   <img src="dev/icon.png?raw=true" alt="Permissions Watcher"/>
 </p>
@@ -43,6 +27,24 @@ Underlying principles, there are six steps in the technique:
   <img src="dev/screenshots/en_5.png?raw=true" width="250" alt="Records"/>
   <img src="dev/screenshots/en_6.png?raw=true" width="250" alt="Settings"/>
 </p>
+
+## Features
+
+* Customize your own pomodoro times (working time, short break time, long break time and number of working times to get a long break).
+* Overlay screen to avoid losing focus during work.
+* Configurable alarms that can use sounds and vibrations.
+* A complete historical with the pomodoros you have done grouped by categories.
+* Support that you store additional information about the tasks that are doing.
+
+## How works
+
+There are six steps in the technique:
+1. Decide on the task to be done.
+2. Set the pomodoro timer (traditionally to 25 minutes).
+3. Work on the task until the timer rings.
+4. After the timer rings, put a checkmark on a piece of paper.
+5. If you have fewer than four checkmarks, take a short break (3–5 minutes), then go to step 2.
+6. After four pomodoros, take a longer break (15–30 minutes), reset your checkmark count to zero, then go to step 1.
 
 ## License
 
