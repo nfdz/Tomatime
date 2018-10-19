@@ -79,7 +79,7 @@ public class TomatimeApp extends Application {
     }
 
     private void setupAds() {
-        MobileAds.initialize(this, getString(R.string.app_ads_id));
+        MobileAds.initialize(this, BuildConfig.AppAdsId);
     }
 
     private void clearOutdatedPomodoroIfAny() {

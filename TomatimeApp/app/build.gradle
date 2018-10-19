@@ -14,9 +14,19 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "AppAdsId", TomatimeApp_Ad_ApiKey
+            resValue 'string', "app_ads_id", TomatimeApp_Ad_ApiKey
+            buildConfigField 'String', "BreakAdBannerId", TomatimeApp_Ad_BannerKey
+            resValue 'string', "break_ad_banner_id", TomatimeApp_Ad_BannerKey
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "AppAdsId", TomatimeApp_Ad_ApiKey
+            resValue 'string', "app_ads_id", TomatimeApp_Ad_ApiKey
+            buildConfigField 'String', "BreakAdBannerId", TomatimeApp_Ad_BannerKey
+            resValue 'string', "break_ad_banner_id", TomatimeApp_Ad_BannerKey
         }
     }
     splits {

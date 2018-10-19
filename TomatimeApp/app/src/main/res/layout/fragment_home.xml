@@ -368,7 +368,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             ads:adSize="LARGE_BANNER"
-            ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+            ads:adUnitId="@string/break_ad_banner_id">
         </com.google.android.gms.ads.AdView>
 
     </android.support.constraint.ConstraintLayout>
