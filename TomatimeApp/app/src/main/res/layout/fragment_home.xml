@@ -356,7 +356,7 @@
             app:srcCompat="@drawable/ic_close"
             android:background="?attr/selectableItemBackground"
             app:layout_constraintBottom_toTopOf="@+id/home_tv_break"
-            app:layout_constraintRight_toRightOf="@+id/home_av_banner"/>
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <com.google.android.gms.ads.AdView
             xmlns:ads="http://schemas.android.com/apk/res-auto"

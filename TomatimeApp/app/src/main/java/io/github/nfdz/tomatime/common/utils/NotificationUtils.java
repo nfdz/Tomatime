@@ -2,7 +2,7 @@ package io.github.nfdz.tomatime.common.utils;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.media.Ringtone;
+import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
@@ -19,7 +19,7 @@ public class NotificationUtils {
     private static final int[] VIBRATION_AMPLITUDES = new int[]{0, 255, 120, 255, 120, 255, 120, 255, 120, 255, 120, 255};
     private static final long DEMO_TIME_MILLIS = 2000;
 
-    private static Ringtone ONGOING_SOUND;
+    private static MediaPlayer ONGOING_SOUND;
 
     public static void vibrate(Vibrator vibrator) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -39,8 +39,11 @@ public class NotificationUtils {
         clearIfIsNotPlaying();
         try {
             if (ONGOING_SOUND == null) {
-                ONGOING_SOUND = RingtoneManager.getRingtone(context, getNotificationSoundUri(context, customSoundClipId));
-                ONGOING_SOUND.play();
+                ONGOING_SOUND = new MediaPlayer();
+                ONGOING_SOUND.setDataSource(context, getNotificationSoundUri(context, customSoundClipId));
+                ONGOING_SOUND.prepare();
+                ONGOING_SOUND.setLooping(true);
+                ONGOING_SOUND.start();
             }
         } catch (Exception e) {
             Timber.e(e, "Cannot play event ringtone");
@@ -51,6 +54,7 @@ public class NotificationUtils {
         try {
             if (ONGOING_SOUND != null && ! ONGOING_SOUND.isPlaying()) {
                 ONGOING_SOUND.stop();
+                ONGOING_SOUND.release();
                 ONGOING_SOUND = null;
             }
         } catch (Exception e) {
@@ -62,6 +66,7 @@ public class NotificationUtils {
         try {
             if (ONGOING_SOUND != null) {
                 ONGOING_SOUND.stop();
+                ONGOING_SOUND.release();
                 ONGOING_SOUND = null;
             }
         } catch (Exception e) {
@@ -71,13 +76,18 @@ public class NotificationUtils {
 
     public static void soundDemo(Context context, String customSoundClipId) {
         try {
-            final Ringtone r = RingtoneManager.getRingtone(context, getNotificationSoundUri(context, customSoundClipId));
-            r.play();
+
+            final MediaPlayer mp = new MediaPlayer();
+            mp.setDataSource(context, getNotificationSoundUri(context, customSoundClipId));
+            mp.prepare();
+            mp.setLooping(false);
+            mp.start();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        r.stop();
+                        mp.stop();
+                        mp.release();
                     } catch (Exception e) {
                         Timber.e(e, "Cannot stop demo ringtone");
                     }
