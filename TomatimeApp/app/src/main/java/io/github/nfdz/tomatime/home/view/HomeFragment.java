@@ -62,8 +62,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         return new HomeFragment();
     }
 
-    private static final long ELAPSED_TIME_TO_SHOW_AD_MILLIS = TimeUnit.MINUTES.toMillis(20);
-    private static final long TIME_TO_SHOW_CLOSE_AD_MILLIS = TimeUnit.SECONDS.toMillis(5);
+    private static final long TIME_TO_SHOW_CLOSE_AD_MILLIS = TimeUnit.SECONDS.toMillis(3);
     private static final long CLOCK_RATE_MILLIS = 1000;
     private static final float ALPHA_DISABLED_BUTTON = 0.5f;
     private static final int MAX_INDICATORS_TO_DRAW = 4;
@@ -298,12 +297,12 @@ public class HomeFragment extends Fragment implements HomeContract.View,
                     showWorkingMode();
                     break;
                 case PomodoroState.SHORT_BREAK:
-                    showShortBreakMode();
                     showBreakLayer();
+                    showShortBreakMode();
                     break;
                 case PomodoroState.LONG_BREAK:
-                    showLongBreakMode();
                     showBreakLayer();
+                    showLongBreakMode();
                     break;
                 case PomodoroState.FINISHED: // TODO handle finish event
                 case PomodoroState.NONE:
@@ -611,6 +610,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
     }
 
     private void showContinue() {
+        hideBreakLayer();
         home_cl_continue.setVisibility(View.VISIBLE);
     }
 
@@ -625,7 +625,7 @@ public class HomeFragment extends Fragment implements HomeContract.View,
             lastTime = now;
             SettingsPreferencesUtils.setLastTimeAd(now);
         }
-        if (now - lastTime > ELAPSED_TIME_TO_SHOW_AD_MILLIS) {
+        if (now - lastTime > getElapsedTimeToShowAdInMillis()) {
             Timber.d("Time to show ad reached");
             SettingsPreferencesUtils.setLastTimeAd(now);
             AdRequest adRequest = new AdRequest.Builder().build();
@@ -641,6 +641,10 @@ public class HomeFragment extends Fragment implements HomeContract.View,
         } else {
             Timber.d("No time to show ad");
         }
+    }
+
+    private long getElapsedTimeToShowAdInMillis() {
+        return SettingsPreferencesUtils.getPomodoroTimeInMillis() * 2;
     }
 
     private void hideBreakLayer() {
