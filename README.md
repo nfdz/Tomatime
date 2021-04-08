@@ -1,5 +1,5 @@
 # Tomatime
-Android application implementation of pomodoro timer. It is very full of features, light, modern and respects your privacy.
+Android pomodoro timer application.
 
 <p align="center">
   <img width="250" src="dev/icon.png?raw=true" alt="Permissions Watcher"/>
